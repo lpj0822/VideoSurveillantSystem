@@ -1,4 +1,4 @@
-#include "isaliency.h"
+﻿#include "isaliency.h"
 
 ISaliency::~ISaliency()
 {

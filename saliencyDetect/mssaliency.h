@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Radhakrishna Achanta and Sabine Susstrunk,
  * Saliency Detection using Maximum Symmetric Surround,
  * International Conference on Image Processing (ICIP),Hong Kong, September 2010.

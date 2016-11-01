@@ -1,4 +1,4 @@
-/*
+﻿/*
  * X. Hou and L. Zhang.
  * Saliency detection: A spectral residual approach.
  * In IEEE CVPR 2007, 2007.

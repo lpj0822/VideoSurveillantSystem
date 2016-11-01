@@ -1,4 +1,4 @@
-/*
+﻿/*
  *Y. Zhai and M. Shah. Visual attention detection in video sequences
  *   using spatiotemporal cues. In ACM Multimedia 2006.
  */

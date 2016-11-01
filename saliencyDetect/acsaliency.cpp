@@ -1,4 +1,4 @@
-#include "acsaliency.h"
+﻿#include "acsaliency.h"
 #include <iostream>
 
 ACSaliency::ACSaliency()
@@ -41,7 +41,7 @@ cv::Mat ACSaliency::getSaliency(const cv::Mat &src)
     int off1 = mindim / 2;
     int off2 = mindim / 4;
     int off3 = mindim / 8;
-    for( int r = 1; r < height; r++)
+    for (int r = 1; r < height; r++)
     {
         float *dataS = saliencyMap.ptr<float>(r - 1);
         float *lab = tempLab.ptr<float>(r - 1);

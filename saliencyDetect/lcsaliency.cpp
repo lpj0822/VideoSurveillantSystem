@@ -1,4 +1,4 @@
-#include "lcsaliency.h"
+﻿#include "lcsaliency.h"
 #include <iostream>
 
 LCSaliency::LCSaliency()

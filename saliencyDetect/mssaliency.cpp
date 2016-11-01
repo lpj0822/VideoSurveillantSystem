@@ -1,4 +1,4 @@
-#include "mssaliency.h"
+﻿#include "mssaliency.h"
 #include <iostream>
 
 MSSaliency::MSSaliency()

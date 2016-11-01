@@ -1,4 +1,4 @@
-#include "ittisaliency.h"
+﻿#include "ittisaliency.h"
 #include <iostream>
 
 IttiSaliency::IttiSaliency()

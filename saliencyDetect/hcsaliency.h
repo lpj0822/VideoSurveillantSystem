@@ -1,4 +1,4 @@
-/*
+﻿/*
  *M.-M. Cheng, N. J. Mitra, X. Huang, P.H.S. Torr S.-M. Hu. Global
  *   Contrast based Salient Region Detection. IEEE PAMI, 2014.
  */

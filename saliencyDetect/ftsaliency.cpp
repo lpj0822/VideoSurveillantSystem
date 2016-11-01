@@ -1,4 +1,4 @@
-#include "ftsaliency.h"
+﻿#include "ftsaliency.h"
 #include <iostream>
 
 FTSaliency::FTSaliency()

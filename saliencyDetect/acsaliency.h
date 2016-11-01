@@ -1,4 +1,4 @@
-/*
+﻿/*
  * R. Achanta, F. Estrada, P. Wils and S. Susstrunk,
  * Salient Region Detectionand Segmentation,
  * International Conference on Computer Vision Systems(ICVS '08), Vol. 5008, Springer Lecture Notes in Computer Science,

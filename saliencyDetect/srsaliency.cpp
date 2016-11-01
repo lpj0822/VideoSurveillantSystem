@@ -1,4 +1,4 @@
-#include "srsaliency.h"
+﻿#include "srsaliency.h"
 #include <iostream>
 
 SRSaliency::SRSaliency()

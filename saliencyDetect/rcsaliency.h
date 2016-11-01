@@ -1,4 +1,4 @@
-/*
+﻿/*
  *M.-M. Cheng, N. J. Mitra, X. Huang, P.H.S. Torr S.-M. Hu. Global
  *   Contrast based Salient Region Detection. IEEE PAMI, 2014.
  */
@@ -37,13 +37,13 @@ public:
     cv::Mat getSaliency(const cv::Mat &src);
 
     //基于区域对比度
-    cv::Mat getRCSaliency(const cv::Mat &src, double sigmaDist = 0.4,
-                                      double segK = 50, int segMinSize = 200, double segSigma = 0.5);
+    cv::Mat getRCSaliency(const cv::Mat &src, double sigmaDist=0.4,
+                                      double segK=50, int segMinSize=200, double segSigma=0.5);
 
 private:
 
     //颜色空间量化
-    int quantize(const cv::Mat& srcFC3, cv::Mat &indexIC1, cv::Mat &colorFC3, cv::Mat &colorNum, double ratio=0.95, const int colorNums[3]= DefaultNums);
+    int quantize(const cv::Mat& srcFC3, cv::Mat &indexIC1, cv::Mat &colorFC3, cv::Mat &colorNum, double ratio=0.95, const int colorNums[3]=DefaultNums);
     void buildRegions(cv::Mat& regIndexIC1, std::vector<Region> &regs, cv::Mat &colorIndexIC1, int colorNum);
     void regionContrast(const std::vector<Region> &regs, cv::Mat &colorFC3, cv::Mat& regSaliencyDC1, double sigmaDist);
     void smoothByHist(cv::Mat &srcFC3, cv::Mat &saliencyFC1, float delta);

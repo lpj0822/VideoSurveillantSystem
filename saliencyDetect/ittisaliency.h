@@ -1,4 +1,4 @@
-/*
+﻿/*
  * L. Itti, C. Koch, E. Niebur,
  * A Model of Saliency-Based Visual Attention for Rapid Scene Analysis,
  * IEEE Transactions on Pattern Analysis and Machine Intelligence,
@@ -7,7 +7,7 @@
 #ifndef ITTISALIENCY_H
 #define ITTISALIENCY_H
 
-#include<opencv2/imgproc.hpp>
+#include <opencv2/imgproc.hpp>
 
 #include "isaliency.h"
 

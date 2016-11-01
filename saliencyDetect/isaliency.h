@@ -1,4 +1,4 @@
-/*
+﻿/*
  * 静态显著图检测
 */
 #ifndef ISALIENCY_H

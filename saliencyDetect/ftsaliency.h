@@ -1,4 +1,4 @@
-/*
+﻿/*
  *R. Achanta, S. Hemami, F. Estrada and S. Susstrunk,
  * Frequency-tuned Salient Region Detection, IEEE CVPR, 2009.
  */
