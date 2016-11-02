@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef PIXELBASEDADAPTIVESEGMENTER_H
+#define PIXELBASEDADAPTIVESEGMENTER_H
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -46,3 +47,4 @@ private:
     void saveConfig();
     void loadConfig();
 };
+#endif //PIXELBASEDADAPTIVESEGMENTER_H

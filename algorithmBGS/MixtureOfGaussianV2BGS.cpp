@@ -63,16 +63,16 @@ void MixtureOfGaussianV2BGS::process(const cv::Mat &img_input, cv::Mat &img_outp
 //初始化混合高斯模型
 void MixtureOfGaussianV2BGS::initMOG2(int history, double varThreshold)
 {
-    mog2 = cv::createBackgroundSubtractorMOG2(history,varThreshold);
+    mog2 = cv::createBackgroundSubtractorMOG2(history, varThreshold);
     mog2->setDetectShadows(enableDetectShadow);
     mog2->setShadowThreshold(shadowThreshold);
 }
 
 void MixtureOfGaussianV2BGS::init()
 {
-    firstTime=true;
+    firstTime = true;
     loadConfig();
-    mog2 = cv::createBackgroundSubtractorMOG2(500,16,false);
+    mog2 = cv::createBackgroundSubtractorMOG2(500, 16, false);
     mog2->setDetectShadows(enableDetectShadow);
     mog2->setShadowThreshold(shadowThreshold);
 }
@@ -80,13 +80,13 @@ void MixtureOfGaussianV2BGS::init()
 void MixtureOfGaussianV2BGS::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/MixtureOfGaussianV2BGS.xml",cv::FileStorage::WRITE);
+    fs.open("./config/MixtureOfGaussianV2BGS.xml", cv::FileStorage::WRITE);
 
     cv::write(fs, "alpha", alpha);
     cv::write(fs, "enableThreshold", enableThreshold);
     cv::write(fs, "threshold", threshold);
-    cv::write(fs,"enableDetectShadow",enableDetectShadow);
-    cv::write(fs,"shadowThreshold",shadowThreshold);
+    cv::write(fs,"enableDetectShadow", enableDetectShadow);
+    cv::write(fs,"shadowThreshold", shadowThreshold);
     cv::write(fs, "showOutput", showOutput);
 
     fs.release();
@@ -95,14 +95,14 @@ void MixtureOfGaussianV2BGS::saveConfig()
 void MixtureOfGaussianV2BGS::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/MixtureOfGaussianV2BGS.xml",cv::FileStorage::READ);
+    fs.open("./config/MixtureOfGaussianV2BGS.xml", cv::FileStorage::READ);
   
-    cv::read(fs["alpha"], alpha,-1);
-    cv::read(fs["enableThreshold"],enableThreshold, true);
-    cv::read(fs["threshold"], threshold,20);
-    cv::read(fs["enableDetectShadow"],enableDetectShadow,false);
-    cv::read(fs["shadowThreshold"],shadowThreshold,0.5);
-    cv::read(fs["showOutput"], showOutput,true);
+    cv::read(fs["alpha"], alpha, -1);
+    cv::read(fs["enableThreshold"], enableThreshold, true);
+    cv::read(fs["threshold"], threshold, 20);
+    cv::read(fs["enableDetectShadow"], enableDetectShadow, false);
+    cv::read(fs["shadowThreshold"], shadowThreshold, 0.5);
+    cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();
 }

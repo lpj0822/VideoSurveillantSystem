@@ -14,7 +14,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with BGSLibrary.  If not, see <http://www.gnu.org/licenses/>.
 */
-#pragma once
+#ifndef IBGS_H
+#define IBGS_H
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/imgproc/imgproc_c.h>
@@ -34,3 +35,4 @@ private:
   virtual void saveConfig() = 0;
   virtual void loadConfig() = 0;
 };
+#endif // IBGS_H

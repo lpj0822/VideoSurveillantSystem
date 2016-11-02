@@ -1,4 +1,5 @@
-﻿#pragma once
+﻿#ifndef MIXTUREOFGAUSSIANV2BGS_H
+#define MIXTUREOFGAUSSIANV2BGS_H
 
 #include <opencv2/opencv.hpp>
 #include <opencv2/video/background_segm.hpp>
@@ -33,4 +34,4 @@ private:
     void saveConfig();
     void loadConfig();
 };
-
+#endif //MIXTUREOFGAUSSIANV2BGS_H

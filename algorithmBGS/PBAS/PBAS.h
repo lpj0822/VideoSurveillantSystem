@@ -6,30 +6,9 @@
 //
 //Note: some changes, to improve the speed and memory requirements, were achieved in comparison to the 
 //described PBAS algorithm in the paper above.
-//
-//Example usage:
-// //Somewhere during initalization:
-// #include "PBAS.h"
-// #include <opencv2/opencv.hpp>
-// PBAS pbas;
-//
-// //you might want to change some parameters of the PBAS here...
-// ....
-//
-// //repeat for each frame
-// //make gaussian blur for reducing image noise
-//cv::Mat bluredImage;
-//cv::Mat pbastResult;
-//cv::GaussianBlur(singleFrame, bluredImage, cv::Size(5,5), 1.5);
-// 
-// //process image and receive segmentation in pbasResult
-//pbas.process(&bluredImage, &pbasResult);
-//
-// //make medianBlur on the result to reduce "salt and pepper noise"
-// //of the per pixel wise segmentation
-//cv::medianBlur(pbasResult, pbasResult, 5);
 
-#pragma once
+#ifndef PBAS_H
+#define PBAS_H
 
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
@@ -182,4 +161,5 @@ private:
 
 	cv::Mat sobelX, sobelY;
 };
+#endif //PBAS_H
 
