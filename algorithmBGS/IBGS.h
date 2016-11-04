@@ -17,10 +17,7 @@ along with BGSLibrary.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef IBGS_H
 #define IBGS_H
 
-#include <opencv2/opencv.hpp>
-#include <opencv2/imgproc/imgproc_c.h>
-#include <opencv2/imgproc/types_c.h>
-#include <opencv2/highgui/highgui_c.h>
+#include <opencv2/core.hpp>
 
 class IBGS
 {

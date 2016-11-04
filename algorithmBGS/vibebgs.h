@@ -20,7 +20,7 @@ public:
     ViBeBGS();
     ~ViBeBGS();
 
-    void process(const cv::Mat &img_input, cv::Mat &img_output,cv::Mat &img_bgmodel);
+    void process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel);
 
 private:
     //初始化模型

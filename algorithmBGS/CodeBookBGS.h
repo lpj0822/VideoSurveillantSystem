@@ -1,7 +1,9 @@
 ﻿#ifndef CODEBOOKBGS_H
 #define CODEBOOKBGS_H
 
-#include <opencv2/opencv.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
 #include "IBGS.h"
 
 #define CHANNELS 3 // 设置处理的图像通道数,要求小于等于图像本身的通道数

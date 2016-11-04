@@ -24,16 +24,16 @@ ViBeBGS::~ViBeBGS()
 
 void ViBeBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel)
 {
-    if(img_input.empty())
+    if (img_input.empty())
         return;
 
-    if(firstTime)
+    if (firstTime)
     {
         initBg(img_input);
         saveConfig();
         firstTime = false;
-        img_foreground=cv::Mat::zeros(img_input.size(),CV_8UC1);
-        if(showOutput)
+        img_foreground = cv::Mat::zeros(img_input.size(), CV_8UC1);
+        if (showOutput)
         {
             cv::imshow("VIBE", img_foreground);
         }
@@ -42,7 +42,7 @@ void ViBeBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &im
     else
     {
         update(img_input,img_foreground);
-        if(showOutput)
+        if (showOutput)
         {
             cv::imshow("VIBE", img_foreground);
         }
@@ -293,21 +293,21 @@ void ViBeBGS::proc8UC1(const cv::Mat& image, cv::Mat& foreImage)
 
 void ViBeBGS::init()
 {
-    firstTime=true;
+    firstTime = true;
     rowSamples.clear();
-    ptrSamples=NULL;
+    ptrSamples = NULL;
     loadConfig();
 }
 
 void ViBeBGS::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/ViBeBGS.xml",cv::FileStorage::WRITE);
+    fs.open("./config/ViBeBGS.xml", cv::FileStorage::WRITE);
 
     cv::write(fs, "numOfSamples", numOfSamples);
     cv::write(fs, "minMatchDist", minMatchDist);
     cv::write(fs, "minNumOfMatchCount", minNumOfMatchCount);
-    cv::write(fs,"subSampleInterval",subSampleInterval);
+    cv::write(fs, "subSampleInterval", subSampleInterval);
     cv::write(fs, "showOutput", showOutput);
 
     fs.release();
@@ -316,13 +316,13 @@ void ViBeBGS::saveConfig()
 void ViBeBGS::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/ViBeBGS.xml",cv::FileStorage::READ);
+    fs.open("./config/ViBeBGS.xml", cv::FileStorage::READ);
 
-    cv::read(fs["numOfSamples"], numOfSamples,20);
-    cv::read(fs["minMatchDist"],minMatchDist, 20);
-    cv::read(fs["minNumOfMatchCount"], minNumOfMatchCount,2);
-    cv::read(fs["subSampleInterval"],subSampleInterval,16);
-    cv::read(fs["showOutput"], showOutput,false);
+    cv::read(fs["numOfSamples"], numOfSamples, 20);
+    cv::read(fs["minMatchDist"], minMatchDist, 20);
+    cv::read(fs["minNumOfMatchCount"], minNumOfMatchCount ,2);
+    cv::read(fs["subSampleInterval"], subSampleInterval, 16);
+    cv::read(fs["showOutput"], showOutput, false);
 
     fs.release();
 }

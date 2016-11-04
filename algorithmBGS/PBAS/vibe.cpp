@@ -34,7 +34,7 @@ vibeModel *libvibeModelNew()
     return model;
 }
 
-vibeModel *libvibeModelNew(unsigned int numSamples,unsigned int radius,unsigned int minMatchNum,unsigned int update)
+vibeModel *libvibeModelNew(int numSamples, int radius, int minMatchNum, int update)
 {
     vibeModel *model = (vibeModel*)calloc(1, sizeof(vibeModel));
     if (model)
@@ -48,9 +48,9 @@ vibeModel *libvibeModelNew(unsigned int numSamples,unsigned int radius,unsigned 
     return model;
 }
 
-unsigned char getRandPixel(const unsigned char *image_data, const unsigned int width, const unsigned int height, const unsigned int stride, const unsigned int x, const unsigned int y)
+unsigned char getRandPixel(const unsigned char *image_data, const int width, const int height, const int stride, const unsigned int x, const unsigned int y)
 {
-    unsigned int neighborRange = 1;
+    int neighborRange = 1;
     int dx;
     int dy;
     dx = (x - neighborRange) + rnd[rndPos = (rndPos + 1) % rndSize] % (2 * neighborRange);
@@ -80,7 +80,7 @@ unsigned char getRandPixel(const unsigned char *image_data, const unsigned int w
     return image_data[dx + dy*stride];
 }
 
-int libvibeModelInit(vibeModel *model, const unsigned char *image_data, const unsigned int width, const unsigned int height, const unsigned int stride)
+int libvibeModelInit(vibeModel *model, const unsigned char *image_data, const int width, const int height, const int stride)
 {
     if (!model || !image_data || !width || !height || !stride || (stride<width)) return 1;
     // Store frame size
@@ -93,7 +93,7 @@ int libvibeModelInit(vibeModel *model, const unsigned char *image_data, const un
     if (!model->pixels) return 1;
 
     // Allocate memory for each model N samples
-    for (unsigned int i = 0; i < model->width*model->height; i++)
+    for (int i = 0; i < model->width*model->height; i++)
     {
         model->pixels[i].numberOfSamples = model->numberOfSamples;
         model->pixels[i].sizeOfSample = 1;
@@ -106,13 +106,13 @@ int libvibeModelInit(vibeModel *model, const unsigned char *image_data, const un
     // We need to fill samples.
     // One of samples written with pixel value,
     // others filled with random neighbour pixels values.
-    unsigned int n = 0;
-    for (unsigned int j = 0; j < model->height; j++)
+    int n = 0;
+    for (int j = 0; j < model->height; j++)
     {
-        for (unsigned int i = 0; i < model->width; i++)
+        for (int i = 0; i < model->width; i++)
         {
             model->pixels[n].samples[0] = image_data[i + j*stride];
-            for (unsigned int k = 1; k < model->numberOfSamples; k++)
+            for (int k = 1; k < model->numberOfSamples; k++)
                 model->pixels[n].samples[k] = getRandPixel(image_data, width, height, stride, i, j);
             n++;
         }
@@ -127,19 +127,19 @@ int libvibeModelUpdate(vibeModel *model, const unsigned char *image_data, unsign
     if (!model || !image_data || !segmentation_map) return 1;
     if (model->stride < model->width) return 1;
 
-    unsigned int n = 0;
-    for (unsigned int j = 0; j < model->height; j++)
+    int n = 0;
+    for (int j = 0; j < model->height; j++)
     {
-        for (unsigned int i = 0; i < model->width; i++)
+        for (int i = 0; i < model->width; i++)
         {
 
             /****************************************************************/
             /**********************Compare pixels****************************/
             /****************************************************************/
             bool flag = false;
-            unsigned int matchingCounter = 0;
+            int matchingCounter = 0;
             // Compare with every sample
-            for (unsigned int t = 0; t<model->pixels[n].numberOfSamples; t++)
+            for (int t = 0; t<model->pixels[n].numberOfSamples; t++)
             {
                 if (abs((int)image_data[n] - (int)model->pixels[n].samples[t]) < model->matchingThreshold)
                 {
@@ -297,7 +297,7 @@ int libvibeModelUpdate(vibeModel *model, const unsigned char *image_data, unsign
 
 int libvibeModelFree(vibeModel *model)
 {
-    for (unsigned int i = 0; i<model->width*model->height; i++)
+    for (int i = 0; i<model->width*model->height; i++)
     {
         free(model->pixels[i].samples);
     }

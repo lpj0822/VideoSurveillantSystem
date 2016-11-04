@@ -37,17 +37,11 @@ void PixelBasedAdaptiveSegmenter::process(const cv::Mat &img_input, cv::Mat &img
     }
 
     cv::Mat img_input_new;
-    if(enableInputBlur)
-        cv::GaussianBlur(img_input, img_input_new, cv::Size(5,5), 1.5);
-    else
-        img_input.copyTo(img_input_new);
+    img_input.copyTo(img_input_new);
 
     pbas.process(&img_input_new, &img_foreground);
 
-    if(enableOutputBlur)
-        cv::medianBlur(img_foreground, img_foreground, 5);
-
-    if(showOutput)
+    if (showOutput)
     {
         cv::imshow("PBAS", img_foreground);
     }
@@ -57,17 +51,15 @@ void PixelBasedAdaptiveSegmenter::process(const cv::Mat &img_input, cv::Mat &img
 
 void PixelBasedAdaptiveSegmenter::init()
 {
-    firstTime=true;
+    firstTime = true;
     loadConfig();
 }
 
 void PixelBasedAdaptiveSegmenter::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/PixelBasedAdaptiveSegmenter.xml",cv::FileStorage::WRITE);
+    fs.open("./config/PixelBasedAdaptiveSegmenter.xml", cv::FileStorage::WRITE);
 
-    cv::write(fs, "enableInputBlur", enableInputBlur);
-    cv::write(fs, "enableOutputBlur", enableOutputBlur);
     cv::write(fs, "alpha", alpha);
     cv::write(fs, "beta", beta);
     cv::write(fs, "N", N);
@@ -91,9 +83,6 @@ void PixelBasedAdaptiveSegmenter::loadConfig()
     cv::FileStorage fs;
     fs.open("./config/PixelBasedAdaptiveSegmenter.xml",cv::FileStorage::READ);
   
-    cv::read(fs["enableInputBlur"],enableInputBlur, true);
-    cv::read(fs["enableOutputBlur"],enableOutputBlur, false);
-  
     cv::read(fs["alpha"], alpha,7.0f);
     cv::read(fs["beta"], beta,1.0f);
     cv::read(fs["N"], N,20);
@@ -107,7 +96,7 @@ void PixelBasedAdaptiveSegmenter::loadConfig()
     cv::read(fs["T_lower"],T_lower ,2);
     cv::read(fs["T_upper"], T_upper,200);
 
-    cv::read(fs["showOutput"],showOutput ,true);
+    cv::read(fs["showOutput"], showOutput ,true);
 
     fs.release();
 }

@@ -19,21 +19,23 @@ void ThreeFrameDifferenceBGS::process(const cv::Mat &img_input, cv::Mat &img_out
     cv::Mat gray_diff11, gray_diff12;
     cv::Mat gray_diff21, gray_diff22;
 
-    if(img_input.empty())
+    if (img_input.empty())
         return;
 
-    if(firstTime)
+    if (firstTime)
     {
         saveConfig();
         firstTime=false;
     }
 
-    if(img_input_prev.empty()){
+    if (img_input_prev.empty())
+    {
         img_input.copyTo(img_input_prev);
         return;
     }
 
-    if(img_input_prev1.empty()){
+    if (img_input_prev1.empty())
+    {
         img_input_prev.copyTo(img_input_prev1);
         img_input.copyTo(img_input_prev);
         return;
@@ -46,17 +48,21 @@ void ThreeFrameDifferenceBGS::process(const cv::Mat &img_input, cv::Mat &img_out
     cv::subtract(img_input_prev, img_input, gray_diff22);
     cv::add(gray_diff21, gray_diff22, gray_diff2);
 
-    if (gray_diff1.channels() == 3){
+    if (gray_diff1.channels() == 3)
+    {
         cv::cvtColor(gray_diff1, gray_diff1, cv::COLOR_BGR2GRAY);
     }
-    if (gray_diff2.channels() == 3){
+    if (gray_diff2.channels() == 3)
+    {
         cv::cvtColor(gray_diff2, gray_diff2, cv::COLOR_BGR2GRAY);
     }
 
-    for(int i = 0; i < gray_diff1.rows; i++){
+    for (int i = 0; i < gray_diff1.rows; i++)
+    {
         uchar* data1 = gray_diff1.ptr<uchar>(i);
         uchar* data2 = gray_diff2.ptr<uchar>(i);
-        for(int j=0;j<gray_diff1.cols;j++){
+        for (int j=0; j<gray_diff1.cols; j++)
+        {
             if (abs(data1[j]) >= threshold_diff1)//这里模板参数一定要用unsigned char，否则就一直报错
                 data1[j] = 255;            //第一次相减阈值处理
             else
@@ -83,7 +89,7 @@ void ThreeFrameDifferenceBGS::process(const cv::Mat &img_input, cv::Mat &img_out
 void ThreeFrameDifferenceBGS::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./ThreeFrameDifferenceBGS.xml", cv::FileStorage::WRITE);
+    fs.open("./config/ThreeFrameDifferenceBGS.xml", cv::FileStorage::WRITE);
 
     cv::write(fs, "threshold_diff1", threshold_diff1);
     cv::write(fs, "threshold_diff2", threshold_diff2);
@@ -95,10 +101,10 @@ void ThreeFrameDifferenceBGS::saveConfig()
 void ThreeFrameDifferenceBGS::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./ThreeFrameDifferenceBGS.xml", cv::FileStorage::READ);
+    fs.open("./config/ThreeFrameDifferenceBGS.xml", cv::FileStorage::READ);
 
-    cv::read(fs["threshold_diff1"], threshold_diff1, 20);
-    cv::read(fs["threshold_diff2"], threshold_diff2, 20);
+    cv::read(fs["threshold_diff1"], threshold_diff1, 10);
+    cv::read(fs["threshold_diff2"], threshold_diff2, 10);
     cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();

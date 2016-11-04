@@ -94,7 +94,7 @@ void MyCascadeClassifier::init()
 void MyCascadeClassifier::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/MyCascadeClassifier.xml",cv::FileStorage::WRITE,"utf-8");
+    fs.open("./config/MyCascadeClassifier.xml", cv::FileStorage::WRITE,"utf-8");
 
     cv::write(fs,"enableEqualize",enableEqualize);
 
@@ -104,7 +104,7 @@ void MyCascadeClassifier::saveConfig()
 void MyCascadeClassifier::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/MyCascadeClassifier.xml",cv::FileStorage::READ,"utf-8");
+    fs.open("./config/MyCascadeClassifier.xml", cv::FileStorage::READ,"utf-8");
 
     cv::read(fs["enableEqualize"],enableEqualize,false);
 

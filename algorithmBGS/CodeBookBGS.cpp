@@ -10,7 +10,7 @@ CodeBookBGS::CodeBookBGS()
 
 CodeBookBGS::~CodeBookBGS()
 {
-    if(cB)
+    if (cB)
     {
         delete [] cB;
         cB = NULL;
@@ -20,10 +20,10 @@ CodeBookBGS::~CodeBookBGS()
 
 void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel)
 {
-    if(img_input.empty())
+    if (img_input.empty())
         return;
 
-    if(firstTime)
+    if (firstTime)
     {
         imageLen = img_input.cols * img_input.rows;
         cB = new CodeBook[imageLen];
@@ -41,8 +41,8 @@ void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
         }
 
         saveConfig();
-        firstTime=false;
-        historyNumber=1;
+        firstTime = false;
+        historyNumber = 1;
     }
 
     uchar* pColor = NULL;
@@ -86,7 +86,7 @@ void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
         }
     }
 
-    if(showOutput)
+    if (showOutput)
     {
         cv::imshow("CodeBookBGS", img_foreground);
     }
@@ -108,7 +108,7 @@ void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
 */
 int CodeBookBGS::updateCodeBook(uchar *p, CodeBook &c, unsigned int *cbBounds, int numChannels)
 {
-    if(c.numEntries == 0)
+    if (c.numEntries == 0)
         c.t = 0;
     // 码本中码元为零时初始化时间为0
     c.t += 1;	// Record learning event
@@ -139,7 +139,7 @@ int CodeBookBGS::updateCodeBook(uchar *p, CodeBook &c, unsigned int *cbBounds, i
         for (n=0; n<numChannels; n++)
             //遍历每个通道
         {
-            if((c.cb[i]->learnLow[n] <= *(p+n)) && (*(p+n) <= c.cb[i]->learnHigh[n])) //Found an entry for this channel
+            if ((c.cb[i]->learnLow[n] <= *(p+n)) && (*(p+n) <= c.cb[i]->learnHigh[n])) //Found an entry for this channel
             // 如果p 像素通道数据在该码元阀值上下限之间
             {
                 matchChannel++;
@@ -164,23 +164,23 @@ int CodeBookBGS::updateCodeBook(uchar *p, CodeBook &c, unsigned int *cbBounds, i
     }
 
     // ENTER A NEW CODE WORD IF NEEDED
-    if(i == c.numEntries)  // No existing code word found, make a new one
+    if (i == c.numEntries)  // No existing code word found, make a new one
     // p 像素不满足此码本中任何一个码元,下面创建一个新码元
     {
         code_element **foo = new code_element* [c.numEntries+1];
         // 申请c.numEntries+1 个指向码元的指针
-        for(int ii=0; ii<c.numEntries; ii++)
+        for (int ii=0; ii<c.numEntries; ii++)
             // 将前c.numEntries 个指针指向已存在的每个码元
             foo[ii] = c.cb[ii];
 
         foo[c.numEntries] = new code_element;
         // 申请一个新的码元
-        if(c.numEntries)
+        if (c.numEntries)
             delete [] c.cb;
         // 删除c.cb 指针数组
         c.cb = foo;
         // 把foo 头指针赋给c.cb
-        for(n=0; n<numChannels; n++)
+        for (n=0; n<numChannels; n++)
             // 更新新码元各通道数据
         {
             c.cb[c.numEntries]->learnHigh[n] = high[n];
@@ -194,22 +194,22 @@ int CodeBookBGS::updateCodeBook(uchar *p, CodeBook &c, unsigned int *cbBounds, i
     }
 
     // OVERHEAD TO TRACK POTENTIAL STALE ENTRIES
-    for(int s=0; s<c.numEntries; s++)
+    for (int s=0; s<c.numEntries; s++)
     {
         // This garbage is to track which codebook entries are going stale
         int negRun = c.t - c.cb[s]->t_last_update;
         // 计算该码元的不更新时间
-        if(c.cb[s]->stale < negRun)
+        if (c.cb[s]->stale < negRun)
             c.cb[s]->stale = negRun;
     }
 
     // SLOWLY ADJUST LEARNING BOUNDS
-    for(n=0; n<numChannels; n++)
+    for (n=0; n<numChannels; n++)
         // 如果像素通道数据在高低阀值范围内,但在码元阀值之外,则缓慢调整此码元学习界限
     {
-        if(c.cb[i]->learnHigh[n] < high[n])
+        if (c.cb[i]->learnHigh[n] < high[n])
             c.cb[i]->learnHigh[n] += 1;
-        if(c.cb[i]->learnLow[n] > low[n])
+        if (c.cb[i]->learnLow[n] > low[n])
             c.cb[i]->learnLow[n] -= 1;
     }
 
@@ -248,11 +248,11 @@ uchar CodeBookBGS::backgroundDiff(uchar *p, CodeBook &c, int numChannels, int *m
         if (matchChannel == numChannels)
             break; //Found an entry that matched all channels
     }
-    if(i == c.numEntries)
+    if (i == c.numEntries)
         // p像素各通道值满足码本中其中一个码元,则返回白色
-        return (255);
+        return 255;
 
-    return(0);
+    return 0;
 }
 
 
@@ -289,9 +289,9 @@ int CodeBookBGS::clearStaleEntries(CodeBook &c)
     code_element **foo = new code_element* [keepCnt];
     // 申请大小为keepCnt 的码元指针数组
     int k=0;
-    for(int ii=0; ii<c.numEntries; ii++)
+    for (int ii=0; ii<c.numEntries; ii++)
     {
-        if(keep[ii])
+        if (keep[ii])
         {
             foo[k] = c.cb[ii];
             foo[k]->stale = 0;		//We have to refresh these entries for next clearStale
@@ -308,7 +308,7 @@ int CodeBookBGS::clearStaleEntries(CodeBook &c)
     // 被清理的码元个数
     c.numEntries = keepCnt;
     // 剩余的码元地址
-    return (numCleared);
+    return numCleared;
 }
 
 void CodeBookBGS::init()
@@ -316,20 +316,20 @@ void CodeBookBGS::init()
     cB = NULL;
     imageLen = 0;
     nChannels = CHANNELS;
-    historyNumber=1;
+    historyNumber = 1;
 
-    firstTime=true;
+    firstTime = true;
 }
 
 void CodeBookBGS::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./CodeBookBGS.xml", cv::FileStorage::WRITE);
+    fs.open("./config/CodeBookBGS.xml", cv::FileStorage::WRITE);
 
     cv::write(fs, "historyCount", historyCount);
-    cv::write(fs,"channelsThreshold", channelsThreshold);
-    cv::write(fs,"minLengthChannels", minLengthChannels);
-    cv::write(fs,"maxLengthChannels", maxLengthChannels);
+    cv::write(fs, "channelsThreshold", channelsThreshold);
+    cv::write(fs, "minLengthChannels", minLengthChannels);
+    cv::write(fs, "maxLengthChannels", maxLengthChannels);
     cv::write(fs, "showOutput", showOutput);
 
     fs.release();
@@ -338,13 +338,13 @@ void CodeBookBGS::saveConfig()
 void CodeBookBGS::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./CodeBookBGS.xml", cv::FileStorage::READ);
+    fs.open("./config/CodeBookBGS.xml", cv::FileStorage::READ);
 
     cv::read(fs["historyCount"], historyCount, 20);
-    cv::read(fs["channelsThreshold"], channelsThreshold,10);
-    cv::read(fs["minLengthChannels"], minLengthChannels,20);
-    cv::read(fs["maxLengthChannels"], maxLengthChannels,20);
-    cv::read(fs["showOutput"], showOutput,true);
+    cv::read(fs["channelsThreshold"], channelsThreshold, 10);
+    cv::read(fs["minLengthChannels"], minLengthChannels, 20);
+    cv::read(fs["maxLengthChannels"], maxLengthChannels, 20);
+    cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();
 }

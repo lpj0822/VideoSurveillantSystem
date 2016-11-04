@@ -16,20 +16,20 @@
 typedef struct
 {
     unsigned char *samples;
-    unsigned int numberOfSamples;
-    unsigned int sizeOfSample;
+    int numberOfSamples;
+    int sizeOfSample;
 }pixel;
 
 typedef struct
 {
     pixel *pixels;
-    unsigned int width;
-    unsigned int height;
-    unsigned int stride;
-    unsigned int numberOfSamples;
-    unsigned int matchingThreshold;
-    unsigned int matchingNumber;
-    unsigned int updateFactor;
+    int width;
+    int height;
+    int stride;
+    int numberOfSamples;
+    int matchingThreshold;
+    int matchingNumber;
+    int updateFactor;
 }vibeModel;
 
 typedef vibeModel vibeModel_t;
@@ -39,9 +39,9 @@ static unsigned int rndSize;
 static unsigned int rndPos;
 
 vibeModel *libvibeModelNew();
-vibeModel *libvibeModelNew(unsigned int numSamples,unsigned int radius,unsigned int minMatchNum,unsigned int update);
-unsigned char getRandPixel(const unsigned char *image_data, const unsigned int width, const unsigned int height, const unsigned int stride, const unsigned int x, const unsigned int y);
-int32_t libvibeModelInit(vibeModel *model, const unsigned char *image_data, const unsigned int width, const unsigned int height, const unsigned int stride);
+vibeModel *libvibeModelNew(int numSamples, int radius, int minMatchNum, int update);
+unsigned char getRandPixel(const unsigned char *image_data, const int width, const int height, const int stride, const unsigned int x, const unsigned int y);
+int32_t libvibeModelInit(vibeModel *model, const unsigned char *image_data, const int width, const int height, const int stride);
 int32_t libvibeModelUpdate(vibeModel *model, const unsigned char *image_data, unsigned char *segmentation_map);
 int32_t libvibeModelFree(vibeModel *model);
 

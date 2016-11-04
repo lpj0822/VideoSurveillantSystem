@@ -16,7 +16,7 @@ public:
     PixelBasedAdaptiveSegmenter();
     ~PixelBasedAdaptiveSegmenter();
 
-    void process(const cv::Mat &img_input, cv::Mat &img_output,cv::Mat &img_bgmodel);
+    void process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel);
 
 private:
     PBAS pbas;
@@ -24,8 +24,6 @@ private:
 
     bool firstTime;
     bool showOutput;
-    bool enableInputBlur;
-    bool enableOutputBlur;
 
     float alpha;
     float beta;
