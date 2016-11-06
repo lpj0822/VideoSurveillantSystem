@@ -1,5 +1,5 @@
 # VideoSurveillantSystem
-智能视频监控系统
+Intelligent Visual Surveillance
 --------------------------
 Depend
 
@@ -10,4 +10,4 @@ Qt5
 C++11
 
 -------------------------
-QQ交流群：320367853
+QQ：320367853
