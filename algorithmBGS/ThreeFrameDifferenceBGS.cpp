@@ -3,8 +3,7 @@
 
 ThreeFrameDifferenceBGS::ThreeFrameDifferenceBGS()
 {
-    firstTime=true;
-    loadConfig();
+    init();
     std::cout << "ThreeFrameDifferenceBGS()" << std::endl;
 }
 
@@ -84,6 +83,12 @@ void ThreeFrameDifferenceBGS::process(const cv::Mat &img_input, cv::Mat &img_out
 
     img_input_prev.copyTo(img_input_prev1);
     img_input.copyTo(img_input_prev);
+}
+
+void ThreeFrameDifferenceBGS::init()
+{
+    firstTime=true;
+    loadConfig();
 }
 
 void ThreeFrameDifferenceBGS::saveConfig()

@@ -1,4 +1,10 @@
-﻿#ifndef CODEBOOKBGS_H
+﻿/** CodeBook is a background subtraction algorithm, described in:
+ *
+ * Kim,
+ * Real-time foreground–background segmentation using codebook model,
+ * Real-Time Imaging, 2005.
+**/
+#ifndef CODEBOOKBGS_H
 #define CODEBOOKBGS_H
 
 #include <opencv2/core.hpp>
@@ -10,7 +16,6 @@
 
 // 下面为码本码元的数据结构
 // 处理图像时每个像素对应一个码本,每个码本中可有若干个码元
-// 当涉及一个新领域,通常会遇到一些奇怪的名词,不要被这些名词吓坏,其实思路都是简单的
 typedef struct ce {
     uchar learnHigh[CHANNELS];	// High side threshold for learning
     // 此码元各通道的阀值上限(学习界限)
@@ -62,13 +67,12 @@ private:
     int maxLengthChannels;
     bool showOutput;
 
-    void init();
-
+private:
     int updateCodeBook(uchar *p, CodeBook &c, unsigned int *cbBounds, int numChannels);//更新码本模型
     uchar backgroundDiff(uchar *p, CodeBook &c, int numChannels, int *minMod, int *maxMod);//根据码本模型决定此像素是前景还是背景
     int clearStaleEntries(CodeBook &c);//定期清除陈旧的码本
 
-private:
+    void init();
     void saveConfig();
     void loadConfig();
 };

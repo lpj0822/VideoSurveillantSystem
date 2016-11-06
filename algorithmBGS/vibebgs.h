@@ -1,7 +1,8 @@
-﻿/*
-    基于存储历史像素样本值和邻域样本值更新策略的前景提取算法
-    ViBe: A Universal Background Subtraction Algorithm for Video Sequences
-    in IEEE Transactions on Image Processing, June, 2011, Volume 20, Issue 6
+﻿/** ViBe is a background subtraction algorithm, described in:
+ *
+ * Olivier Barnich and Marc Van Droogenbroeck,
+ * ViBe: A Universal Background Subtraction Algorithm for Video Sequences,
+ * IEEE Transactions on Image Processing, Vol. 20, No. 6, June 2011.
 **/
 #ifndef VIBEBGS_H
 #define VIBEBGS_H

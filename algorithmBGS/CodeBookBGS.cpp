@@ -4,7 +4,6 @@
 CodeBookBGS::CodeBookBGS()
 {
     init();
-    loadConfig();
     std::cout << "CodeBookBGS()" << std::endl;
 }
 
@@ -42,13 +41,11 @@ void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
 
         saveConfig();
         firstTime = false;
-        historyNumber = 1;
+        img_foreground = cv::Mat::zeros(img_input.size(), CV_8UC1);
     }
 
     uchar* pColor = NULL;
     cv::Mat	yuvImage = cv::Mat::zeros(img_input.size(),CV_8UC3);
-
-    img_foreground = cv::Mat::zeros(img_input.size(), CV_8UC1);
 
     // 色彩空间转换,将rawImage 转换到YUV色彩空间,输出到yuvImage,即使不转换效果依然很好
     cv::cvtColor(img_input, yuvImage, CV_BGR2YCrCb);
@@ -61,7 +58,7 @@ void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
         {
             updateCodeBook(pColor, cB[c], cbBounds, nChannels);
             // 对每个像素,调用此函数,捕捉背景中相关变化图像
-            pColor += 3;//3通道图像, 指向下一个像素通道数据
+            pColor += nChannels;//nChannels通道图像, 指向下一个像素通道数据
         }
         if (historyNumber == historyCount)// 到historyCount帧时调用下面函数,删除码本中陈旧的码元
         {
@@ -80,18 +77,17 @@ void CodeBookBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
         for(int c=0; c<imageLen; c++)
         {
             maskPixelCodeBook = backgroundDiff(pColor, cB[c], nChannels, minMod, maxMod);
-            // 我看到这儿时豁然开朗,开始理解了codeBook
             *pMask++ = maskPixelCodeBook;
-            pColor += 3;// pColor 指向的是3通道图像
+            pColor += nChannels;// pColor 指向的是nChannels通道图像
         }
-    }
 
-    if (showOutput)
-    {
-        cv::imshow("CodeBookBGS", img_foreground);
-    }
+        if (showOutput)
+        {
+            cv::imshow("CodeBookBGS", img_foreground);
+        }
 
-    img_foreground.copyTo(img_output);
+        img_foreground.copyTo(img_output);
+    }
 }
 
 /*
@@ -317,8 +313,9 @@ void CodeBookBGS::init()
     imageLen = 0;
     nChannels = CHANNELS;
     historyNumber = 1;
-
     firstTime = true;
+
+    loadConfig();
 }
 
 void CodeBookBGS::saveConfig()

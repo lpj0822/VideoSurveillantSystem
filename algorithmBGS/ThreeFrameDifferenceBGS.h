@@ -25,6 +25,7 @@ private:
     bool showOutput;
 
 private:
+    void init();
     void saveConfig();
     void loadConfig();
 };
