@@ -158,8 +158,8 @@ cv::Mat IttiSaliency::getSaliency(const cv::Mat &src)
     cv::add(all,O_mean,saliencyMap);
 
     saliencyMap.convertTo(saliencyMap,saliencyMap.type(),0.33333,0);
-    cv::normalize(saliencyMap,saliencyMap,1.0,0.0,cv::NORM_MINMAX);
-    cv::resize(saliencyMap,saliencyMap,src.size(),0,0,cv::INTER_LINEAR);
+    cv::normalize(saliencyMap,saliencyMap,1.0, 0.0, cv::NORM_MINMAX);
+    cv::resize(saliencyMap,saliencyMap,src.size(), 0,0, cv::INTER_LINEAR);
     return saliencyMap;
 }
 

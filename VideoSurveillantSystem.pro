@@ -13,6 +13,7 @@ TARGET = VideoSurveillantSystem
 TEMPLATE = app
 
 include(colorConvert/colorConvert.pri)
+include(imageFiltering/imageFiltering.pri)
 include(algorithmBGS/algorithmBGS.pri)
 include(shadowDetect/shadowDetect.pri)
 include(multipletracking/multipletracking.pri)
@@ -35,7 +36,7 @@ HEADERS  += \
     vehicleconversecontrolwindow.h
 	
 RESOURCES += \
-	text.qrc
+        text.qrc
 
 INCLUDEPATH+= D:\opencv\build\include\
               D:\opencv\build\include\opencv\
@@ -44,4 +45,3 @@ INCLUDEPATH+= D:\opencv\build\include\
 
 LIBS+=D:\opencv\build\x64\vc12\lib\opencv_world310d.lib
 LIBS+=D:\opencv\build\x64\vc12\lib\opencv_world310.lib
-
