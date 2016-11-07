@@ -1,10 +1,8 @@
 INCLUDEPATH += $$PWD
 
 HEADERS += \
-    $$PWD/baseAlgorithm/package_filter/guidedfilter.h \
     $$PWD/baseAlgorithm/frameforeground.h \
     $$PWD/baseAlgorithm/geometrycalculations.h \
-    $$PWD/baseAlgorithm/imagefilter.h \
     $$PWD/baseAlgorithm/imageprocess.h \
     $$PWD/baseAlgorithm/myvideowriter.h \
     $$PWD/baseAlgorithm/objectrecognition.h \
@@ -36,10 +34,8 @@ HEADERS += \
     $$PWD/videowritethread.h
 
 SOURCES += \
-    $$PWD/baseAlgorithm/package_filter/guidedfilter.cpp \
     $$PWD/baseAlgorithm/frameforeground.cpp \
     $$PWD/baseAlgorithm/geometrycalculations.cpp \
-    $$PWD/baseAlgorithm/imagefilter.cpp \
     $$PWD/baseAlgorithm/imageprocess.cpp \
     $$PWD/baseAlgorithm/myvideowriter.cpp \
     $$PWD/baseAlgorithm/objectrecognition.cpp \
