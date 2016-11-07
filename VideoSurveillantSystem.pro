@@ -36,7 +36,7 @@ HEADERS  += \
     vehicleconversecontrolwindow.h
 	
 RESOURCES += \
-	text.qrc
+        text.qrc
 
 INCLUDEPATH+= D:\opencv\build\include\
               D:\opencv\build\include\opencv\
@@ -45,4 +45,3 @@ INCLUDEPATH+= D:\opencv\build\include\
 
 LIBS+=D:\opencv\build\x64\vc12\lib\opencv_world310d.lib
 LIBS+=D:\opencv\build\x64\vc12\lib\opencv_world310.lib
-
