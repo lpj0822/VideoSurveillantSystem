@@ -16,9 +16,6 @@ public:
     void process(const cv::Mat &img_input, cv::Mat &img_output,cv::Mat &img_bgmodel);
 
 private:
-    void init();
-
-private:
     vibeModel_t *model;
     cv::Mat img_foreground;
 
@@ -31,6 +28,7 @@ private:
     bool showOutput;
 
 private:
+    void init();
     void saveConfig();
     void loadConfig();
 };

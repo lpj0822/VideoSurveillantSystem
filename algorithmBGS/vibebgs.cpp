@@ -32,19 +32,13 @@ void ViBeBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &im
         initBg(img_input);
         saveConfig();
         firstTime = false;
-        img_foreground = cv::Mat::zeros(img_input.size(), CV_8UC1);
-        if (showOutput)
-        {
-            cv::imshow("VIBE", img_foreground);
-        }
-        img_foreground.copyTo(img_output);
     }
     else
     {
         update(img_input,img_foreground);
         if (showOutput)
         {
-            cv::imshow("VIBE", img_foreground);
+            cv::imshow("ViBe", img_foreground);
         }
         img_foreground.copyTo(img_output);
     }
@@ -322,7 +316,7 @@ void ViBeBGS::loadConfig()
     cv::read(fs["minMatchDist"], minMatchDist, 20);
     cv::read(fs["minNumOfMatchCount"], minNumOfMatchCount ,2);
     cv::read(fs["subSampleInterval"], subSampleInterval, 16);
-    cv::read(fs["showOutput"], showOutput, false);
+    cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();
 }

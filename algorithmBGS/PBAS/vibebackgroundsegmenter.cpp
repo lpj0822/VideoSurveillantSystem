@@ -33,10 +33,10 @@ void VibeBackgroundSegmenter::process(const cv::Mat &img_input, cv::Mat &img_out
 
         saveConfig();
         firstTime = false;
+        img_foreground.create(height, width, CV_8UC1);
     }
     else
     {
-
         uint8_t *image_data1 = (uint8_t*)gray.data;
         uint8_t *segmentation_map = (uint8_t*)img_foreground.data;
 

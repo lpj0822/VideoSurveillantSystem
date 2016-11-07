@@ -40,8 +40,6 @@ private:
 
 private:
     void init();
-
-private:
     void saveConfig();
     void loadConfig();
 };

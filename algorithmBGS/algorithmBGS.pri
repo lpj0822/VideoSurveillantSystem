@@ -9,7 +9,8 @@ HEADERS += \
     $$PWD/PBAS/PixelBasedAdaptiveSegmenter.h \
     $$PWD/PBAS/vibe.h \
     $$PWD/PBAS/VibeBackgroundSegmenter.h \
-    $$PWD/my/MyBGS.h
+    $$PWD/my/MyBGS.h \
+    $$PWD/my/IViBeBGS.h
 
 SOURCES += \
     $$PWD/OpticalFlowBGS.cpp \
@@ -21,5 +22,6 @@ SOURCES += \
     $$PWD/PBAS/PixelBasedAdaptiveSegmenter.cpp \
     $$PWD/PBAS/vibe.cpp \
     $$PWD/PBAS/VibeBackgroundSegmenter.cpp \
-    $$PWD/my/MyBGS.cpp
+    $$PWD/my/MyBGS.cpp \
+    $$PWD/my/IViBeBGS.cpp
     
