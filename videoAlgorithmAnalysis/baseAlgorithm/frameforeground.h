@@ -5,7 +5,7 @@
 #include "algorithmBGS/PBAS/PixelBasedAdaptiveSegmenter.h"
 #include "algorithmBGS/PBAS/vibebackgroundsegmenter.h"
 #include "shadowDetect/colorshadowdetector.h"
-#include "imagefilter.h"
+#include "imageFiltering/imagefilter.h"
 #include <vector>
 
 class FrameForeground

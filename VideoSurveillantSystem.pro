@@ -13,6 +13,7 @@ TARGET = VideoSurveillantSystem
 TEMPLATE = app
 
 include(colorConvert/colorConvert.pri)
+include(imageFiltering/imageFiltering.pri)
 include(algorithmBGS/algorithmBGS.pri)
 include(shadowDetect/shadowDetect.pri)
 include(multipletracking/multipletracking.pri)
