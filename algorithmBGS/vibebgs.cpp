@@ -35,7 +35,7 @@ void ViBeBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &im
     }
     else
     {
-        update(img_input,img_foreground);
+        update(img_input, img_foreground);
         if (showOutput)
         {
             cv::imshow("ViBe", img_foreground);

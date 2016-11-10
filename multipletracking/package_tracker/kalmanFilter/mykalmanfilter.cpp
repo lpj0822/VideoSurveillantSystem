@@ -10,7 +10,7 @@ MyKalmanFilter::MyKalmanFilter(cv::Point2f pt, float dt, float Accel_noise_mag)
 
     // We don't know acceleration, so, assume it to process noise.
     // But we can guess, the range of acceleration values thich can be achieved by tracked object.
-    // Process noise. (standard deviation of acceleration: ?馸2)
+    // Process noise. (standard deviation of acceleration: )
     // shows, woh much target can accelerate.
     //float Accel_noise_mag = 0.5;
 
@@ -52,7 +52,11 @@ MyKalmanFilter::MyKalmanFilter(cv::Point2f pt, float dt, float Accel_noise_mag)
 //---------------------------------------------------------------------------
 MyKalmanFilter::~MyKalmanFilter()
 {
-    delete kalman;
+    if (kalman)
+    {
+        delete kalman;
+        kalman = nullptr;
+    }
     std::cout<<"~MyKalmanFilter()"<<std::endl;
 }
 

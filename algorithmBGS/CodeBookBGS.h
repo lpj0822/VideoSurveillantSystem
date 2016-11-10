@@ -52,6 +52,7 @@ public:
 private:
     bool firstTime;
     cv::Mat img_foreground;
+    cv::RNG rng;//随机数生成器
 
     CodeBook* cB;
     unsigned int cbBounds[CHANNELS];
@@ -65,6 +66,7 @@ private:
     int channelsThreshold;// 用于确定码元各通道的阀值
     int minLengthChannels;// 用于背景差分函数中,调整其值以达到最好的分割
     int maxLengthChannels;
+    int update_probability;//更新周期
     bool showOutput;
 
 private:

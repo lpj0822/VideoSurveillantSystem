@@ -1,5 +1,6 @@
 ﻿#include "CodeBookBGS.h"
 #include <iostream>
+#include <ctime>
 
 CodeBookBGS::CodeBookBGS()
 {
@@ -309,11 +310,15 @@ int CodeBookBGS::clearStaleEntries(CodeBook &c)
 
 void CodeBookBGS::init()
 {
+    long seed = (long)time(0);
+    rng = cv::RNG(seed);
     cB = NULL;
     imageLen = 0;
     nChannels = CHANNELS;
     historyNumber = 1;
     firstTime = true;
+
+    update_probability = 20;//更新周期
 
     loadConfig();
 }
@@ -337,7 +342,7 @@ void CodeBookBGS::loadConfig()
     cv::FileStorage fs;
     fs.open("./config/CodeBookBGS.xml", cv::FileStorage::READ);
 
-    cv::read(fs["historyCount"], historyCount, 20);
+    cv::read(fs["historyCount"], historyCount, 25);
     cv::read(fs["channelsThreshold"], channelsThreshold, 10);
     cv::read(fs["minLengthChannels"], minLengthChannels, 20);
     cv::read(fs["maxLengthChannels"], maxLengthChannels, 20);

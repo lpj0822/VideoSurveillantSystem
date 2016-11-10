@@ -10,9 +10,9 @@ BlobTracking::BlobTracking() : firstTime(true), minArea(300), maxArea(20000), de
 BlobTracking::BlobTracking(double distance,int inactive,int minArea)
 {
     loadConfig();
-    this->distance=distance;
-    this->inactive=inactive;
-    this->minArea=minArea;
+    this->distance = distance;
+    this->inactive = inactive;
+    this->minArea = minArea;
     std::cout << "BlobTracking()" << std::endl;
 }
 
@@ -69,7 +69,7 @@ void BlobTracking::process(const cv::Mat img_input, const cv::Mat &img_mask, cv:
     if(showOutput)
         cvShowImage("Blob Tracking", frame);
 
-    cv::Mat img_result=cv::cvarrToMat(frame);
+    cv::Mat img_result = cv::cvarrToMat(frame);
     img_result.copyTo(img_output);
 
     //cvReleaseImage(&frame);
@@ -87,8 +87,8 @@ void BlobTracking::saveConfig()
 
     cv::write(fs, "minArea", minArea);
     cv::write(fs, "maxArea", maxArea);
-    cv::write(fs,"distance",distance);
-    cv::write(fs,"inactive",inactive);
+    cv::write(fs, "distance", distance);
+    cv::write(fs, "inactive", inactive);
   
     cv::write(fs, "debugTrack", debugTrack);
     cv::write(fs, "debugBlob", debugBlob);
@@ -102,14 +102,14 @@ void BlobTracking::loadConfig()
     cv::FileStorage fs;
     fs.open("config/BlobTracking.xml",cv::FileStorage::READ);
   
-    cv::read(fs["minArea"], minArea,300);
-    cv::read(fs["maxArea"], maxArea,20000);
-    cv::read(fs["distance"],distance,50.0);
-    cv::read(fs["inactive"],inactive,10);
+    cv::read(fs["minArea"], minArea, 300);
+    cv::read(fs["maxArea"], maxArea, 20000);
+    cv::read(fs["distance"], distance, 50.0);
+    cv::read(fs["inactive"], inactive, 10);
 
-    cv::read(fs["debugTrack"], debugTrack,false);
-    cv::read(fs["debugBlob"],debugBlob, false);
-    cv::read(fs["showOutput"], showOutput,false);
+    cv::read(fs["debugTrack"], debugTrack, false);
+    cv::read(fs["debugBlob"], debugBlob, false);
+    cv::read(fs["showOutput"], showOutput, false);
 
     fs.release();
 }
