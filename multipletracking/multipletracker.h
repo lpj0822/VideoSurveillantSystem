@@ -13,7 +13,7 @@ public:
     //卡尔曼滤波跟踪算法
     std::vector<KalmanTrack*> tracks;
     void initStart(bool isStart);//根据每次开始运行重新初始化
-    void Update(cv::Mat& inFrame,std::vector<cv::Point2f>& detections);
+    void Update(cv::Mat& inFrame, std::vector<cv::Point2f>& detections);
 
     void initData();//初始化数据
 

@@ -17,14 +17,14 @@ MultipleTracker::~MultipleTracker()
         if(tracks[i])
         {
             delete tracks[i];
-            tracks[i]=NULL;
+            tracks[i] = NULL;
         }
     }
     tracks.clear();
     std::cout<<"~MultipleTracker()"<<std::endl;
 }
 
-void MultipleTracker::Update(cv::Mat& inFrame,std::vector<cv::Point2f>& detections)
+void MultipleTracker::Update(cv::Mat& inFrame, std::vector<cv::Point2f>& detections)
 {
     if(inFrame.empty())
     {
@@ -33,25 +33,25 @@ void MultipleTracker::Update(cv::Mat& inFrame,std::vector<cv::Point2f>& detectio
     if(isFirstRun)
     {
         saveConfig();
-        isFirstRun=false;
+        isFirstRun = false;
     }
-    if(detections.size()<=0)
+    if(detections.size() <= 0)
     {
-        for(int i=0;i<tracks.size();i++)
+        for (int i=0; i<tracks.size(); i++)
         {
             tracks[i]->skipped_frames++;
-            if (tracks[i]->skipped_frames>maximum_allowed_skipped_frames)
+            if (tracks[i]->skipped_frames > maximum_allowed_skipped_frames)
             {
                 delete tracks[i];
                 tracks.erase(tracks.begin() + i);
                 i--;
             }
         }
-        for(int i=0;i<tracks.size();i++)
+        for (int i=0; i<tracks.size(); i++)
         {
             tracks[i]->KF->GetPrediction();
-            tracks[i]->prediction = tracks[i]->KF->Update(cv::Point2f(0, 0), 0);
-            if (tracks[i]->trace.size()>max_trace_length)
+            tracks[i]->prediction = tracks[i]->KF->Update(cv::Point2f(0, 0), false);
+            if (tracks[i]->trace.size() > max_trace_length)
             {
                 tracks[i]->trace.erase(tracks[i]->trace.begin(), tracks[i]->trace.end() - max_trace_length);
             }
@@ -84,7 +84,7 @@ void MultipleTracker::Update(cv::Mat& inFrame,std::vector<cv::Point2f>& detectio
     double dist;
     for (int i = 0; i<tracks.size(); i++)
     {
-        // Point2d prediction=tracks[i]->prediction;
+        // Point2d prediction = tracks[i]->prediction;
         // cout << prediction << endl;
         for (int j = 0; j<detections.size(); j++)
         {
@@ -130,7 +130,7 @@ void MultipleTracker::Update(cv::Mat& inFrame,std::vector<cv::Point2f>& detectio
     // -----------------------------------
     for (int i = 0; i<tracks.size(); i++)
     {
-        if (tracks[i]->skipped_frames>maximum_allowed_skipped_frames)
+        if (tracks[i]->skipped_frames > maximum_allowed_skipped_frames)
         {
             delete tracks[i];
             tracks.erase(tracks.begin() + i);
@@ -175,11 +175,11 @@ void MultipleTracker::Update(cv::Mat& inFrame,std::vector<cv::Point2f>& detectio
         if (assignment[i] != -1) // If we have assigned detect, then update using its coordinates,
         {
             tracks[i]->skipped_frames = 0;
-            tracks[i]->prediction = tracks[i]->KF->Update(detections[assignment[i]], 1);//估计值
+            tracks[i]->prediction = tracks[i]->KF->Update(detections[assignment[i]], true);//估计值
         }
         else				  // if not continue using predictions
         {
-            tracks[i]->prediction = tracks[i]->KF->Update(cv::Point2f(0, 0), 0);
+            tracks[i]->prediction = tracks[i]->KF->Update(cv::Point2f(0, 0), false);
         }
 
         if (tracks[i]->trace.size()>max_trace_length)
@@ -218,16 +218,7 @@ void MultipleTracker::initStart(bool isStart)
 //初始化数据
 void MultipleTracker::initData()
 {
-    for (int i = 0; i<tracks.size(); i++)
-    {
-        if(tracks[i])
-        {
-            delete tracks[i];
-            tracks[i]=NULL;
-        }
-    }
-    tracks.clear();
-
+    initStart(true);
     loadConfig();
 }
 
@@ -279,7 +270,6 @@ void MultipleTracker::init()
 {
     isFirstRun=true;
     tracks.clear();
-
     loadConfig();
 }
 

@@ -21,16 +21,14 @@ KalmanTrack::KalmanTrack(cv::Point2f pt):firstTime(true),dt(0.2f),Accel_noise_ma
 
     std::cout<<"KalmanTrack()"<<std::endl;
 }
-// ---------------------------------------------------------------------------
-//
-// ---------------------------------------------------------------------------
+
 KalmanTrack::~KalmanTrack()
 {
     // Free resources.
     if(KF)
     {
         delete KF;
-        KF=NULL;
+        KF = NULL;
     }
     std::cout<<"~KalmanTrack()"<<std::endl;
 }
@@ -38,7 +36,7 @@ KalmanTrack::~KalmanTrack()
 void KalmanTrack::saveConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/KalmanTrack.xml",cv::FileStorage::WRITE);
+    fs.open("./config/KalmanTrack.xml", cv::FileStorage::WRITE);
 
     cv::write(fs, "dt", dt);
     cv::write(fs, "Accel_noise_mag", Accel_noise_mag);
@@ -49,10 +47,10 @@ void KalmanTrack::saveConfig()
 void KalmanTrack::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/KalmanTrack.xml",cv::FileStorage::READ);
+    fs.open("./config/KalmanTrack.xml", cv::FileStorage::READ);
 
     cv::read(fs["dt"], dt,0.2f);
-    cv::read(fs["Accel_noise_mag"],Accel_noise_mag, 0.5f);
+    cv::read(fs["Accel_noise_mag"], Accel_noise_mag, 0.5f);
 
     fs.release();
 }

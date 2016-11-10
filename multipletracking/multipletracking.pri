@@ -5,7 +5,9 @@ HEADERS += \
     $$PWD/package_tracker/kalmantrack.h \
     $$PWD/utils/assignmentproblemsolver.h \
     $$PWD/blobmultipletracker.h \
-    $$PWD/multipletracker.h
+    $$PWD/multipletracker.h \
+    $$PWD/kalmanmultipletracker.h \
+    $$PWD/package_tracker/kalmantracker.h
 
 SOURCES += \
     $$PWD/package_tracker/cvblob/cvaux.cpp \
@@ -19,4 +21,6 @@ SOURCES += \
     $$PWD/package_tracker/kalmantrack.cpp \
     $$PWD/utils/assignmentproblemsolver.cpp \
     $$PWD/blobmultipletracker.cpp \
-    $$PWD/multipletracker.cpp
+    $$PWD/multipletracker.cpp \
+    $$PWD/kalmanmultipletracker.cpp \
+    $$PWD/package_tracker/kalmantracker.cpp

@@ -1,6 +1,6 @@
 ﻿#ifndef KALMANTRACK_H
 #define KALMANTRACK_H
-#pragma once
+
 #include "kalmanFilter/mykalmanfilter.h"
 #include <opencv2/core.hpp>
 #include <vector>
