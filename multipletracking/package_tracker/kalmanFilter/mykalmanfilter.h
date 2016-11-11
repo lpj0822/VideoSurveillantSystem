@@ -11,7 +11,10 @@ public:
     ~MyKalmanFilter();
 
     cv::Point2f prediction();//预测
-    cv::Point2f update(cv::Point2f p, bool DataCorrect);//更新
+    cv::Point2f update(cv::Point2f point, bool DataCorrect);//更新
+
+private:
+    void initMaxtrix();
 
 private:
     cv::KalmanFilter* kalman;
@@ -19,9 +22,6 @@ private:
     float acceleration_noise_mag;
 
     cv::Point2f lastResult;//最后估计值
-
-private:
-    void initMaxtrix();
 };
 
 #endif // MYKALMANFILTER_H

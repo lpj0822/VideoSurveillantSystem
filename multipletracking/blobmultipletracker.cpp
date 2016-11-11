@@ -4,7 +4,7 @@
 BlobMultipleTracker::BlobMultipleTracker()
 {
     init();
-    std::cout<<"BlobMultipleTracker()"<<std::endl;
+    std::cout << "BlobMultipleTracker()" << std::endl;
 }
 
 BlobMultipleTracker::~BlobMultipleTracker()
@@ -12,20 +12,20 @@ BlobMultipleTracker::~BlobMultipleTracker()
     if(blobTracking)
     {
         delete blobTracking;
-        blobTracking=NULL;
+        blobTracking = NULL;
     }
     blobTracks.clear();
-    std::cout<<"~BlobMultipleTracker()"<<std::endl;
+    std::cout << "~BlobMultipleTracker()" << std::endl;
 }
 
 //Blob Tracking Algorithm
-void BlobMultipleTracker::process(const cv::Mat &inFrame,const cv::Mat &foregroundFrame)
+void BlobMultipleTracker::multipleTracking(const cv::Mat &inFrame,const cv::Mat &foregroundFrame)
 {
     if(inFrame.empty())
     {
         return;
     }
-    cv::Mat frame=inFrame.clone();
+    cv::Mat frame = inFrame.clone();
     if(isFirstRun)
     {
         saveConfig();
@@ -121,7 +121,7 @@ void BlobMultipleTracker::initStart(bool isStart)
             blobTracking=NULL;
         }
 
-        blobTracking=new BlobTracking();
+        blobTracking = new BlobTracker();
         blobTracks.clear();
         points.clear();//每个目标跟踪的点
         //trackerSkippedFrames.clear();//每个目标调过的帧数
@@ -138,7 +138,7 @@ void BlobMultipleTracker::initData()
         blobTracking=NULL;
     }
     loadConfig();
-    blobTracking=new BlobTracking(dist_thres,maximum_allowed_skipped_frames,minArea);
+    blobTracking=new BlobTracker(dist_thres,maximum_allowed_skipped_frames,minArea);
     blobTracks.clear();
     points.clear();//每个目标跟踪的点
     //trackerSkippedFrames.clear();//每个目标调过的帧数
@@ -165,7 +165,7 @@ void BlobMultipleTracker::init()
     isFirstRun=true;
 
     loadConfig();
-    blobTracking=new BlobTracking(dist_thres,maximum_allowed_skipped_frames,minArea);
+    blobTracking=new BlobTracker(dist_thres,maximum_allowed_skipped_frames,minArea);
     blobTracks.clear();
     points.clear();//每个目标跟踪的点
     //trackerSkippedFrames.clear();//每个目标调过的帧数
@@ -177,11 +177,11 @@ void BlobMultipleTracker::saveConfig()
     cv::FileStorage fs;
     fs.open("./config/BlobMultipleTracker.xml",cv::FileStorage::WRITE);
 
-    cv::write(fs,"minArea",minArea);
+    cv::write(fs, "minArea", minArea);
     cv::write(fs, "dist_thres", dist_thres);
     cv::write(fs, "maximum_allowed_skipped_frames", maximum_allowed_skipped_frames);
-    cv::write(fs, "max_trace_length",max_trace_length);
-    cv::write(fs,"showOutput",showOutput);
+    cv::write(fs, "max_trace_length", max_trace_length);
+    cv::write(fs, "showOutput", showOutput);
 
     fs.release();
 }
@@ -189,13 +189,13 @@ void BlobMultipleTracker::saveConfig()
 void BlobMultipleTracker::loadConfig()
 {
     cv::FileStorage fs;
-    fs.open("./config/BlobMultipleTracker.xml",cv::FileStorage::READ);
+    fs.open("./config/BlobMultipleTracker.xml", cv::FileStorage::READ);
 
-    cv::read(fs["minArea"],minArea,300);
-    cv::read(fs["dist_thres"], dist_thres,50.0);
-    cv::read(fs["maximum_allowed_skipped_frames"],maximum_allowed_skipped_frames, 10);
-    cv::read(fs["max_trace_length"],max_trace_length, 2);
-    cv::read(fs["showOutput"],showOutput,true);
+    cv::read(fs["minArea"] ,minArea, 300);
+    cv::read(fs["dist_thres"], dist_thres, 50.0);
+    cv::read(fs["maximum_allowed_skipped_frames"], maximum_allowed_skipped_frames, 10);
+    cv::read(fs["max_trace_length"], max_trace_length, 2);
+    cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();
 }

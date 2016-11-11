@@ -11,23 +11,20 @@ class MyCascadeClassifier
 public:
     MyCascadeClassifier();
     ~MyCascadeClassifier();
-
-    int initClassifier(std::string cascadeName);//初始化分类器
-
-    std::vector<cv::Rect> detectObjectRect(cv::Mat inFrame,int minSize,int maxSize=1000);//检测目标
-    std::vector<cv::Point2f> detectObjectCenter(cv::Mat inFrame,int minSize,int maxSize=1000);//检测目标
+    //初始化分类器
+    int initClassifier(std::string cascadeName);
+    //识别目标
+    std::vector<cv::Rect> detectObjectRect(const cv::Mat& inFrame, int minSize, int maxSize=1000);
 
 private:
     cv::CascadeClassifier cascade;//级联分类器
     bool isClassifier;//是否加载了分类器
+    bool isFirstRun;
 
     bool enableEqualize;//是否均衡化
 
-    bool isFirstRun;
-
-    void init();
-
 private:
+    void init();
     void saveConfig();
     void loadConfig();
 };

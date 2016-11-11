@@ -36,7 +36,7 @@ cv::Point2f MyKalmanFilter::prediction()
     return lastResult;
 }
 
-cv::Point2f MyKalmanFilter::update(cv::Point2f p, bool DataCorrect)
+cv::Point2f MyKalmanFilter::update(cv::Point2f point, bool DataCorrect)
 {
     //观测值
     cv::Mat measure(2, 1, CV_32FC1);
@@ -49,8 +49,8 @@ cv::Point2f MyKalmanFilter::update(cv::Point2f p, bool DataCorrect)
     else
     {
         //update using measurements
-        measure.at<float>(0) = p.x;
-        measure.at<float>(1) = p.y;
+        measure.at<float>(0) = point.x;
+        measure.at<float>(1) = point.y;
     }
     // Correction矫正
     cv::Mat estimated = kalman->correct(measure);

@@ -11,7 +11,7 @@ AssignmentProblemSolver::~AssignmentProblemSolver()
     std::cout<<"~AssignmentProblemSolver()"<<std::endl;
 }
 
-double AssignmentProblemSolver::Solve(std::vector<std::vector<double>>& DistMatrix, std::vector<int>& Assignment, TMethod Method)
+double AssignmentProblemSolver::Solve(const std::vector<std::vector<double>>& DistMatrix, std::vector<int>& Assignment, TMethod Method)
 {
     int N = (int)DistMatrix.size(); // number of columns (tracks)
     int M = (int)DistMatrix[0].size(); // number of rows (measurements)
@@ -30,11 +30,15 @@ double AssignmentProblemSolver::Solve(std::vector<std::vector<double>>& DistMatr
     }
     switch (Method)
     {
-    case optimal: assignmentoptimal(assignment, &cost, distIn, N, M); break;
-
-    case many_forbidden_assignments: assignmentoptimal(assignment, &cost, distIn, N, M); break;
-
-    case without_forbidden_assignments: assignmentoptimal(assignment, &cost, distIn, N, M); break;
+    case optimal:
+        assignmentoptimal(assignment, &cost, distIn, N, M);
+        break;
+    case many_forbidden_assignments:
+        assignmentoptimal(assignment, &cost, distIn, N, M);
+        break;
+    case without_forbidden_assignments:
+        assignmentoptimal(assignment, &cost, distIn, N, M);
+        break;
     }
 
     // form result
@@ -48,6 +52,7 @@ double AssignmentProblemSolver::Solve(std::vector<std::vector<double>>& DistMatr
     delete[] distIn;
     return cost;
 }
+
 // --------------------------------------------------------------------------
 // Computes the optimal assignment (minimum overall costs) using Munkres algorithm.
 // --------------------------------------------------------------------------
@@ -75,7 +80,7 @@ void AssignmentProblemSolver::assignmentoptimal(int *assignment, double *cost, d
     *cost = 0;
     for (row = 0; row<nOfRows; row++)
     {
-        assignment[row] = -1.0;
+        assignment[row] = -1;
     }
 
     // Generate distance matrix
@@ -482,7 +487,7 @@ void AssignmentProblemSolver::assignmentsuboptimal2(int *assignment, double *cos
     *cost = 0;
     for (row = 0; row<nOfRows; row++)
     {
-        assignment[row] = -1.0;
+        assignment[row] = -1;
     }
 
     /* recursively search for the minimum element and do the assignment */
@@ -545,7 +550,7 @@ void AssignmentProblemSolver::assignmentsuboptimal1(int *assignment, double *cos
 
     for (row = 0; row<nOfRows; row++)
     {
-        assignment[row] = -1.0;
+        assignment[row] = -1;
     }
 
     /* allocate memory */

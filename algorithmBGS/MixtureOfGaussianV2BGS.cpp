@@ -26,7 +26,6 @@ void MixtureOfGaussianV2BGS::process(const cv::Mat &img_input, cv::Mat &img_outp
     if(mog2.get())
     {
         mog2->apply(img_input, img_foreground, alpha);
-  
         mog2->getBackgroundImage(img_bgmodel);
 
         if(enableThreshold)

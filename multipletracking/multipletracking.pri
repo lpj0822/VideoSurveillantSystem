@@ -1,13 +1,13 @@
 HEADERS += \
     $$PWD/package_tracker/cvblob/cvblob.h \
     $$PWD/package_tracker/kalmanFilter/mykalmanfilter.h \
-    $$PWD/package_tracker/blobtracking.h \
-    $$PWD/package_tracker/kalmantrack.h \
+    $$PWD/package_tracker/blobtracker.h \
+    $$PWD/package_tracker/kalmantracker.h \
     $$PWD/utils/assignmentproblemsolver.h \
     $$PWD/blobmultipletracker.h \
-    $$PWD/multipletracker.h \
     $$PWD/kalmanmultipletracker.h \
-    $$PWD/package_tracker/kalmantracker.h
+    $$PWD/package_tracker/kalmanFilter/mykalmanfilter2.h
+
 
 SOURCES += \
     $$PWD/package_tracker/cvblob/cvaux.cpp \
@@ -17,10 +17,10 @@ SOURCES += \
     $$PWD/package_tracker/cvblob/cvlabel.cpp \
     $$PWD/package_tracker/cvblob/cvtrack.cpp \
     $$PWD/package_tracker/kalmanFilter/mykalmanfilter.cpp \
-    $$PWD/package_tracker/blobtracking.cpp \
-    $$PWD/package_tracker/kalmantrack.cpp \
+    $$PWD/package_tracker/blobtracker.cpp \
+    $$PWD/package_tracker/kalmantracker.cpp \
     $$PWD/utils/assignmentproblemsolver.cpp \
     $$PWD/blobmultipletracker.cpp \
-    $$PWD/multipletracker.cpp \
     $$PWD/kalmanmultipletracker.cpp \
-    $$PWD/package_tracker/kalmantracker.cpp
+    $$PWD/package_tracker/kalmanFilter/mykalmanfilter2.cpp
+

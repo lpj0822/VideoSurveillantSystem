@@ -11,7 +11,7 @@
 #include <QVector>
 #include <QPoint>
 
-#include "videoAlgorithmAnalysis/vehicleconverseshowvideowindow.h"
+#include "videoAnalysis/vehicleconverseshowvideowindow.h"
 
 class VehicleConverseControlWindow : public QWidget
 {

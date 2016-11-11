@@ -19,7 +19,8 @@ include(shadowDetect/shadowDetect.pri)
 include(multipletracking/multipletracking.pri)
 include(algorithmClassify/algorithmClassify.pri)
 include(saliencyDetect/saliencyDetect.pri)
-include(videoAlgorithmAnalysis/videoAlgorithmAnalysis.pri)
+include(baseAlgorithm/baseAlgorithm.pri)
+include(videoAnalysis/videoAnalysis.pri)
 
 SOURCES += main.cpp\
     configurationwindow.cpp \

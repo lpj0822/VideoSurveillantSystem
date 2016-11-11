@@ -10,7 +10,7 @@
 #include <QTextBrowser>
 #include <QVector>
 #include <QPoint>
-#include "videoAlgorithmAnalysis/vehiclecountingshowvideowindow.h"
+#include "videoAnalysis/vehiclecountingshowvideowindow.h"
 
 class VehicleCountingControlWindow : public QWidget
 {

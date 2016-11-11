@@ -1,7 +1,7 @@
 ﻿#ifndef BLOBMULTIPLETRACKER_H
 #define BLOBMULTIPLETRACKER_H
 
-#include "package_tracker/blobtracking.h"
+#include "package_tracker/blobtracker.h"
 #include <opencv2/highgui.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
@@ -16,7 +16,7 @@ public:
     void initData();//初始化数据
 
     //Blob Tracking Algorithm
-    void process(const cv::Mat &inFrame,const cv::Mat &foregroundFrame);
+    void multipleTracking(const cv::Mat &inFrame,const cv::Mat &foregroundFrame);
     std::vector< std::vector<cv::Point2d> > getTracksPoints();//得到每个目标的跟踪轨迹
 
 private:
@@ -25,12 +25,11 @@ private:
     double dist_thres;//两帧之间目标最大的移动距离
     int maximum_allowed_skipped_frames;//允许目标消失的最大帧数
     int max_trace_length;//跟踪轨迹的最大长度
-
     bool showOutput;//显示跟踪过程
 
     /* Blob Tracking Algorithm */
     cv::Mat img_blob;
-    BlobTracking* blobTracking;
+    BlobTracker* blobTracking;
     cvb::CvTracks blobTracks;
     std::map<cvb::CvID, std::vector<cv::Point2d> > points;//每个目标跟踪的点
     //std::vector<int> trackerSkippedFrames;//每个目标调过的帧数
@@ -39,9 +38,8 @@ private:
 
     bool isFirstRun;//第一次运行
 
-    void init();
-
 private:
+    void init();
     void saveConfig();
     void loadConfig();
 };

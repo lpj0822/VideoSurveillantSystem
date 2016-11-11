@@ -1,4 +1,7 @@
-﻿#ifndef ASSIGNMENTPROBLEMSOLVER_H
+﻿/*
+ *Hungarian algorithm with task allocation procedures
+ */
+#ifndef ASSIGNMENTPROBLEMSOLVER_H
 #define ASSIGNMENTPROBLEMSOLVER_H
 #pragma once
 #include <vector>
@@ -7,6 +10,12 @@
 
 class AssignmentProblemSolver
 {
+public:
+    enum TMethod { optimal, many_forbidden_assignments, without_forbidden_assignments };
+    AssignmentProblemSolver();
+    ~AssignmentProblemSolver();
+    double Solve(const std::vector< std::vector<double> >& DistMatrix, std::vector<int>& Assignment, TMethod Method = optimal);
+
 private:
     // --------------------------------------------------------------------------
     // Computes the optimal assignment (minimum overall costs) using Munkres algorithm.
@@ -27,11 +36,6 @@ private:
     // Computes a suboptimal solution. Good for cases with many forbidden assignments.
     // --------------------------------------------------------------------------
     void assignmentsuboptimal2(int *assignment, double *cost, double *distMatrixIn, int nOfRows, int nOfColumns);
-public:
-    enum TMethod { optimal, many_forbidden_assignments, without_forbidden_assignments };
-    AssignmentProblemSolver();
-    ~AssignmentProblemSolver();
-    double Solve(std::vector<std::vector<double>>& DistMatrix, std::vector<int>& Assignment, TMethod Method = optimal);
 };
 
 #endif // ASSIGNMENTPROBLEMSOLVER_H

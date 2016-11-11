@@ -217,7 +217,7 @@ void VehicleConverseControlWindow::initUI()
     mainLayout->addWidget(commandText);
     this->setLayout(mainLayout);
     //this->setMaximumSize(700,520);
-    this->setMinimumSize(1000,800);
+    this->setMinimumSize(900, 700);
     this->setWindowTitle(tr("车辆逆行检测系统"));
 }
 
