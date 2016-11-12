@@ -19,10 +19,7 @@ public:
     ~VehicleConverseDetection();
 
     void initDetectData();//初始化检测参数
-    void initDetectData(const QString& cascadeName);
-
-    int detect(cv::Mat &frame);//车辆逆行检测
-
+    int detect(const cv::Mat &frame);//车辆逆行检测
     void startTrcaking(bool isStart);//每个跟踪区域重新开始跟踪
 
     int getErrorCode();//得到错误码
@@ -35,22 +32,12 @@ signals:
 
 private:
 
-    std::vector<cv::Rect> detectObject(cv::Mat &frame);//检测运动目标
-    std::vector<cv::Point2f> detectObjectCenter(cv::Mat &frame);//检测运动目标得到运动目标中心
-
-    std::vector<cv::Point2f> getInAreaCenter(std::vector<cv::Point2f>& detectPoints,int number);//得到检测区域内的目标中心点
-
-    void matchObjectConverse(int number);//匹配区域中是否有逆行目标
-    void matchAllObjectConverse();//匹配区域中是否有逆行目标
-
-    void tracking(cv::Mat& roi,std::vector<cv::Point2f> centers,int number);//对目标进行多目标跟踪
-
-    bool isTrcakConverse(const std::vector<cv::Point2f> &points,int myDirection);//判断路径是否逆方向
-
+    std::vector<cv::Point2f> detectObjectCenter(const cv::Mat& frame, int number);//检测运动目标得到检测区域内的目标中心点
+    void tracking(const cv::Mat& roi, const std::vector<cv::Point2f>& centers, int number);//对目标进行多目标跟踪
+    void calculateObjectConverse(int number);//匹配区域中是否有逆行目标
+    bool isTrcakConverse(const std::vector<cv::Point2f> &points, int myDirection);//判断路径是否逆方向
     int converseArea(int number);//判断某个区域是否逆行
-
-    QList<int> allConverseArea(cv::Mat inFrame,QString fileDir="./converse",QString fileName="./converse/image.png");//得到逆行区域并保存图片
-    int converseArea(cv::Mat inFrame,int number,QString fileDir="./converse",QString fileName="./converse/image.png");//该区域是否逆行并保存图片
+    int converseArea(const cv::Mat& inFrame,int number, QString fileDir="./converse", QString fileName="./converse/image.png");//该区域是否逆行并保存图片
 
     void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制检测区域
 
@@ -73,8 +60,8 @@ private:
     float minBox;//检测的最小目标面积大小
     int minSize;//最小检测目标
     QString savePictureDir;//保存截图的路径
-
     QString savePictureFileName;
+    QString saveClassiferPath;//分类器保存路径
 
     bool isDrawObject;
 
@@ -83,9 +70,8 @@ private:
     int errorCode;//错误码
     bool isFirstRun;//第一次运行
 
-    void init();//初始化数据
-
 private:
+    void init();//初始化
     void saveConfig();
     void loadConfig();
 

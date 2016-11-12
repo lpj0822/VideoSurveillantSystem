@@ -17,8 +17,7 @@ public:
     ~LeaveDetection();
 
     void initDetectData();//初始化检测参数
-
-    int detect(cv::Mat &frame);//离岗检测
+    int detect(const cv::Mat &frame);//离岗检测
 
     int getErrorCode();//得到错误码
     std::vector<OfficeArea>  getOfficeArea();//得到办公区域
@@ -30,17 +29,12 @@ signals:
 public slots:
 
 private:
-    std::vector<cv::Rect> detectObject(cv::Mat &frame);//检测运动目标
-
-    void matchOfficeAllArea(std::vector<cv::Rect> vectorRect);//通过检测出的目标匹配目标区域
+    std::vector<cv::Rect> detectObject(const cv::Mat& frame);//检测运动目标
     void matchOfficeArea(std::vector<cv::Rect> vectorRect,int number);//对某一个区域匹配目标
-
     int leaveArea(int number);//判断某个区域是否离岗
+    int leaveArea(const cv::Mat& inFrame,int number, QString leaveFileDir="./leave", QString leaveFileName="./leave/image.png");//该区域是否离岗并保存图片
 
-    QList<int> allLeaveArea(cv::Mat inFrame,QString leaveFileDir="./leave",QString leaveFileName="./leave/image.png");//得到离岗区域并保存图片
-    int leaveArea(cv::Mat inFrame,int number,QString leaveFileDir="./leave",QString leaveFileName="./leave/image.png");//该区域是否离岗并保存图片
-
-    void drawOfficeArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(0,0,255));//绘制办公区域
+    void drawOfficeArea(cv::Mat& inFrame ,cv::Scalar color=cv::Scalar(0,0,255));//绘制办公区域
 
 
 private:

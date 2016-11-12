@@ -6,6 +6,8 @@
 #include <QTabWidget>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include "vehicleconversecontrolwindow.h"
+#include "vehiclecountingcontrolwindow.h"
 
 class ControlWindow : public QWidget
 {
@@ -25,6 +27,9 @@ private:
     QVBoxLayout *mainLayout;//布局
     QTabWidget *tabweight;//tab
     QDialogButtonBox *buttonBox;
+
+    VehicleConverseControlWindow *vehicleConverseWindow;//车辆逆行检测
+    VehicleCountingControlWindow *vehicleCountingWindow;//车流量统计
 
     void init();
     void initUI();

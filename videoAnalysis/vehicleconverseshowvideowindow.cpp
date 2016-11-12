@@ -80,7 +80,7 @@ void VehicleConverseShowVideoWindow::slotVideoImage(QImage image,bool isOpen)
     }
 }
 
-void VehicleConverseShowVideoWindow::slotMessage(QString message,int pos)
+void VehicleConverseShowVideoWindow::slotMessage(QString message, int pos)
 {
     int errCode=0;
     QString str="Vehicle Converse Detection:";
@@ -157,7 +157,7 @@ int VehicleConverseShowVideoWindow::showVideo(const QString &path)
             if(info1.exists())
             {
                 loadVehicleConverseConfig();
-                vehicleConverseDetectThread->initData(QString("./detectData/cascade.xml"));//初始化车辆逆行检测参数
+                vehicleConverseDetectThread->initData();//初始化车辆逆行检测参数
             }
             vehicleConverseDetectThread->start();
             isOpen=true;
@@ -216,8 +216,7 @@ void VehicleConverseShowVideoWindow::setConfigParameter(QList<QPolygonF> detectA
         areaDirection.push_back(directions[loop]);
     }
     saveVehicleConverseConfig();
-    vehicleConverseDetectThread->initData();
-    //vehicleConverseDetectThread->initData(QString("./detectData/cascade.xml"));//初始化车辆逆行检测参数
+    vehicleConverseDetectThread->initData();//初始化车辆逆行检测参数
 }
 
 //开始检测

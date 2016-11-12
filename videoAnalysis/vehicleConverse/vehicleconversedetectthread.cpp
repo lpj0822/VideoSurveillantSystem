@@ -181,11 +181,6 @@ void VehicleConverseDetectThread::initData()
     vehicleConverseDetection->initDetectData();
 }
 
-void VehicleConverseDetectThread::initData(const QString& cascadePath)
-{
-    vehicleConverseDetection->initDetectData(cascadePath);
-}
-
 void VehicleConverseDetectThread::init()
 {
     videoProcess=new VideoProcess();

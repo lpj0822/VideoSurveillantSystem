@@ -34,7 +34,7 @@ LeaveDetection::~LeaveDetection()
 }
 
 //离岗检测
-int LeaveDetection::detect(cv::Mat &frame)
+int LeaveDetection::detect(const cv::Mat &frame)
 {
     cv::Mat roiArea;//办公区域截图
     int objectNumber=0;
@@ -95,19 +95,8 @@ void LeaveDetection::initDetectData()
     }
 }
 
-//通过检测出的目标匹配目标区域
-void LeaveDetection::matchOfficeAllArea(std::vector<cv::Rect> vectorRect)
-{
-    size_t numberOfficeArea=office.size();
-    //判断两矩形的相交度
-    for(int loop=0;loop<numberOfficeArea;loop++)
-    {
-        matchOfficeArea(vectorRect,loop);
-    }
-}
-
 //对某一个区域匹配目标
-void LeaveDetection::matchOfficeArea(std::vector<cv::Rect> vectorRect,int number)
+void LeaveDetection::matchOfficeArea(std::vector<cv::Rect> vectorRect, int number)
 {
     int deltaTime=0;
     int numberRect=(int)vectorRect.size();
@@ -165,26 +154,8 @@ int LeaveDetection::leaveArea(int number)
     }
 }
 
-//得到离岗区域并保存图片
-QList<int> LeaveDetection::allLeaveArea(cv::Mat inFrame,QString leaveFileDir,QString leaveFileName)
-{
-    int isLeave=0;
-    QList<int> leaveAreaAll;
-    int numberOfficeArea=(int)office.size();
-    leaveAreaAll.clear();
-    for(int loop=0;loop<numberOfficeArea;loop++)
-    {
-       isLeave=leaveArea(inFrame,loop,leaveFileDir,leaveFileName);
-       if(isLeave>0)
-       {
-           leaveAreaAll.append(isLeave);
-       }
-    }
-    return leaveAreaAll;
-}
-
 //该区域是否离岗并保存图片
-int LeaveDetection::leaveArea(cv::Mat inFrame,int number,QString leaveFileDir,QString leaveFileName)
+int LeaveDetection::leaveArea(const cv::Mat& inFrame,int number,QString leaveFileDir,QString leaveFileName)
 {
     //Mat leaveROI;
     if(office[number].getLeaveTime()>maxLeaveTime)
@@ -223,7 +194,7 @@ void LeaveDetection::drawOfficeArea(cv::Mat &inFrame ,cv::Scalar color)
 }
 
 //检测运动目标
-std::vector<cv::Rect> LeaveDetection::detectObject(cv::Mat &frame)
+std::vector<cv::Rect> LeaveDetection::detectObject(const cv::Mat &frame)
 {
     std::vector<cv::Rect> objectRect;//检测的目标矩形边界
     objectRect.clear();
@@ -232,7 +203,7 @@ std::vector<cv::Rect> LeaveDetection::detectObject(cv::Mat &frame)
         objectRect=frameForeground->getFrameForegroundRect(frame,minBox);
         if(isDrawObject)
         {
-            imageProcess->drawRect(frame,objectRect,cv::Scalar(0,0,255));
+            imageProcess->drawRect(const_cast<cv::Mat&>(frame), objectRect, cv::Scalar(0,0,255));
         }
     }
 

@@ -28,7 +28,7 @@ VehicleCouting::~VehicleCouting()
 }
 
 //车辆逆行检测
-int VehicleCouting::detect(cv::Mat &frame)
+int VehicleCouting::detect(const cv::Mat& frame)
 {
     cv::Mat roiArea;//区域截图
     currentDate = QDateTime::currentDateTime().toString("yyyy:MM:dd-hh:mm:ss");
@@ -69,7 +69,7 @@ int VehicleCouting::detect(cv::Mat &frame)
 }
 
 //对目标进行多目标跟踪
-void VehicleCouting::tracking(cv::Mat& roi,int number)
+void VehicleCouting::tracking(const cv::Mat& roi,int number)
 {
     cv::Mat fsMak;
     if(frameForeground)

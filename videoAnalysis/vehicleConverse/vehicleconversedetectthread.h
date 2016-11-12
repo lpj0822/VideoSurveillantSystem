@@ -27,8 +27,7 @@ public:
 
     bool getIsOpenVideo();//是否打开视频
 
-    void initData();//初始化话数据
-    void initData(const QString& cascadePath);
+    void initData();//初始化数据
 
 signals:
     void signalMessage(QString message,int pos);

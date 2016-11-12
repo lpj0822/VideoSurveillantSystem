@@ -29,6 +29,11 @@ void ControlWindow::init()
 void ControlWindow::initUI()
 {
     tabweight=new QTabWidget();
+    vehicleConverseWindow = new VehicleConverseControlWindow();
+    vehicleCountingWindow = new VehicleCountingControlWindow();
+
+    tabweight->addTab(vehicleConverseWindow, tr("车辆逆行检测"));
+    tabweight->addTab(vehicleCountingWindow, tr("车流量统计"));
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel); // 创建QDialogButtonBox
     buttonBox->button(QDialogButtonBox::Ok)->setText(tr("确定"));//将buttonbox中的ok 变成汉化

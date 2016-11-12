@@ -15,9 +15,7 @@ public:
     ~VehicleCouting();
 
     void initDetectData();//初始化检测参数
-
-    int detect(cv::Mat &frame);//车流量统计
-
+    int detect(const cv::Mat &frame);//车流量统计
     void startTrcaking(bool isStart);//每个跟踪区域重新开始跟踪
 
     int getErrorCode();//得到错误码
@@ -30,11 +28,10 @@ signals:
 
 private:
 
-    void tracking(cv::Mat& roi,int number);//对目标进行多目标跟踪
-
+    void tracking(const cv::Mat& roi,int number);//对目标进行多目标跟踪
     void countingVehicle(int number);//统计车流量
 
-    void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制检测区域
+    void drawingDetectArea(cv::Mat &inFrame , cv::Scalar color=cv::Scalar(255,255,255));//绘制检测区域
 
     void initData();
 
@@ -51,9 +48,8 @@ private:
     int errorCode;//错误码
     bool isFirstRun;//第一次运行
 
-    void init();//初始化数据
-
 private:
+    void init();//初始化数据
     void saveConfig();
     void loadConfig();
 };

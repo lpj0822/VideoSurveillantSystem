@@ -17,11 +17,10 @@ public:
     ~IntrusionDetection();
 
     void initDetectData();//初始化检测参数
-
-    int detect(cv::Mat &frame);//入侵检测
+    int detect(const cv::Mat& frame);//入侵检测
 
     int getErrorCode();//得到错误码
-    std::vector<IntrusionArea>  getDetectArea();//得到入侵区域
+    std::vector<IntrusionArea>&  getDetectArea();//得到入侵区域
 
     QString currentDate;//当前时间
 
@@ -30,15 +29,10 @@ signals:
 public slots:
 
 private:
-    std::vector<cv::Rect> detectObject(cv::Mat &frame);//检测运动目标
-
-    void matchDetectAllArea(std::vector<cv::Rect> vectorRect);//通过检测出的目标匹配目标区域
+    std::vector<cv::Rect> detectObject(const cv::Mat& frame);//检测运动目标
     void matchDetectArea(std::vector<cv::Rect> vectorRect,int number);//对某一个区域匹配目标
-
     int  intrusionArea(int number);//判断某个区域是否入侵
-
-    QList<int> allIntrusionArea(cv::Mat inFrame,QString fileDir="./intrude",QString fileName="./intrude/image.png");//得到入侵区域并保存图片
-    int intrusionArea(cv::Mat inFrame,int number,QString fileDir="./intrude",QString fileName="./intrude/image.png");//该区域是否入侵并保存图片
+    int intrusionArea(const cv::Mat& inFrame,int number,QString fileDir="./intrude",QString fileName="./intrude/image.png");//该区域是否入侵并保存图片
 
     void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制入侵区域
 

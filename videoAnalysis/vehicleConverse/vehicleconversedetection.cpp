@@ -49,7 +49,7 @@ VehicleConverseDetection::~VehicleConverseDetection()
 }
 
 //车辆逆行检测
-int VehicleConverseDetection::detect(cv::Mat &frame)
+int VehicleConverseDetection::detect(const cv::Mat& frame)
 {
     cv::Mat roiArea;//区域截图
     int objectNumber=0;
@@ -69,13 +69,12 @@ int VehicleConverseDetection::detect(cv::Mat &frame)
             if(detectArea[loop].getNormalDirection()>0)
             {
                 objectNumber=0;
-                roiArea=frame(detectArea[loop].getPolygonRect());
+                roiArea = frame(detectArea[loop].getPolygonRect());
                 objectCenter.clear();
-                objectCenter=detectObjectCenter(roiArea);
-                objectCenter=getInAreaCenter(objectCenter,loop);
+                objectCenter=detectObjectCenter(roiArea, loop);
                 tracking(roiArea,objectCenter,loop);
-                matchObjectConverse(loop);
-                isConverse=converseArea(loop);
+                calculateObjectConverse(loop);
+                isConverse = converseArea(loop);
                 objectNumber+=(int)objectCenter.size();
                 if(errorCode<0)
                 {
@@ -116,48 +115,12 @@ void VehicleConverseDetection::initDetectData()
     //加载参数
     loadConfig();
     frameForeground->initData();
+    objectRecognition->initData(saveClassiferPath.toStdString());
     initData();
-}
-
-void VehicleConverseDetection::initDetectData(const QString& cascadeName)
-{
-    isFirstRun=true;
-    errorCode=0;
-    //加载参数
-    loadConfig();
-    objectRecognition->initData(cascadeName.toStdString());
-    initData();
-}
-
-void VehicleConverseDetection::initData()
-{
-    detectArea.clear();
-    for (int loop1=0;loop1<(int)allMultipleTrackers.size();loop1++)
-    {
-        if (allMultipleTrackers[loop1])
-        {
-            delete allMultipleTrackers[loop1];
-            allMultipleTrackers[loop1] = NULL;
-        }
-    }
-    allMultipleTrackers.clear();
-
-    ConverseArea area;
-    int number=(int)pointsArea.size();
-    for (int loop2=0; loop2<number; loop2++)
-    {
-        area.setPolygon(pointsArea[loop2]);
-        area.setNormalDirection(areaDirection[loop2]);
-        area.isConverse=false;
-        area.isFirst=0;
-        detectArea.push_back(area);
-        KalmanMultipleTracker* tarcker=new KalmanMultipleTracker();
-        allMultipleTrackers.push_back(tarcker);
-    }
 }
 
 //匹配区域中是否有逆行目标
-void VehicleConverseDetection::matchObjectConverse(int number)
+void VehicleConverseDetection::calculateObjectConverse(int number)
 {
     std::vector<KalmanTracker*> trackers = allMultipleTrackers[number]->getListTrackers();
     int count = allMultipleTrackers[number]->getTrackersCount();
@@ -178,13 +141,89 @@ void VehicleConverseDetection::matchObjectConverse(int number)
     }
 }
 
-//匹配区域中是否有逆行目标
-void VehicleConverseDetection::matchAllObjectConverse()
+//检测运动目标得到运动目标中心
+std::vector<cv::Point2f> VehicleConverseDetection::detectObjectCenter(const cv::Mat &frame, int number)
 {
-    int countTracker = (int)allMultipleTrackers.size();
-    for (int loop=0; loop<countTracker; loop++)
+    std::vector<cv::Point2f> myCenterPoint;
+    std::vector<cv::Point2f> objectCenters;//检测目标的中心
+    objectCenters.clear();
+    myCenterPoint.clear();
+    //objectCenters=frameForeground->getFrameForegroundCentroid(frame,minBox);
+    objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
+    //objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
+    int count= static_cast<int>(objectCenters.size());
+    for (int loop=0; loop<count; loop++)
     {
-        matchObjectConverse(loop);
+        if(geometryCalculations->pointInPolygon(objectCenters[loop], detectArea[number].getPolygon1()))
+        {
+            myCenterPoint.push_back(objectCenters[loop]);
+        }
+    }
+    if (isDrawObject)
+    {
+        imageProcess->drawCenter(const_cast<cv::Mat&>(frame), myCenterPoint, cv::Scalar(0,255,255));
+    }
+
+    return myCenterPoint;
+}
+
+//对目标进行多目标跟踪
+void VehicleConverseDetection::tracking(const cv::Mat& roi, const std::vector<cv::Point2f>& centers, int number)
+{
+    if(allMultipleTrackers[number])
+    {
+        allMultipleTrackers[number]->mutilpleTracking(roi, centers);
+    }
+}
+
+//判断某个区域是否逆行
+int VehicleConverseDetection::converseArea(int number)
+{
+    if(detectArea[number].isConverse)
+    {
+        detectArea[number].isConverse = false;
+        return number + 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+//该区域是否逆行并保存图片
+int VehicleConverseDetection::converseArea(const cv::Mat& inFrame, int number, QString fileDir, QString fileName)
+{
+    //cv::Mat detectROI;
+    if(detectArea[number].isConverse)
+    {
+        if(detectArea[number].isFirst==0)
+        {
+            detectArea[number].firstTime=QDateTime::currentDateTime();
+            detectArea[number].isFirst=1;
+            //deectROI=inFrame(detectArea[loop].getPolygonRect());
+            pictureSaveThread->wait();
+            errorCode=pictureSaveThread->initData(fileDir,fileName,inFrame);
+            pictureSaveThread->start();
+        }
+        else
+        {
+            int tempDeltaTime=detectArea[number].firstTime.secsTo(QDateTime::currentDateTime());
+            qDebug() << "deltaTime:" << tempDeltaTime;
+            if(tempDeltaTime > saveDeltaTime)
+            {
+                //deectROI=inFrame(detectArea[loop].getPolygonRect());
+                pictureSaveThread->wait();
+                errorCode=pictureSaveThread->initData(fileDir,fileName,inFrame);
+                pictureSaveThread->start();
+            }
+        }
+
+        detectArea[number].isConverse=false;
+        return number+1;
+    }
+    else
+    {
+        return 0;
     }
 }
 
@@ -258,85 +297,6 @@ bool VehicleConverseDetection::isTrcakConverse(const std::vector<cv::Point2f> &p
     return isConverse;
 }
 
-//对目标进行多目标跟踪
-void VehicleConverseDetection::tracking(cv::Mat& roi, std::vector<cv::Point2f> centers, int number)
-{
-    if(allMultipleTrackers[number])
-    {
-        allMultipleTrackers[number]->mutilpleTracking(roi, centers);
-    }
-}
-
-//判断某个区域是否逆行
-int VehicleConverseDetection::converseArea(int number)
-{
-    if(detectArea[number].isConverse)
-    {
-        detectArea[number].isConverse=false;
-        return number + 1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-//得到检测区域并保存图片
-QList<int> VehicleConverseDetection::allConverseArea(cv::Mat inFrame,QString fileDir,QString fileName)
-{
-    //cv::Mat detectROI;
-    QList<int> converseAreaAll;
-    int isConverse=0;
-    int numberDetectArea=(int)detectArea.size();
-    converseAreaAll.clear();
-    for(int loop=0;loop<numberDetectArea;loop++)
-    {
-        isConverse=converseArea(inFrame,loop,fileDir,fileName);
-        if(isConverse>0)
-        {
-            converseAreaAll.append(isConverse);
-        }
-    }
-    return converseAreaAll;
-}
-
-//该区域是否逆行并保存图片
-int VehicleConverseDetection::converseArea(cv::Mat inFrame,int number,QString fileDir,QString fileName)
-{
-    //cv::Mat detectROI;
-    if(detectArea[number].isConverse)
-    {
-        if(detectArea[number].isFirst==0)
-        {
-            detectArea[number].firstTime=QDateTime::currentDateTime();
-            detectArea[number].isFirst=1;
-            //deectROI=inFrame(detectArea[loop].getPolygonRect());
-            pictureSaveThread->wait();
-            errorCode=pictureSaveThread->initData(fileDir,fileName,inFrame);
-            pictureSaveThread->start();
-        }
-        else
-        {
-            int tempDeltaTime=detectArea[number].firstTime.secsTo(QDateTime::currentDateTime());
-            qDebug() << "deltaTime:" << tempDeltaTime;
-            if(tempDeltaTime > saveDeltaTime)
-            {
-                //deectROI=inFrame(detectArea[loop].getPolygonRect());
-                pictureSaveThread->wait();
-                errorCode=pictureSaveThread->initData(fileDir,fileName,inFrame);
-                pictureSaveThread->start();
-            }
-        }
-
-        detectArea[number].isConverse=false;
-        return number+1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
 //绘制检测区域
 void VehicleConverseDetection::drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color)
 {
@@ -356,57 +316,6 @@ void VehicleConverseDetection::drawingDetectArea(cv::Mat &inFrame ,cv::Scalar co
     }
 }
 
-//检测运动目标
-std::vector<cv::Rect> VehicleConverseDetection::detectObject(cv::Mat &frame)
-{
-    std::vector<cv::Rect> objectRect;//检测的目标矩形边界
-    objectRect.clear();
-    if(frameForeground)
-    {
-        objectRect=frameForeground->getFrameForegroundRect(frame,minBox);
-        if(isDrawObject)
-        {
-            imageProcess->drawRect(frame,objectRect,cv::Scalar(0,0,255));
-        }
-    }
-
-    return objectRect;
-}
-
-//检测运动目标得到运动目标中心
-std::vector<cv::Point2f> VehicleConverseDetection::detectObjectCenter(cv::Mat &frame)
-{
-    std::vector<cv::Point2f> objectCenters;//检测目标的中心
-    objectCenters.clear();
-    if(frameForeground)
-    {
-        //objectCenters=frameForeground->getFrameForegroundCentroid(frame,minBox);
-        objectCenters = frameForeground->getFrameForegroundCenter(frame,minBox);
-        //objectRecognition->getFrameCarObejctdCenter(frame,minSize,minBox);
-        if(isDrawObject)
-        {
-            imageProcess->drawCenter(frame,objectCenters,cv::Scalar(0,255,255));
-        }
-    }
-    return objectCenters;
-}
-
-//得到检测区域内的目标中心点
-std::vector<cv::Point2f> VehicleConverseDetection::getInAreaCenter(std::vector<cv::Point2f>& detectPoints,int number)
-{
-    std::vector<cv::Point2f> myCenterPoint;
-    int count=(int)detectPoints.size();
-    myCenterPoint.clear();
-    for(int loop=0;loop<count;loop++)
-    {
-        if(geometryCalculations->pointInPolygon(detectPoints[loop],detectArea[number].getPolygon1()))
-        {
-            myCenterPoint.push_back(detectPoints[loop]);
-        }
-    }
-    return myCenterPoint;
-}
-
 //得到错误码
 int VehicleConverseDetection::getErrorCode()
 {
@@ -419,7 +328,34 @@ std::vector<ConverseArea>&  VehicleConverseDetection::getDetectArea()
     return detectArea;
 }
 
-//初始化数据
+void VehicleConverseDetection::initData()
+{
+    detectArea.clear();
+    for (int loop1=0;loop1<(int)allMultipleTrackers.size();loop1++)
+    {
+        if (allMultipleTrackers[loop1])
+        {
+            delete allMultipleTrackers[loop1];
+            allMultipleTrackers[loop1] = NULL;
+        }
+    }
+    allMultipleTrackers.clear();
+
+    ConverseArea area;
+    int number=(int)pointsArea.size();
+    for (int loop2=0; loop2<number; loop2++)
+    {
+        area.setPolygon(pointsArea[loop2]);
+        area.setNormalDirection(areaDirection[loop2]);
+        area.isConverse=false;
+        area.isFirst=0;
+        detectArea.push_back(area);
+        KalmanMultipleTracker* tarcker=new KalmanMultipleTracker();
+        allMultipleTrackers.push_back(tarcker);
+    }
+}
+
+//初始化
 void VehicleConverseDetection::init()
 {
     errorCode=0;
@@ -455,13 +391,14 @@ void VehicleConverseDetection::saveConfig()
     }
     fs.open("./config/VehicleConverseDetection.xml",cv::FileStorage::WRITE,"utf-8");
 
-    cv::write(fs,"isDrawObject",isDrawObject);
+    cv::write(fs,"isDrawObject", isDrawObject);
     cv::write(fs, "saveDeltaTime", saveDeltaTime);
     cv::write(fs, "minConversePointNum", minConversePointNum);
     cv::write(fs, "crossMatchMaxValue", crossMatchMaxValue);
     cv::write(fs, "minSize", minSize);
     cv::write(fs, "minBox", minBox);
     cv::write(fs, "savePictureDir", savePictureDir.toStdString());
+    cv::write(fs, "saveClassiferPath", saveClassiferPath.toStdString());
     cv::write(fs, "areaDirection", areaDirection);
     for(int loop=0;loop<(int)pointsArea.size();loop++)
     {
@@ -476,20 +413,23 @@ void VehicleConverseDetection::loadConfig()
     cv::FileStorage fs;
     std::vector<cv::Point> tempVector;
     cv::String tempDataDir="./intrude";
+    cv::String tempPath = "./cascade.xml";
     pointsArea.clear();
     areaDirection.clear();
-    fs.open("./config/VehicleConverseDetection.xml",cv::FileStorage::READ,"utf-8");
+    fs.open("./config/VehicleConverseDetection.xml", cv::FileStorage::READ, "utf-8");
 
-    cv::read(fs["isDrawObject"],isDrawObject,false);
+    cv::read(fs["isDrawObject"],isDrawObject, false);
     cv::read(fs["saveDeltaTime"], saveDeltaTime, 3);
-    cv::read(fs["minConversePointNum"],minConversePointNum,10);
-    cv::read(fs["crossMatchMaxValue"], crossMatchMaxValue,0.1f);
-    cv::read(fs["minSize"], minSize,30);
-    cv::read(fs["minBox"], minBox,300.0f);
+    cv::read(fs["minConversePointNum"], minConversePointNum, 10);
+    cv::read(fs["crossMatchMaxValue"], crossMatchMaxValue, 0.1f);
+    cv::read(fs["minSize"], minSize, 30);
+    cv::read(fs["minBox"], minBox, 300.0f);
     cv::read(fs["savePictureDir"], tempDataDir, cv::String("./converse"));
-    savePictureDir=QString::fromStdString(tempDataDir);
-    qDebug()<<savePictureDir;
-    cv::read(fs["areaDirection"],areaDirection);
+    cv::read(fs["saveClassiferPath"], tempPath, cv::String("./classifer/cascade.xml"));
+    savePictureDir = QString::fromStdString(tempDataDir);
+    saveClassiferPath = QString::fromStdString(tempPath);
+    qDebug() << savePictureDir << " " << saveClassiferPath;
+    cv::read(fs["areaDirection"], areaDirection);
 
     cv::FileNode node=fs["pointsArea0"];
     if(node.isNone())

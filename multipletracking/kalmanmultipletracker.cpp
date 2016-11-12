@@ -253,8 +253,8 @@ void KalmanMultipleTracker::loadConfig()
     fs.open("./config/MultipleTracker.xml", cv::FileStorage::READ);
 
     cv::read(fs["dist_thres"], dist_thres, 60.0);
-    cv::read(fs["maximum_allowed_skipped_frames"], maximum_allowed_skipped_frames, 15);
-    cv::read(fs["max_trace_length"], max_trace_length, 10);
+    cv::read(fs["maximum_allowed_skipped_frames"], maximum_allowed_skipped_frames, 12);
+    cv::read(fs["max_trace_length"], max_trace_length, 12);
     cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();

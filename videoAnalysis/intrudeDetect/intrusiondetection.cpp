@@ -36,7 +36,7 @@ IntrusionDetection::~IntrusionDetection()
 }
 
 //入侵检测
-int IntrusionDetection::detect(cv::Mat &frame)
+int IntrusionDetection::detect(const cv::Mat &frame)
 {
     cv::Mat roiArea;//区域截图
     int objectNumber=0;
@@ -99,17 +99,6 @@ void IntrusionDetection::initDetectData()
     }
 }
 
-//通过检测出的目标匹配目标区域
-void IntrusionDetection::matchDetectAllArea(std::vector<cv::Rect> vectorRect)
-{
-    int numberDetectArea=(int)detectArea.size();
-    //判断两矩形的相交度
-    for(int loop=0;loop<numberDetectArea;loop++)
-    {
-        matchDetectArea(vectorRect,loop);
-    }
-}
-
 //对某一个区域匹配目标
 void IntrusionDetection::matchDetectArea(std::vector<cv::Rect> vectorRect,int number)
 {
@@ -143,41 +132,8 @@ void IntrusionDetection::matchDetectArea(std::vector<cv::Rect> vectorRect,int nu
     }
 }
 
-//判断某个区域是否入侵
-int  IntrusionDetection::intrusionArea(int number)
-{
-    if(detectArea[number].isIntrusion)
-    {
-        detectArea[number].isIntrusion=false;
-        return number+1;
-    }
-    else
-    {
-        return 0;
-    }
-}
-
-
-//得到入侵区域并保存图片
-QList<int> IntrusionDetection::allIntrusionArea(cv::Mat inFrame,QString fileDir,QString fileName)
-{
-    QList<int> intrusionAreaAll;
-    int isIntrusion=0;
-    int numberDetectArea=(int)detectArea.size();
-    intrusionAreaAll.clear();
-    for(int loop=0;loop<numberDetectArea;loop++)
-    {
-        isIntrusion=intrusionArea(inFrame,loop,fileDir,fileName);
-        if(isIntrusion>0)
-        {
-            intrusionAreaAll.append(isIntrusion);
-        }
-    }
-    return intrusionAreaAll;
-}
-
 //该区域是否入侵并保存图片
-int IntrusionDetection::intrusionArea(cv::Mat inFrame,int number,QString fileDir,QString fileName)
+int IntrusionDetection::intrusionArea(const cv::Mat& inFrame, int number, QString fileDir, QString fileName)
 {
     //cv::Mat detectROI;
     if(detectArea[number].isIntrusion)
@@ -212,6 +168,20 @@ int IntrusionDetection::intrusionArea(cv::Mat inFrame,int number,QString fileDir
     }
 }
 
+//判断某个区域是否入侵
+int  IntrusionDetection::intrusionArea(int number)
+{
+    if(detectArea[number].isIntrusion)
+    {
+        detectArea[number].isIntrusion=false;
+        return number+1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 //绘制入侵区域
 void IntrusionDetection::drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color)
 {
@@ -232,16 +202,16 @@ void IntrusionDetection::drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color)
 }
 
 //检测运动目标
-std::vector<cv::Rect> IntrusionDetection::detectObject(cv::Mat &frame)
+std::vector<cv::Rect> IntrusionDetection::detectObject(const cv::Mat &frame)
 {
     std::vector<cv::Rect> objectRect;//检测的目标矩形边界
     objectRect.clear();
     if(frameForeground)
     {
-        objectRect=frameForeground->getFrameForegroundRect(frame,minBox);
+        objectRect=frameForeground->getFrameForegroundRect(frame, minBox);
         if(isDrawObject)
         {
-            imageProcess->drawRect(frame,objectRect,cv::Scalar(0,0,255));
+            imageProcess->drawRect(const_cast<cv::Mat&>(frame), objectRect, cv::Scalar(0,0,255));
         }
     }
 
@@ -255,7 +225,7 @@ int IntrusionDetection::getErrorCode()
 }
 
 //得到检测区域
-std::vector<IntrusionArea>  IntrusionDetection::getDetectArea()
+std::vector<IntrusionArea>&  IntrusionDetection::getDetectArea()
 {
     return detectArea;
 }
