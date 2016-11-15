@@ -90,7 +90,7 @@ void KalmanMultipleTracker::mutilpleTracking(const cv::Mat& inFrame, const std::
 
     // Solving assignment problem (listTrackers and predictions of Kalman filter)
     AssignmentProblemSolver APS;
-    APS.Solve(Cost, assignment, AssignmentProblemSolver::optimal);
+    APS.Solve(Cost, assignment);
 
     // clean assignment from pairs with large distance
     // Not assigned trackers

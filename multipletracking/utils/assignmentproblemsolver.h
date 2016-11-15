@@ -11,10 +11,10 @@
 class AssignmentProblemSolver
 {
 public:
-    enum TMethod { optimal, many_forbidden_assignments, without_forbidden_assignments };
+
     AssignmentProblemSolver();
     ~AssignmentProblemSolver();
-    double Solve(const std::vector< std::vector<double> >& DistMatrix, std::vector<int>& Assignment, TMethod Method = optimal);
+    double Solve(const std::vector< std::vector<double> >& DistMatrix, std::vector<int>& Assignment);
 
 private:
     // --------------------------------------------------------------------------
@@ -32,9 +32,7 @@ private:
     // Computes a suboptimal solution. Good for cases with many forbidden assignments.
     // --------------------------------------------------------------------------
     void assignmentsuboptimal1(int *assignment, double *cost, double *distMatrixIn, int nOfRows, int nOfColumns);
-    // --------------------------------------------------------------------------
-    // Computes a suboptimal solution. Good for cases with many forbidden assignments.
-    // --------------------------------------------------------------------------
+    //贪心算法
     void assignmentsuboptimal2(int *assignment, double *cost, double *distMatrixIn, int nOfRows, int nOfColumns);
 };
 
