@@ -30,7 +30,7 @@ LeaveShowVideoWindow::~LeaveShowVideoWindow()
         delete videoSave;
         videoSave=NULL;
     }
-    std::cout<<"~LeaveShowVideoWindow()"<<std::endl;
+    std::cout << "~LeaveShowVideoWindow()" << std::endl;
 }
 
 void LeaveShowVideoWindow::paintEvent(QPaintEvent *e)
@@ -41,11 +41,26 @@ void LeaveShowVideoWindow::paintEvent(QPaintEvent *e)
     {
         QPixmap tempPicture=QPixmap::fromImage(currentImage);
         drawingArea(tempPicture);
+        int window_width = width();
+        int window_height = height();
+        int image_width = tempPicture.width();
+        int image_height = tempPicture.height();
+        int offset_x = (window_width - image_width) / 2;
+        int offset_y = (window_height - image_height) / 2;
+        painter.translate(offset_x, offset_y);
         painter.drawPixmap(0,0,tempPicture);
     }
     else
     {
-        painter.drawPixmap(0,0,QPixmap::fromImage(QImage(":/img/play.png")));
+        QPixmap initPicture=QPixmap::fromImage(QImage(":/img/play.png"));
+        int window_width = width();
+        int window_height = height();
+        int image_width = initPicture.width();
+        int image_height = initPicture.height();
+        int offset_x = (window_width - image_width) / 2;
+        int offset_y = (window_height - image_height) / 2;
+        painter.translate(offset_x, offset_y);
+        painter.drawPixmap(0,0,initPicture);
     }
     painter.end();
 }
@@ -55,7 +70,7 @@ void LeaveShowVideoWindow::slotVideoImage(QImage image,bool isOpen)
     this->isOpen=isOpen;
     currentImage=image;
     this->update();
-    if(!isOpen)
+    if (!isOpen)
     {
         emit signalVideoMessage(isOpen);
     }
@@ -64,26 +79,21 @@ void LeaveShowVideoWindow::slotVideoImage(QImage image,bool isOpen)
 void LeaveShowVideoWindow::slotMessage(QString message,int pos)
 {
     QString str="Leave Detection:";
-    qDebug()<<message;
-    if(message.trimmed().startsWith(str))
+    qDebug() << message;
+    if (message.trimmed().startsWith(str))
     {
-//        QString filePath = QDir::currentPath()+"/Resource/"+QDate::currentDate().toString("yyyy-MM-dd");
-//        QString fileName = QDir::currentPath()+"/Resource/"+QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
-//        videoSave->saveVideoData2(videoPath,filePath,fileName,pos/1000,maxLeaveTime);
-        int number=message.trimmed().mid(str.length()).toInt();
-        int stopPos=pos/1000;
-        int startPos=stopPos-maxLeaveTime;
-        if(startPos<0)
-        {
-            startPos=0;
-        }
-        emit signalLeaveMessage(number,startPos,stopPos);
+        QString filePath = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd");
+        QString fileName = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd") + "/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+        videoSave->saveVideoData(videoPath, filePath, fileName, pos, maxLeaveTime);
+        int number= message.trimmed().mid(str.length()).toInt();
+        emit signalLeaveMessage(number);
     }
 }
 
 void LeaveShowVideoWindow::slotSaveVideo(QString path)
 {
-    qDebug()<<"path:"<<path;
+    qDebug() << "path:" << path;
+    emit signalSaveVideoMessage(path);
 }
 
 int LeaveShowVideoWindow::showVideo(const QString &path)
@@ -92,8 +102,8 @@ int LeaveShowVideoWindow::showVideo(const QString &path)
     videoPath = path;
     if(leaveDetectThread)
     {
-        errCode=leaveDetectThread->startThread(path);
-        if(errCode>=0)
+        errCode = leaveDetectThread->startThread(path);
+        if(errCode >= 0)
         {
             QFileInfo info1("./config/LeaveDetection.xml");
             if(info1.exists())
@@ -117,7 +127,8 @@ int LeaveShowVideoWindow::closeShowVideo()
     if(leaveDetectThread)
     {
         leaveDetectThread->stopThread();
-        isOpen=false;
+        isOpen = false;
+        this->update();
     }
     return 0;
 }
@@ -129,14 +140,14 @@ bool LeaveShowVideoWindow::getIsOpenVideo()
 }
 
 //配置检测参数
-void LeaveShowVideoWindow::setConfigParameter(QList<QPolygonF> detectArea,int maxLeaveTime)
+void LeaveShowVideoWindow::setConfigParameter(QList<QPolygonF> detectArea, int maxLeaveTime)
 {
     if(detectArea.isEmpty())
     {
         qDebug()<<"区域为空"<<endl;
         return;
     }
-    this->maxLeaveTime=maxLeaveTime;
+    this->maxLeaveTime = maxLeaveTime;
     area.clear();
     copyArea=detectArea;
     for(int loop=0;loop<detectArea.size();loop++)
@@ -212,11 +223,11 @@ void LeaveShowVideoWindow::initData()
 
     videoPath="";
 
-    leaveDetectThread=new LeaveDetectThread();//离岗检测
+    leaveDetectThread = new LeaveDetectThread();//离岗检测
     videoSave=new VideoSave();//保存视频
     isOpen=false;
 
-    currentImage=QImage(":/img/play.png");
+    currentImage = QImage(":/img/play.png");
 
     //绘图画笔
     myPen.setWidth(2);
@@ -226,10 +237,9 @@ void LeaveShowVideoWindow::initData()
 
 void LeaveShowVideoWindow::initConnect()
 {
-    connect(leaveDetectThread,&LeaveDetectThread::signalMessage,this,&LeaveShowVideoWindow::slotMessage);
-    connect(leaveDetectThread,&LeaveDetectThread::signalVideoMessage,this,&LeaveShowVideoWindow::slotVideoImage);
-
-    connect(videoSave,&VideoSave::signalSaveFinish,this,&LeaveShowVideoWindow::slotSaveVideo);
+    connect(leaveDetectThread, &LeaveDetectThread::signalMessage, this, &LeaveShowVideoWindow::slotMessage);
+    connect(leaveDetectThread, &LeaveDetectThread::signalVideoMessage, this, &LeaveShowVideoWindow::slotVideoImage);
+    connect(videoSave, &VideoSave::signalSaveFinish, this, &LeaveShowVideoWindow::slotSaveVideo);
 }
 
 void LeaveShowVideoWindow::saveLeaveConfig()

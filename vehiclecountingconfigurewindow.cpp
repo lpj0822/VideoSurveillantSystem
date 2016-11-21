@@ -1,12 +1,12 @@
 ﻿#pragma execution_character_set("utf-8")
-#include "vehicleconverseconfigurationwindow.h"
+#include "vehiclecountingconfigurewindow.h"
 #include <QVector>
 #include <QPoint>
 #include <QMessageBox>
 #include <QEvent>
 #include <QDebug>
 
-VehicleConverseConfigurationWindow::VehicleConverseConfigurationWindow(QImage image, QWidget *parent) : QDialog(parent)
+VehicleCountingConfigureWindow::VehicleCountingConfigureWindow(QImage image, QWidget *parent) : QDialog(parent)
 {
     this->pixmap = QPixmap::fromImage(image);
     initUI();
@@ -14,12 +14,12 @@ VehicleConverseConfigurationWindow::VehicleConverseConfigurationWindow(QImage im
     initConnect();
 }
 
-VehicleConverseConfigurationWindow::~VehicleConverseConfigurationWindow()
+VehicleCountingConfigureWindow::~VehicleCountingConfigureWindow()
 {
     drawArea->deleteLater();
 }
 
-void VehicleConverseConfigurationWindow::changeEvent(QEvent *event)
+void VehicleCountingConfigureWindow::changeEvent(QEvent *event)
 {
     QDialog::changeEvent(event);
     switch (event->type())
@@ -34,14 +34,14 @@ void VehicleConverseConfigurationWindow::changeEvent(QEvent *event)
     }
 }
 
-//得到逆行检测区域
-QList<QPolygonF> VehicleConverseConfigurationWindow::getDetectArea()
+//得到检测区域
+QList<QPolygonF> VehicleCountingConfigureWindow::getDetectArea()
 {
     return area;
 }
 
 //车辆正常行驶方向
-QList<int> VehicleConverseConfigurationWindow::getDirection()
+QList<int> VehicleCountingConfigureWindow::getDirection()
 {
     QList<int> areaDirection;
     for(int loop=0;loop<area.size();loop++)
@@ -51,7 +51,7 @@ QList<int> VehicleConverseConfigurationWindow::getDirection()
     return areaDirection;
 }
 
-void VehicleConverseConfigurationWindow::slotOk()
+void VehicleCountingConfigureWindow::slotOk()
 {
     QString message = "";
     QVector<QPoint> tempPolygon = drawArea->getPolygon();
@@ -72,18 +72,13 @@ void VehicleConverseConfigurationWindow::slotOk()
 
 }
 
-void VehicleConverseConfigurationWindow::slotCancel()
-{
-    reject();
-}
-
-void VehicleConverseConfigurationWindow::slotRest()
+void VehicleCountingConfigureWindow::slotRest()
 {
     drawArea->restImage(pixmap);
 }
 
 //初始化UI
-void VehicleConverseConfigurationWindow::initUI()
+void VehicleCountingConfigureWindow::initUI()
 {
     mainLayout = new QVBoxLayout();
 
@@ -126,19 +121,19 @@ void VehicleConverseConfigurationWindow::initUI()
 
     this->setMaximumSize(widthWindow, heightWindow);
     this->setMinimumSize(widthWindow, heightWindow);
-    this->setWindowTitle(tr("车辆逆行检测系统参数配置"));
+    this->setWindowTitle(tr("车流量统计系统参数配置"));
 }
 
 //初始化数据
-void VehicleConverseConfigurationWindow::initData()
+void VehicleCountingConfigureWindow::initData()
 {
     area.clear();
 }
 
 //事件连接
-void VehicleConverseConfigurationWindow::initConnect()
+void VehicleCountingConfigureWindow::initConnect()
 {
-    connect(okButton, &QPushButton::clicked, this, &VehicleConverseConfigurationWindow::slotOk);
-    connect(cancelButton, &QPushButton::clicked, this, &VehicleConverseConfigurationWindow::slotCancel);
-    connect(restButton, &QPushButton::clicked, this, &VehicleConverseConfigurationWindow::slotRest);
+    connect(okButton, &QPushButton::clicked, this, &VehicleCountingConfigureWindow::slotOk);
+    connect(cancelButton, &QPushButton::clicked, this, &VehicleCountingConfigureWindow::reject);
+    connect(restButton, &QPushButton::clicked, this, &VehicleCountingConfigureWindow::slotRest);
 }

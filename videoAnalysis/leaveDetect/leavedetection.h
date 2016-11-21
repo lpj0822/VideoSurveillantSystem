@@ -1,12 +1,16 @@
-﻿#ifndef LEAVEDETECTION_H
+﻿/*
+ *Leave detection
+ * 离岗检测
+ */
+#ifndef LEAVEDETECTION_H
 #define LEAVEDETECTION_H
 
 #include <QObject>
 #include "baseAlgorithm/imageprocess.h"
 #include "baseAlgorithm/geometrycalculations.h"
 #include "baseAlgorithm/frameforeground.h"
-#include "../picturesavethread.h"
-#include "../errorcodestring.h"
+#include "../utility/picturesavethread.h"
+#include "../utility/errorcodestring.h"
 #include "officearea.h"
 
 class LeaveDetection : public QObject

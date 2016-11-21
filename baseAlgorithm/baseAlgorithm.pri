@@ -4,7 +4,8 @@ HEADERS += \
     $$PWD/imageprocess.h \
     $$PWD/myvideowriter.h \
     $$PWD/objectrecognition.h \
-    $$PWD/testprocesstime.h
+    $$PWD/testprocesstime.h \
+    $$PWD/beziercurve.h
 
 SOURCES += \
     $$PWD/frameforeground.cpp \
@@ -12,4 +13,5 @@ SOURCES += \
     $$PWD/imageprocess.cpp \
     $$PWD/myvideowriter.cpp \
     $$PWD/objectrecognition.cpp \
-    $$PWD/testprocesstime.cpp
+    $$PWD/testprocesstime.cpp \
+    $$PWD/beziercurve.cpp

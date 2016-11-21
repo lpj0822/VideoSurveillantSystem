@@ -13,7 +13,10 @@ ControlWindow::ControlWindow(QWidget *parent)
 
 ControlWindow::~ControlWindow()
 {
-
+    leaveDetectWindow->deleteLater();
+    intrudeDetectWindow->deleteLater();
+    vehicleConverseWindow->deleteLater();
+    vehicleCountingWindow->deleteLater();
 }
 
 void ControlWindow::slotOK()
@@ -29,11 +32,15 @@ void ControlWindow::init()
 void ControlWindow::initUI()
 {
     tabweight=new QTabWidget();
+    leaveDetectWindow = new LeaveDetectControlWindow();
+    intrudeDetectWindow = new IntrudeDetectControlWindow();
     vehicleConverseWindow = new VehicleConverseControlWindow();
     vehicleCountingWindow = new VehicleCountingControlWindow();
 
-    tabweight->addTab(vehicleConverseWindow, tr("车辆逆行检测"));
-    tabweight->addTab(vehicleCountingWindow, tr("车流量统计"));
+    tabweight->addTab(leaveDetectWindow, tr("离岗检测系统"));
+    tabweight->addTab(intrudeDetectWindow, tr("入侵检测系统"));
+    tabweight->addTab(vehicleConverseWindow, tr("车辆逆行检测系统"));
+    tabweight->addTab(vehicleCountingWindow, tr("车流量统计系统"));
 
     buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel); // 创建QDialogButtonBox
     buttonBox->button(QDialogButtonBox::Ok)->setText(tr("确定"));//将buttonbox中的ok 变成汉化

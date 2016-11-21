@@ -128,7 +128,7 @@ bool VehicleCountingShowVideoWindow::getIsOpenVideo()
 }
 
 //配置检测参数
-void VehicleCountingShowVideoWindow::setConfigParameter(QList<QPolygonF> detectArea,QList<int> directions)
+void VehicleCountingShowVideoWindow::setConfigParameter(QList<QPolygonF> detectArea, QList<int> directions)
 {
     if(detectArea.isEmpty())
     {

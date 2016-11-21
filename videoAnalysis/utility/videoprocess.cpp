@@ -150,7 +150,7 @@ int VideoProcess::getFramePosition()
     int position=0;
     if(isOpenVideo)
     {
-        position=capture.get(cv::CAP_PROP_POS_FRAMES);
+        position = capture.get(cv::CAP_PROP_POS_FRAMES);
     }
     return position;
 }
@@ -161,7 +161,7 @@ int VideoProcess::getFramePositionmSec()
     int mSec=0;
     if(isOpenVideo)
     {
-        mSec=capture.get(cv::CAP_PROP_POS_MSEC);
+        mSec = capture.get(cv::CAP_PROP_POS_MSEC);
     }
     return mSec;
 }

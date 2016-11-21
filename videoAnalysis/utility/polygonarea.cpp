@@ -15,7 +15,7 @@ PolygonArea::~PolygonArea()
 //设置区域
 void PolygonArea::setPolygon(std::vector<cv::Point> points)
 {
-    rect=cv::boundingRect(points);
+    rect = cv::boundingRect(points);
     this->polygon=points;
     for(int loop=0;loop<(int)points.size();loop++)
     {
@@ -23,11 +23,6 @@ void PolygonArea::setPolygon(std::vector<cv::Point> points)
         int y=points[loop].y-rect.y;
         this->movePolygon.push_back(cv::Point(x,y));
     }
-}
-
-void PolygonArea::addArea(cv::Point point)//增加点
-{
-    this->polygon.push_back(point);
 }
 
 //得到多边形区域

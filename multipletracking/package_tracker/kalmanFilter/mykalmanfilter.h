@@ -3,6 +3,7 @@
 
 #include <opencv2/core.hpp>
 #include <opencv2/video.hpp>
+#include <memory>
 
 class MyKalmanFilter
 {
@@ -17,7 +18,7 @@ private:
     void initMaxtrix();
 
 private:
-    cv::KalmanFilter* kalman;
+    std::unique_ptr<cv::KalmanFilter> kalman;
     float deltatime;
     float acceleration_noise_mag;
 

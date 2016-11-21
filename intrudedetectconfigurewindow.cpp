@@ -1,12 +1,12 @@
 ﻿#pragma execution_character_set("utf-8")
-#include "leavedetectconfigurewindow.h"
+#include "intrudedetectconfigurewindow.h"
 #include <QVector>
 #include <QPoint>
 #include <QMessageBox>
 #include <QEvent>
 #include <QDebug>
 
-LeaveDetectConfigureWindow::LeaveDetectConfigureWindow(QImage image, QWidget *parent) : QDialog(parent)
+IntrudeDetectConfigureWindow::IntrudeDetectConfigureWindow(QImage image, QWidget *parent) : QDialog(parent)
 {
     this->pixmap = QPixmap::fromImage(image);
     initUI();
@@ -14,12 +14,12 @@ LeaveDetectConfigureWindow::LeaveDetectConfigureWindow(QImage image, QWidget *pa
     initConnect();
 }
 
-LeaveDetectConfigureWindow::~LeaveDetectConfigureWindow()
+IntrudeDetectConfigureWindow::~IntrudeDetectConfigureWindow()
 {
     drawArea->deleteLater();
 }
 
-void LeaveDetectConfigureWindow::changeEvent(QEvent *event)
+void IntrudeDetectConfigureWindow::changeEvent(QEvent *event)
 {
     QDialog::changeEvent(event);
     switch (event->type())
@@ -35,18 +35,12 @@ void LeaveDetectConfigureWindow::changeEvent(QEvent *event)
 }
 
 //得到检测区域
-QList<QPolygonF> LeaveDetectConfigureWindow::getDetectArea()
+QList<QPolygonF> IntrudeDetectConfigureWindow::getDetectArea()
 {
     return area;
 }
 
-//最大离岗时间，超过该时间则判定为离岗
-int LeaveDetectConfigureWindow::getLeaveMaxTime()
-{
-    return (maxLeaveTimeBox->value() * 60);
-}
-
-void LeaveDetectConfigureWindow::slotOk()
+void IntrudeDetectConfigureWindow::slotOk()
 {
     QString message = "";
     QVector<QPoint> tempPolygon = drawArea->getPolygon();
@@ -67,35 +61,21 @@ void LeaveDetectConfigureWindow::slotOk()
 
 }
 
-void LeaveDetectConfigureWindow::slotRest()
+void IntrudeDetectConfigureWindow::slotRest()
 {
     drawArea->restImage(pixmap);
     area.clear();
 }
 
 //初始化UI
-void LeaveDetectConfigureWindow::initUI()
+void IntrudeDetectConfigureWindow::initUI()
 {
     mainLayout = new QVBoxLayout();
-
-    QHBoxLayout *configureLayout = new QHBoxLayout();
-    maxLeaveTimeLabel = new QLabel(tr("最大离岗时间："));
-    maxLeaveTimeBox = new QSpinBox();
-    maxLeaveTimeBox->setSuffix(tr("分钟"));
-    maxLeaveTimeBox->setValue(5);
-    maxLeaveTimeBox->setMinimum(5);
-    maxLeaveTimeBox->setMaximum(1440);
-    maxLeaveTimeBox->setSingleStep(10);
-    configureLayout->setSpacing(10);  //设置各个控件之间的边距
-    configureLayout->setAlignment(Qt::AlignCenter);
-    configureLayout->addWidget(maxLeaveTimeLabel);
-    configureLayout->addWidget(maxLeaveTimeBox);
-
 
     drawArea = new DrawingWindow(pixmap);
     drawArea->setMouseTracking(true);
     this->widthWindow=drawArea->width() + 20;
-    this->heightWindow=drawArea->height() + 90;
+    this->heightWindow=drawArea->height() + 60;
 
     QHBoxLayout *bottomLayout=new QHBoxLayout();
     bottomLayout->setAlignment(Qt::AlignCenter);
@@ -111,26 +91,25 @@ void LeaveDetectConfigureWindow::initUI()
     mainLayout->setSpacing(10);  //设置各个控件之间的边距
     mainLayout->setAlignment(Qt::AlignCenter);
     mainLayout->addWidget(drawArea);
-    mainLayout->addLayout(configureLayout);
     mainLayout->addLayout(bottomLayout);
     this->setLayout(mainLayout);
 
     this->setMaximumSize(widthWindow, heightWindow);
     this->setMinimumSize(widthWindow, heightWindow);
-    this->setWindowTitle(tr("离岗检测系统参数配置"));
+    this->setWindowTitle(tr("入侵检测系统参数配置"));
 }
 
 //初始化数据
-void LeaveDetectConfigureWindow::initData()
+void IntrudeDetectConfigureWindow::initData()
 {
     area.clear();
 }
 
 //事件连接
-void LeaveDetectConfigureWindow::initConnect()
+void IntrudeDetectConfigureWindow::initConnect()
 {
-    connect(okButton, &QPushButton::clicked, this, &LeaveDetectConfigureWindow::slotOk);
-    connect(cancelButton, &QPushButton::clicked, this, &LeaveDetectConfigureWindow::reject);
-    connect(restButton, &QPushButton::clicked, this, &LeaveDetectConfigureWindow::slotRest);
+    connect(okButton, &QPushButton::clicked, this, &IntrudeDetectConfigureWindow::slotOk);
+    connect(cancelButton, &QPushButton::clicked, this, &IntrudeDetectConfigureWindow::reject);
+    connect(restButton, &QPushButton::clicked, this, &IntrudeDetectConfigureWindow::slotRest);
 }
 

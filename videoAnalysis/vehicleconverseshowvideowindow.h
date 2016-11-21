@@ -11,8 +11,8 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include "vehicleConverse/vehicleconversedetectthread.h"
-#include "videowritethread.h"
-#include "errorcodestring.h"
+#include "utility/videowritethread.h"
+#include "utility/errorcodestring.h"
 
 class VehicleConverseShowVideoWindow : public QWidget
 {
@@ -37,7 +37,7 @@ public:
     bool getIsOpenVideo();//是否打开视频
 
 signals:
-    void signalConverseMessage(int number,QString savePath);
+    void signalConverseMessage(int number, QString savePath);
     void signalVideoMessage(bool isOpenVideo);
 
 public slots:

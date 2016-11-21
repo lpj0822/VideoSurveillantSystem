@@ -1,4 +1,8 @@
-﻿#ifndef VEHICLECOUTING_H
+﻿/*
+ * Vehicle counting
+ * 车流量统计
+ */
+#ifndef VEHICLECOUTING_H
 #define VEHICLECOUTING_H
 
 #include <QObject>

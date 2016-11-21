@@ -102,13 +102,12 @@ int VideoWriteThread::initSaveVideoData(const QString &fileNameDir, const QStrin
     this->fileName=fileName;
     if(!makeDir.exists(fileNameDir))
     {
-        if(!makeDir.mkdir(fileNameDir))
+        if(!makeDir.mkpath(fileNameDir))
         {
-            std::cout<<"make dir fail!"<<std::endl;
+            std::cout<< "make dir fail!" << "fileName:" << fileName.toStdString() << std::endl;
             return -11;
         }
     }
-    std::cout<<"fileName:"<<fileName.toStdString()<<std::endl;
     outputVideo->closeWriteVideo();
     errCode=outputVideo->initSaveVideoData(fileName.toStdString().c_str(),size,fps,codec,isColor);
     return errCode;

@@ -1,6 +1,4 @@
 #include "ivibebgs.h"
-#include <stdexcept>
-#include <cstdlib>
 #include <ctime>
 #include <cmath>
 #include <iostream>
@@ -8,12 +6,12 @@
 IViBeBGS::IViBeBGS()
 {
     init();
-    std::cout<<"IViBeBGS()"<<std::endl;
+    std::cout << "IViBeBGS()"<< std::endl;
 }
 
 IViBeBGS::~IViBeBGS()
 {
-    std::cout<<"~IViBeBGS()"<<std::endl;
+    std::cout << "~IViBeBGS()"<< std::endl;
 }
 
 void IViBeBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel)
@@ -146,7 +144,7 @@ void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
     if(model_ptr)
     {
         delete [] model_ptr;
-        model_ptr=NULL;
+        model_ptr = NULL;
     }
 }
 
@@ -200,7 +198,7 @@ void IViBeBGS::initBGModel (const cv::Mat& bg)
     if(model_ptr)
     {
         delete [] model_ptr;
-        model_ptr=NULL;
+        model_ptr = NULL;
     }
 }
 

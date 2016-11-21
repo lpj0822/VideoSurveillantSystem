@@ -1,12 +1,11 @@
-﻿//Implementation of the PBAS from:
-//
-//M. Hofmann, P. Tiefenbacher, G. Rigoll 
-//"Background Segmentation with Feedback: The Pixel-Based Adaptive Segmenter", 
-//in proc of IEEE Workshop on Change Detection, 2012
-//
-//Note: some changes, to improve the speed and memory requirements, were achieved in comparison to the 
-//described PBAS algorithm in the paper above.
-
+﻿/*Implementation of the PBAS from:
+ * M. Hofmann, P. Tiefenbacher, G. Rigoll
+ * "Background Segmentation with Feedback: The Pixel-Based Adaptive Segmenter",
+ * in proc of IEEE Workshop on Change Detection, 2012
+ * Note:
+ * some changes, to improve the speed and memory requirements, were achieved in comparison to the
+ * described PBAS algorithm in the paper above.
+ */
 #ifndef PBAS_H
 #define PBAS_H
 

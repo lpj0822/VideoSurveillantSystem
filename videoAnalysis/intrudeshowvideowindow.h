@@ -11,8 +11,8 @@
 #include <QFileInfo>
 #include <QDateTime>
 #include "intrudeDetect/intrudedetectthread.h"
-#include "videowritethread.h"
-#include "errorcodestring.h"
+#include "utility/videowritethread.h"
+#include "utility/errorcodestring.h"
 
 class IntrudeShowVideoWindow : public QWidget
 {

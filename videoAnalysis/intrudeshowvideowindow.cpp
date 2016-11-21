@@ -45,11 +45,26 @@ void IntrudeShowVideoWindow::paintEvent(QPaintEvent *e)
     {
         QPixmap tempPicture=QPixmap::fromImage(currentImage);
         drawingArea(tempPicture);
+        int window_width = width();
+        int window_height = height();
+        int image_width = tempPicture.width();
+        int image_height = tempPicture.height();
+        int offset_x = (window_width - image_width) / 2;
+        int offset_y = (window_height - image_height) / 2;
+        painter.translate(offset_x, offset_y);
         painter.drawPixmap(0,0,tempPicture);
     }
     else
     {
-        painter.drawPixmap(0,0,QPixmap::fromImage(QImage(":/img/play.png")));
+        QPixmap initPicture=QPixmap::fromImage(QImage(":/img/play.png"));
+        int window_width = width();
+        int window_height = height();
+        int image_width = initPicture.width();
+        int image_height = initPicture.height();
+        int offset_x = (window_width - image_width) / 2;
+        int offset_y = (window_height - image_height) / 2;
+        painter.translate(offset_x, offset_y);
+        painter.drawPixmap(0,0,initPicture);
     }
     painter.end();
 }
@@ -74,8 +89,8 @@ void IntrudeShowVideoWindow::slotMessage(QString message,int pos)
     {
         if(isFirstLeave)
         {
-            QString filePath = QDir::currentPath()+"/Resource/"+QDate::currentDate().toString("yyyy-MM-dd");
-            QString fileName = QDir::currentPath()+"/Resource/"+QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+            QString filePath = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd");
+            QString fileName = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
             errCode=videoWriteThread->openVideo(videoPath);
             if(errCode==0)
             {

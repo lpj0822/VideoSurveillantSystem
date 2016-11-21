@@ -8,9 +8,8 @@ class PolygonArea
 {
 public:
     PolygonArea();
-    ~PolygonArea();
+    virtual ~PolygonArea();
 
-    void addArea(cv::Point point);//增加点
     void setPolygon(std::vector<cv::Point> points);//设置区域
 
     std::vector<cv::Point> getPolygon();//得到多边形区域

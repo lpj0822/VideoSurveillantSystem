@@ -14,11 +14,6 @@ KalmanTracker::KalmanTracker(cv::Point2f initPoint): firstTime(true)
 
 KalmanTracker::~KalmanTracker()
 {
-    if(kalmanFilter != nullptr)
-    {
-        delete kalmanFilter;
-        kalmanFilter = nullptr;
-    }
     std::cout << "~KalmanTracker()" << std::endl;
 }
 
@@ -77,7 +72,7 @@ void KalmanTracker::init()
     loadConfig();
     // Every track have its own Kalman filter,
     // it user for next point position prediction.
-    kalmanFilter = new MyKalmanFilter(predictPoint, dt, Accel_noise_mag);
+    kalmanFilter = std::make_unique<MyKalmanFilter>(predictPoint, dt, Accel_noise_mag);
     skipped_frames = 0;
     trace.clear();
 }

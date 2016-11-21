@@ -12,7 +12,7 @@ MyKalmanFilter::MyKalmanFilter(cv::Point2f pt, float dt, float acceleration_nois
     // shows, woh much target can accelerate.
 
     //4 state variables, 2 measurements, 0 control variables
-    kalman = new cv::KalmanFilter(4, 2, 0, CV_32F);
+    kalman = std::make_unique<cv::KalmanFilter>(4, 2, 0, CV_32F);
     initMaxtrix();
 
     std::cout << "MyKalmanFilter()" << std::endl;
@@ -21,11 +21,6 @@ MyKalmanFilter::MyKalmanFilter(cv::Point2f pt, float dt, float acceleration_nois
 
 MyKalmanFilter::~MyKalmanFilter()
 {
-    if (kalman != nullptr)
-    {
-        delete kalman;
-        kalman = nullptr;
-    }
     std::cout << "~MyKalmanFilter()" << std::endl;
 }
 

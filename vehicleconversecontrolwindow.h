@@ -10,7 +10,6 @@
 #include <QTextBrowser>
 #include <QVector>
 #include <QPoint>
-
 #include "videoAnalysis/vehicleconverseshowvideowindow.h"
 
 class VehicleConverseControlWindow : public QWidget
@@ -33,7 +32,7 @@ public slots:
     void slotClearText();
 
     void slotVideoMessage(bool isVideoOpen);
-    void slotConverseMessage(int number,QString savePath);
+    void slotConverseMessage(int number, QString savePath);
 
 private:
 
@@ -50,35 +49,12 @@ private:
 
     QString path;//视频路径
 
-    QList<QPolygonF> area;//检测区域
-    QList<int> areaDirection;//每个区域的正常行驶方向
-
-    int minConversePointNum;//运动路径中至少多少个逆行点
-
-    int algorithm;//算法类型
-    bool isFilter;//是否滤波
-    int filterType;//滤波器的类型
-
-    int minObjectArea;//最小能检测目标的面积
-    float areaCrossValue;//区域相交度最小值
-
-    double distThreshold;//两帧之间目标最大的移动距离
-    int maxAllowedSkippedFrames;//允许目标消失的最大帧数
-    int maxTraceLength;//跟踪轨迹的最大长度
-
     bool isOpen;//是否打开视频
     bool isStartDetection;//是否开始检测
 
     void initUI();
     void initData();
     void initConnect();
-
-    void saveVehicleConverseConfig();
-    void loadVehicleConverseConfig();
-    void saveForegroundConfig();
-    void loadForegroundConfig();
-    void loadMultipleTrackerConfig();
-    void saveMultipleTrackerConfig();
 };
 
 #endif // VEHICLECONVERSECONTROLWINDOW_H

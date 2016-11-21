@@ -1,5 +1,5 @@
-﻿#ifndef VEHICLECONVERSECONFIGURATIONWINDOW_H
-#define VEHICLECONVERSECONFIGURATIONWINDOW_H
+﻿#ifndef VEHICLECONVERSECONFIGUREWINDOW_H
+#define VEHICLECONVERSECONFIGUREWINDOW_H
 
 #include <QDialog>
 #include <QLabel>
@@ -27,7 +27,6 @@ signals:
 
 public slots:
     void slotOk();
-    void slotCancel();
     void slotRest();
 
 protected:

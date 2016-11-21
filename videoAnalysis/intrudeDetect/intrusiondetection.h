@@ -1,12 +1,16 @@
-﻿#ifndef INTRUSIONDETECTION_H
+﻿/*
+ *Intrusion detection
+ * 入侵检测
+ */
+#ifndef INTRUSIONDETECTION_H
 #define INTRUSIONDETECTION_H
 
 #include <QObject>
 #include "baseAlgorithm/frameforeground.h"
 #include "baseAlgorithm/geometrycalculations.h"
 #include "baseAlgorithm/imageprocess.h"
-#include "../picturesavethread.h"
-#include "../errorcodestring.h"
+#include "../utility/picturesavethread.h"
+#include "../utility/errorcodestring.h"
 #include "intrusionarea.h"
 
 class IntrusionDetection : public QObject

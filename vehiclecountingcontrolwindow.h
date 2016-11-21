@@ -51,31 +51,12 @@ private:
 
     QString path;//视频路径
 
-    QList<QPolygonF> area;//检测区域
-    QList<int> areaDirection;//每个区域的正常行驶方向
-
-    int algorithm;//算法类型
-    bool isFilter;//是否滤波
-    int filterType;//滤波器的类型
-
-    int minArea;//最小目标的面积
-    double distThreshold;//两帧之间目标最大的移动距离
-    int maxAllowedSkippedFrames;//允许目标消失的最大帧数
-    int maxTraceLength;//跟踪轨迹的最大长度
-
     bool isOpen;//是否打开视频
     bool isStartDetection;//是否开始检测
 
     void initUI();
     void initData();
     void initConnect();
-
-    void saveVehicleCountingConfig();
-    void loadVehicleCountingConfig();
-    void saveForegroundConfig();
-    void loadForegroundConfig();
-    void loadMultipleTrackerConfig();
-    void saveMultipleTrackerConfig();
 };
 
 #endif // VEHICLECOUNTINGCONTROLWINDOW_H

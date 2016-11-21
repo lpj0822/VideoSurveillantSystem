@@ -6,6 +6,8 @@
 #include <QTabWidget>
 #include <QPushButton>
 #include <QDialogButtonBox>
+#include "leavedetectcontrolwindow.h"
+#include "intrudedetectcontrolwindow.h"
 #include "vehicleconversecontrolwindow.h"
 #include "vehiclecountingcontrolwindow.h"
 
@@ -28,6 +30,8 @@ private:
     QTabWidget *tabweight;//tab
     QDialogButtonBox *buttonBox;
 
+    LeaveDetectControlWindow *leaveDetectWindow;//离岗检测
+    IntrudeDetectControlWindow *intrudeDetectWindow;//入侵检测
     VehicleConverseControlWindow *vehicleConverseWindow;//车辆逆行检测
     VehicleCountingControlWindow *vehicleCountingWindow;//车流量统计
 

@@ -6,7 +6,7 @@ MyKalmanFilter2::MyKalmanFilter2(cv::Rect2f rect, float dt):
 {
     // deltatime:time increment (lower values makes target more "massive")
     //4 state variables, 2 measurements, 0 control variables
-    kalman = new cv::KalmanFilter(6, 4, 0, CV_32F);
+    kalman = std::make_unique<cv::KalmanFilter>(6, 4, 0, CV_32F);
     initMaxtrix();
 
     std::cout << "MyKalmanFilter2()" << std::endl;
@@ -15,11 +15,6 @@ MyKalmanFilter2::MyKalmanFilter2(cv::Rect2f rect, float dt):
 
 MyKalmanFilter2::~MyKalmanFilter2()
 {
-    if (kalman != nullptr)
-    {
-        delete kalman;
-        kalman = nullptr;
-    }
     std::cout << "~MyKalmanFilter2()" << std::endl;
 }
 

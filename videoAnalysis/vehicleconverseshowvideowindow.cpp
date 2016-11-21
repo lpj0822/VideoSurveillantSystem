@@ -89,12 +89,12 @@ void VehicleConverseShowVideoWindow::slotMessage(QString message, int pos)
     {
         if(isFirstConverse)
         {
-            QString filePath = ".";
-            QString fileName = "./" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+            QString filePath = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd");
+            QString fileName = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
             errCode=videoWriteThread->openVideo(videoPath);
             if(errCode==0)
             {
-                errCode=videoWriteThread->initSaveVideoData(filePath,fileName);
+                errCode=videoWriteThread->initSaveVideoData(filePath, fileName);
                 if(errCode==0)
                 {
                     videoWriteThread->setStartPos(pos);
@@ -125,11 +125,12 @@ void VehicleConverseShowVideoWindow::slotMessage(QString message, int pos)
 
 void VehicleConverseShowVideoWindow::slotSaveVideo()
 {
+    int minSize = 1024 * 1024;
     videoWriteThread->stopThread();
     videoWriteThread->wait();
-    isFirstConverse=true;
+    isFirstConverse = true;
     QFileInfo info(videoWriteThread->getSaveFileName());
-    if((info.size()/1024)>=350)
+    if((info.size()/minSize) > 1)
     {
         emit signalConverseMessage(detectNumber,videoWriteThread->getSaveFileName());
     }
@@ -138,7 +139,7 @@ void VehicleConverseShowVideoWindow::slotSaveVideo()
         QFile tempFile(videoWriteThread->getSaveFileName());
         if(!tempFile.remove())
         {
-            emit signalConverseMessage(detectNumber,videoWriteThread->getSaveFileName());
+            emit signalConverseMessage(detectNumber, videoWriteThread->getSaveFileName());
         }
         tempFile.close();
     }
@@ -188,7 +189,7 @@ bool VehicleConverseShowVideoWindow::getIsOpenVideo()
 }
 
 //配置检测参数
-void VehicleConverseShowVideoWindow::setConfigParameter(QList<QPolygonF> detectArea,QList<int> directions)
+void VehicleConverseShowVideoWindow::setConfigParameter(QList<QPolygonF> detectArea, QList<int> directions)
 {
     if(detectArea.isEmpty())
     {

@@ -138,7 +138,7 @@ void BlobMultipleTracker::initData()
         blobTracking=NULL;
     }
     loadConfig();
-    blobTracking=new BlobTracker(dist_thres,maximum_allowed_skipped_frames,minArea);
+    blobTracking=new BlobTracker(dist_thres, maximum_allowed_skipped_frames, minArea);
     blobTracks.clear();
     points.clear();//每个目标跟踪的点
     //trackerSkippedFrames.clear();//每个目标调过的帧数

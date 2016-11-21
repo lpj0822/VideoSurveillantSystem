@@ -19,9 +19,9 @@ public:
 
     int openVideo(const QString& fileName);//打开视频文件
 
-    int initSaveVideoData(const QString &fileNameDir, const QString &fileName,long startPos,long intervalSec,bool inv=false);//初始化保存数据参数
+    int initSaveVideoData(const QString &fileNameDir, const QString &fileName, long startPos, long intervalSec, bool inv=false);//初始化保存数据参数
 
-    int initSaveVideoData1(const QString &fileNameDir, const QString &fileName,int startSec,int intervalSec,bool inv=false);//初始化保存数据参数
+    int initSaveVideoData1(const QString &fileNameDir, const QString &fileName, int startSec, int intervalSec, bool inv=false);//初始化保存数据参数
 
     void startThread();//开始线程
     void stopThread();//结束线程

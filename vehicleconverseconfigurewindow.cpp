@@ -1,5 +1,5 @@
 ﻿#pragma execution_character_set("utf-8")
-#include "vehicleconverseconfigurationwindow.h"
+#include "vehicleconverseconfigurewindow.h"
 #include <QVector>
 #include <QPoint>
 #include <QMessageBox>
@@ -72,11 +72,6 @@ void VehicleConverseConfigureWindow::slotOk()
 
 }
 
-void VehicleConverseConfigureWindow::slotCancel()
-{
-    reject();
-}
-
 void VehicleConverseConfigureWindow::slotRest()
 {
     drawArea->restImage(pixmap);
@@ -139,7 +134,7 @@ void VehicleConverseConfigureWindow::initData()
 //事件连接
 void VehicleConverseConfigureWindow::initConnect()
 {
-    connect(okButton, &QPushButton::clicked, this, &VehicleConverseConfigurationWindow::slotOk);
-    connect(cancelButton, &QPushButton::clicked, this, &VehicleConverseConfigurationWindow::slotCancel);
-    connect(restButton, &QPushButton::clicked, this, &VehicleConverseConfigurationWindow::slotRest);
+    connect(okButton, &QPushButton::clicked, this, &VehicleConverseConfigureWindow::slotOk);
+    connect(cancelButton, &QPushButton::clicked, this, &VehicleConverseConfigureWindow::reject);
+    connect(restButton, &QPushButton::clicked, this, &VehicleConverseConfigureWindow::slotRest);
 }

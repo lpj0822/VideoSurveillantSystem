@@ -1,5 +1,5 @@
-﻿#ifndef LEAVEDETECTCONTROLWINDOW_H
-#define LEAVEDETECTCONTROLWINDOW_H
+﻿#ifndef INTRUDEDETECTCONTROLWINDOW_H
+#define INTRUDEDETECTCONTROLWINDOW_H
 
 #include <QWidget>
 #include <QPushButton>
@@ -10,15 +10,14 @@
 #include <QTextBrowser>
 #include <QVector>
 #include <QPoint>
-#include "videoAnalysis/leaveshowvideowindow.h"
+#include "videoAnalysis/intrudeshowvideowindow.h"
 
-class LeaveDetectControlWindow : public QWidget
+class IntrudeDetectControlWindow : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit LeaveDetectControlWindow(QWidget *parent = 0);
-    ~LeaveDetectControlWindow();
+    explicit IntrudeDetectControlWindow(QWidget *parent = 0);
+    ~IntrudeDetectControlWindow();
 
     void drawingArea(QPixmap &pixmap);//绘制区域
 
@@ -32,8 +31,7 @@ public slots:
     void slotClearText();
 
     void slotVideoMessage(bool isVideoOpen);
-    void slotLeaveMessage(int number);
-    void slotSaveVideoMessage(QString path);
+    void slotIntrudeMessage(int number, QString savePath);
 
 private:
 
@@ -46,7 +44,7 @@ private:
     QVBoxLayout *mainLayout;//主布局
     QScrollArea *scrollArea;//滚动区域
 
-    LeaveShowVideoWindow *lbPlay;//车辆逆行检测
+    IntrudeShowVideoWindow *lbPlay;//入侵检测
 
     QString path;//视频路径
 
@@ -58,4 +56,4 @@ private:
     void initConnect();
 };
 
-#endif // LEAVEDETECTCONTROLWINDOW_H
+#endif // INTRUDEDETECTCONTROLWINDOW_H

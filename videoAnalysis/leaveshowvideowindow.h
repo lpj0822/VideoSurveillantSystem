@@ -10,7 +10,7 @@
 #include <QPen>
 #include <QFileInfo>
 #include "leaveDetect/leavedetectthread.h"
-#include "videosave.h"
+#include "utility/videosave.h"
 
 class LeaveShowVideoWindow : public QWidget
 {
@@ -36,7 +36,8 @@ public:
     bool getIsOpenVideo();//是否打开视频
 
 signals:
-    void signalLeaveMessage(int number,int startPos,int stopPos);
+    void signalLeaveMessage(int number);
+    void signalSaveVideoMessage(QString path);
     void signalVideoMessage(bool isOpenVideo);
 
 public slots:
@@ -57,7 +58,7 @@ private:
     LeaveDetectThread *leaveDetectThread;//离岗检测
     VideoSave *videoSave;//保存视频
 
-    int maxLeaveTime;//最大离岗时间，超过这个时间就报警
+    int maxLeaveTime;//最大离岗时间，超过这个时间就报警s
 
     std::vector< std::vector<cv::Point> > area;//办公区域
     QList<QPolygonF> copyArea;//办公区域

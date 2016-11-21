@@ -100,7 +100,7 @@ int VideoSaveThread::initSaveVideoData(const QString &fileNameDir, const QString
     if(!inv)
     {
         startFrame=startPos;
-        stopFrame=startPos+intervalSec*fps;
+        stopFrame=startPos + intervalSec*fps;
         if(stopFrame>video->getFrameCount())
         {
             stopFrame=video->getFrameCount();
@@ -123,24 +123,24 @@ int VideoSaveThread::initSaveVideoData(const QString &fileNameDir, const QString
     this->fileName=fileName;
     if(!makeDir.exists(fileNameDir))
     {
-        if(!makeDir.mkdir(fileNameDir))
+        if(!makeDir.mkpath(fileNameDir))
         {
-            std::cout<<"make dir fail!"<<std::endl;
+            std::cout << "make dir fail!" << "path:" << fileName.toStdString() << std::endl;
             return -11;
         }
     }
-    std::cout<<"fileName:"<<fileName.toStdString()<<std::endl;
+
     if(outputVideo.isOpened())
     {
         outputVideo.release();
     }
-    if(outputVideo.open(fileName.toStdString().c_str(),codec,fps,size,isColor))
+    if(outputVideo.open(fileName.toStdString().c_str(),codec, fps, size, isColor))
     {
         return 0;
     }
     else
     {
-        std::cout<<"初始化保存视频对象发生错误"<<std::endl;
+        std::cout << "初始化保存视频对象发生错误" << std::endl;
         return -20;
     }
 }

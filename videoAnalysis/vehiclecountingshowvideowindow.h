@@ -12,7 +12,7 @@
 #include <QDateTime>
 #include "vehicleCouting/vehiclecountingthread.h"
 #include "vehicleCouting/medianline.h"
-#include "errorcodestring.h"
+#include "utility/errorcodestring.h"
 
 class VehicleCountingShowVideoWindow : public QWidget
 {

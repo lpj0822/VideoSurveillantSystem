@@ -3,6 +3,7 @@
 
 #include "kalmanFilter/mykalmanfilter.h"
 #include <opencv2/core.hpp>
+#include <memory>
 #include <vector>
 
 class KalmanTracker
@@ -23,7 +24,7 @@ public:
 
 
 private:
-    MyKalmanFilter* kalmanFilter;
+    std::unique_ptr<MyKalmanFilter> kalmanFilter;
     bool firstTime;
     size_t tracker_id;
     static size_t NextTrackerID;

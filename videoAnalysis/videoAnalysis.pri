@@ -14,18 +14,19 @@ HEADERS += \
     $$PWD/vehicleCouting/medianline.h \
     $$PWD/vehicleCouting/vehiclecountingthread.h \
     $$PWD/vehicleCouting/vehiclecouting.h \
-    $$PWD/errorcodestring.h \
+    $$PWD/utility/polygonarea.h \
+    $$PWD/utility/detectthread.h \
+    $$PWD/utility/errorcodestring.h \
+    $$PWD/utility/videoprocess.h \
+    $$PWD/utility/videosave.h \
+    $$PWD/utility/videosavethread.h \
+    $$PWD/utility/videowritethread.h \
+    $$PWD/utility/picturesave.h \
+    $$PWD/utility/picturesavethread.h \
     $$PWD/intrudeshowvideowindow.h \
     $$PWD/leaveshowvideowindow.h \
-    $$PWD/picturesave.h \
-    $$PWD/picturesavethread.h \
     $$PWD/vehicleconverseshowvideowindow.h \
-    $$PWD/vehiclecountingshowvideowindow.h \
-    $$PWD/videoprocess.h \
-    $$PWD/videosave.h \
-    $$PWD/videosavethread.h \
-    $$PWD/videowritethread.h \
-    $$PWD/utility/polygonarea.h
+    $$PWD/vehiclecountingshowvideowindow.h
 
 SOURCES += \
     $$PWD/intrudeDetect/intrudedetectthread.cpp \
@@ -41,15 +42,16 @@ SOURCES += \
     $$PWD/vehicleCouting/medianline.cpp \
     $$PWD/vehicleCouting/vehiclecountingthread.cpp \
     $$PWD/vehicleCouting/vehiclecouting.cpp \
-    $$PWD/errorcodestring.cpp \
+    $$PWD/utility/polygonarea.cpp \
+    $$PWD/utility/detectthread.cpp \
+    $$PWD/utility/errorcodestring.cpp \
+    $$PWD/utility/videoprocess.cpp \
+    $$PWD/utility/videosave.cpp \
+    $$PWD/utility/videosavethread.cpp \
+    $$PWD/utility/videowritethread.cpp \
+    $$PWD/utility/picturesave.cpp \
+    $$PWD/utility/picturesavethread.cpp \
     $$PWD/intrudeshowvideowindow.cpp \
     $$PWD/leaveshowvideowindow.cpp \
-    $$PWD/picturesave.cpp \
-    $$PWD/picturesavethread.cpp \
     $$PWD/vehicleconverseshowvideowindow.cpp \
-    $$PWD/vehiclecountingshowvideowindow.cpp \
-    $$PWD/videoprocess.cpp \
-    $$PWD/videosave.cpp \
-    $$PWD/videosavethread.cpp \
-    $$PWD/videowritethread.cpp \
-    $$PWD/utility/polygonarea.cpp
+    $$PWD/vehiclecountingshowvideowindow.cpp

@@ -23,18 +23,28 @@ include(baseAlgorithm/baseAlgorithm.pri)
 include(videoAnalysis/videoAnalysis.pri)
 
 SOURCES += main.cpp\
-    configurationwindow.cpp \
     drawingwindow.cpp \
     controlwindow.cpp \
     vehiclecountingcontrolwindow.cpp \
-    vehicleconversecontrolwindow.cpp
+    vehicleconversecontrolwindow.cpp \
+    vehicleconverseconfigurewindow.cpp \
+    vehiclecountingconfigurewindow.cpp \
+    leavedetectcontrolwindow.cpp \
+    leavedetectconfigurewindow.cpp \
+    intrudedetectcontrolwindow.cpp \
+    intrudedetectconfigurewindow.cpp
 
 HEADERS  += \
-    configurationwindow.h \
     drawingwindow.h \
     controlwindow.h \
     vehiclecountingcontrolwindow.h \
-    vehicleconversecontrolwindow.h
+    vehicleconversecontrolwindow.h \
+    vehicleconverseconfigurewindow.h \
+    vehiclecountingconfigurewindow.h \
+    leavedetectcontrolwindow.h \
+    leavedetectconfigurewindow.h \
+    intrudedetectcontrolwindow.h \
+    intrudedetectconfigurewindow.h
 	
 RESOURCES += \
         text.qrc

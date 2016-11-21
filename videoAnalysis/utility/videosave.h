@@ -14,11 +14,7 @@ public:
     VideoSave(QObject *parent = 0);
     ~VideoSave();
 
-    void saveVideoData(QString videoPath,QString savePath,QString saveFileName,int startPos,int intervalSec);
-
-    void saveVideoData1(QString videoPath, QString savePath, QString saveFileName, int stopPos, int intervalSec);
-
-    void saveVideoData2(QString videoPath, QString savePath, QString saveFileName, int stopSec, int intervalSec);
+    void saveVideoData(QString videoPath, QString savePath, QString saveFileName, int stopPos, int intervalSec);
 
 signals:
     void signalSaveFinish(QString name);

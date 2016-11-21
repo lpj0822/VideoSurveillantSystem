@@ -1,4 +1,8 @@
-﻿#ifndef VEHICLECONVERSEDETECTION_H
+﻿/*
+ *Vehicle converse detection
+ * 车辆逆行检测
+ */
+#ifndef VEHICLECONVERSEDETECTION_H
 #define VEHICLECONVERSEDETECTION_H
 
 #include <QObject>
@@ -7,7 +11,7 @@
 #include "baseAlgorithm/imageprocess.h"
 #include "baseAlgorithm/objectrecognition.h"
 #include "multipletracking/kalmanmultipletracker.h"
-#include "../picturesavethread.h"
+#include "../utility/picturesavethread.h"
 #include "conversearea.h"
 
 class VehicleConverseDetection : public QObject

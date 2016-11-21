@@ -1,5 +1,5 @@
-﻿#ifndef VEHICLECONVERSECONFIGURATIONWINDOW_H
-#define VEHICLECONVERSECONFIGURATIONWINDOW_H
+﻿#ifndef VEHICLECOUNTINGCONFIGUREWINDOW_H
+#define VEHICLECOUNIINGCONFIGUREWINDOW_H
 
 #include <QDialog>
 #include <QLabel>
@@ -12,14 +12,14 @@
 #include <QPolygonF>
 #include "drawingwindow.h"
 
-class VehicleConverseConfigurationWindow : public QDialog
+class VehicleCountingConfigureWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit VehicleConverseConfigurationWindow(QImage image, QWidget *parent = 0);
-    ~VehicleConverseConfigurationWindow();
+    explicit VehicleCountingConfigureWindow(QImage image, QWidget *parent = 0);
+    ~VehicleCountingConfigureWindow();
 
-    QList<QPolygonF> getDetectArea();//得到逆行检测区域
+    QList<QPolygonF> getDetectArea();//得到检测区域
     QList<int> getDirection();//车辆正常行驶方向
 
 
@@ -27,7 +27,6 @@ signals:
 
 public slots:
     void slotOk();
-    void slotCancel();
     void slotRest();
 
 protected:

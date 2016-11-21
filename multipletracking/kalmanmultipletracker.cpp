@@ -234,6 +234,13 @@ void KalmanMultipleTracker::drawTrack(cv::Mat& inFrame)
     }
 }
 
+void KalmanMultipleTracker::init()
+{
+    isFirstRun = true;
+    listTrackers.clear();
+    loadConfig();
+}
+
 void KalmanMultipleTracker::saveConfig()
 {
     cv::FileStorage fs;
@@ -258,11 +265,4 @@ void KalmanMultipleTracker::loadConfig()
     cv::read(fs["showOutput"], showOutput, true);
 
     fs.release();
-}
-
-void KalmanMultipleTracker::init()
-{
-    isFirstRun=true;
-    listTrackers.clear();
-    loadConfig();
 }
