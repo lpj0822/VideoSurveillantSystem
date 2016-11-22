@@ -29,7 +29,7 @@ void VideoSaveThread::run()
     {
         if(video->isOpen())
         {
-            if(video->getFramePosition()<=stopFrame)
+            if(video->getFramePosition() <= stopFrame)
             {
                 errCode=video->readFrame(frame);
                 if(errCode==0)

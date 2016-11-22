@@ -5,7 +5,7 @@
 #include "picturesavethread.h"
 #include "errorcodestring.h"
 
-#define MAXPICTURETHREAD 5
+#define MAXPICTURETHREAD 10
 
 class PictureSave : public QObject
 {
@@ -14,12 +14,12 @@ public:
     PictureSave(QObject *parent = 0);
     ~PictureSave();
 
-    void savePictureData(QString savePath,QString saveFileName,QImage image);
+    void savePictureData(QString savePath,QString saveFileName, QImage image);
 
-    void savePictureData(QString savePath, QString saveFileName,cv::Mat frame);
+    void savePictureData(QString savePath, QString saveFileName, const cv::Mat& frame);
 
 signals:
-    void signalSaveFinish(QString name,int code);
+    void signalSaveFinish(QString name, int code);
 
 public slots:
 

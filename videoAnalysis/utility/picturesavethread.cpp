@@ -6,17 +6,17 @@
 PictureSaveThread::PictureSaveThread()
 {
     init();
-    std::cout<<"PictureSaveThread()"<<std::endl;
+    std::cout << "PictureSaveThread()" << std::endl;
 }
 
 PictureSaveThread::~PictureSaveThread()
 {
-    if(imageProcess)
+    if(imageWriter)
     {
-        delete imageProcess;
-        imageProcess=NULL;
+        delete imageWriter;
+        imageWriter = NULL;
     }
-    std::cout<<"~PictureSaveThread()"<<std::endl;
+    std::cout << "~PictureSaveThread()" << std::endl;
 }
 
 void PictureSaveThread::run()
@@ -26,28 +26,28 @@ void PictureSaveThread::run()
     {
         if(isType)
         {
-            errorCode=savePicture(image,savePictureFileName);
+            errorCode = saveImage(image, savePictureFileName);
         }
         else
         {
-            errorCode=imageProcess->savePicture(frame,savePictureFileName.toStdString());
+            errorCode = imageWriter->saveImage(frame, savePictureFileName.toStdString());
         }
     }
-    isStart=false;
-    emit signalPictureSaveFinish(savePictureFileName,errorCode);
+    isStart = false;
+    emit signalPictureSaveFinish(savePictureFileName, errorCode);
 }
 
-int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileName,QImage image)
+int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileName, QImage image)
 {
     QDir makeDir;
-    this->savePictureFileName=fileName;
-    this->image=image;
-    isType=true;
+    this->savePictureFileName = fileName;
+    this->image = image.copy();
+    isType = true;
     if(!makeDir.exists(fileNameDir))
     {
-        if(!makeDir.mkdir(fileNameDir))
+        if(!makeDir.mkpath(fileNameDir))
         {
-            std::cout<<"make dir fail!"<<std::endl;
+            std::cout << "make dir fail!" << std::endl;
             return -11;
         }
     }
@@ -55,27 +55,27 @@ int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileN
     return 0;
 }
 
-int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileName,cv::Mat frame)
+int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileName, const cv::Mat& frame)
 {
     QDir makeDir;
-    this->savePictureFileName=fileName;
-    this->frame=frame;
-    isType=false;
+    this->savePictureFileName = fileName;
+    this->frame = frame.clone();
+    isType = false;
     if(!makeDir.exists(fileNameDir))
     {
-        if(!makeDir.mkdir(fileNameDir))
+        if(!makeDir.mkpath(fileNameDir))
         {
-            std::cout<<"make dir fail!"<<std::endl;
+            std::cout << "make dir fail! "<< std::endl;
             return -11;
         }
     }
-    std::cout<<"fileName:"<<fileName.toStdString()<<std::endl;
-    isStart=true;
+    std::cout << "fileName:" << fileName.toStdString() << std::endl;
+    isStart = true;
     return 0;
 }
 
 //保存图片
-int PictureSaveThread::savePicture(QImage image,const QString& fileNamePath)
+int PictureSaveThread::saveImage(QImage image,const QString& fileNamePath)
 {
     if(image.isNull())
     {
@@ -87,15 +87,15 @@ int PictureSaveThread::savePicture(QImage image,const QString& fileNamePath)
     }
     else
     {
-        qDebug()<<"image save fail";
+        qDebug() << "image save fail";
         return -10;
     }
 }
 
 void PictureSaveThread::init()
 {
-    isStart=false;
-    isType=false;
-    imageProcess=new ImageProcess();
-    savePictureFileName="temp/image.png";
+    isStart = false;
+    isType = false;
+    imageWriter = new MyImageWriter();
+    savePictureFileName = "temp/image.png";
 }

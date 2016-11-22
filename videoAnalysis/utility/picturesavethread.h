@@ -4,7 +4,7 @@
 #include <QThread>
 #include <QObject>
 #include <QImage>
-#include "baseAlgorithm/imageprocess.h"
+#include "baseAlgorithm/myimagewriter.h"
 
 class PictureSaveThread : public QThread
 {
@@ -15,12 +15,10 @@ public:
     ~PictureSaveThread();
 
     int initData(const QString &fileNameDir, const QString &fileName,QImage image);
-    int initData(const QString &fileNameDir, const QString &fileName,cv::Mat frame);
-
-    int savePicture(QImage image,const QString& fileNamePath);//保存图片
+    int initData(const QString &fileNameDir, const QString &fileName, const cv::Mat& frame);
 
 signals:
-    void signalPictureSaveFinish(QString name,int code);
+    void signalPictureSaveFinish(QString name, int code);
 
 protected:
     void run();
@@ -31,11 +29,13 @@ private:
 
     QImage image;
     cv::Mat frame;
-    ImageProcess *imageProcess;
+    MyImageWriter *imageWriter;
 
     //保存截图的路径
     QString savePictureFileName;
 
+private:
+    int saveImage(QImage image, const QString& fileNamePath);//保存图片
     void init();
 
 };

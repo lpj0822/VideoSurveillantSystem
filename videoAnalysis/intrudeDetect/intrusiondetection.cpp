@@ -32,7 +32,7 @@ IntrusionDetection::~IntrusionDetection()
         delete pictureSaveThread;
         pictureSaveThread=NULL;
     }
-    std::cout<<"~IntrusionDetection()"<<std::endl;
+    std::cout << "~IntrusionDetection()" << std::endl;
 }
 
 //入侵检测
