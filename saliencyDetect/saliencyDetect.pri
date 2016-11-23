@@ -1,5 +1,5 @@
 HEADERS += \
-    $$PWD/utils/utility.h \
+    $$PWD/utility/utility.h \
     $$PWD/segmentation/efficientGraphBased/disjoint_set.h \
     $$PWD/segmentation/efficientGraphBased/segment_graph.h \
     $$PWD/segmentation/efficientGraphBased/segment_image.h \
@@ -14,7 +14,7 @@ HEADERS += \
     $$PWD/isaliency.h
 
 SOURCES += \
-    $$PWD/utils/utility.cpp \
+    $$PWD/utility/utility.cpp \
     $$PWD/segmentation/efficientGraphBased/segment_image.cpp \
     $$PWD/acsaliency.cpp \
     $$PWD/ftsaliency.cpp \

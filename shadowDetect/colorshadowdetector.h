@@ -10,7 +10,7 @@
 #ifndef COLORSHADOWDETECTOR_H
 #define COLORSHADOWDETECTOR_H
 
-#include "utils/ConnCompGroup.h"
+#include "utility/ConnCompGroup.h"
 
 class ColorShadowDetector
 {

@@ -3,19 +3,18 @@
 
 CountingArea::CountingArea()
 {
-    PolygonArea::PolygonArea();
     init();
-    std::cout<<"CountingArea()"<<std::endl;
+    std::cout << "CountingArea()" << std::endl;
 }
 
 CountingArea::~CountingArea()
 {
-    std::cout<<"~CountingArea()"<<std::endl;
+    std::cout << "~CountingArea()" << std::endl;
 }
 
 void CountingArea::setNormalDirection(int direction)
 {
-    this->normalDirection=direction;
+    this->normalDirection = direction;
 }
 
 int CountingArea::getNormalDirection()
@@ -25,12 +24,12 @@ int CountingArea::getNormalDirection()
 
 void CountingArea::setVehicleCouting(int count)
 {
-    this->vehicleCouting=count;
+    this->vehicleCouting = count;
 }
 
 void CountingArea::addVehicleCouting(int count)
 {
-    this->vehicleCouting+=count;
+    this->vehicleCouting += count;
 }
 
 int CountingArea::getVehicleCouting()
@@ -40,7 +39,7 @@ int CountingArea::getVehicleCouting()
 
 void CountingArea::setMedianPoint(int position)
 {
-    this->moveMedianPoint=position;
+    this->moveMedianPoint = position;
 }
 
 int CountingArea::getMedianPoint()
@@ -51,7 +50,7 @@ int CountingArea::getMedianPoint()
 //初始化数据
 void CountingArea::init()
 {
-    this->normalDirection=0;
-    this->vehicleCouting=0;
-    this->moveMedianPoint=0;
+    this->normalDirection = 0;
+    this->vehicleCouting = 0;
+    this->moveMedianPoint = 0;
 }

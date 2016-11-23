@@ -3,19 +3,18 @@
 
 OfficeArea::OfficeArea()
 {
-    PolygonArea::PolygonArea();
     initData();
-    std::cout<<"OfficeArea()"<<std::endl;
+    std::cout << "OfficeArea()" << std::endl;
 }
 
 OfficeArea::~OfficeArea()
 {
-    std::cout<<"~OfficeArea()"<<std::endl;
+    std::cout << "~OfficeArea()" << std::endl;
 }
 
 void OfficeArea::setLeaveTime(int initTime)
 {
-    leaveTime=initTime;
+    leaveTime = initTime;
 }
 
 int OfficeArea::getLeaveTime()
@@ -26,12 +25,12 @@ int OfficeArea::getLeaveTime()
 //增加离开时间
 void OfficeArea::addLeaveTime(int leaveTime)
 {
-    this->leaveTime+=leaveTime;
+    this->leaveTime += leaveTime;
 }
 
 void OfficeArea::setLeaveCount(int count)
 {
-    this->leaveCount=count;
+    this->leaveCount = count;
 }
 
 int OfficeArea::getLeaveCount()
@@ -42,13 +41,13 @@ int OfficeArea::getLeaveCount()
 //增加离岗次数
 void OfficeArea::addLeaveCount(int count)
 {
-    this->leaveCount+=count;
+    this->leaveCount += count;
 }
 
 //初始化数据
 void OfficeArea::initData()
 {
-    leaveTime=0;
-    leaveCount=0;
-    this->isFirstLeave=0;
+    leaveTime = 0;
+    leaveCount = 0;
+    isFirstLeave = 0;
 }

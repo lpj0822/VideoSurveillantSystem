@@ -132,11 +132,6 @@ bool DetectThread::getIsOpenVideo()
     return isOpen;
 }
 
-void DetectThread::detect(const cv::Mat& frame)
-{
-    //detect
-}
-
 void DetectThread::init()
 {
     videoProcess = new VideoProcess();

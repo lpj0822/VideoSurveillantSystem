@@ -41,14 +41,12 @@ private:
     void calculateObjectConverse(int number);//匹配区域中是否有逆行目标
     bool isTrcakConverse(const std::vector<cv::Point2f> &points, int myDirection);//判断路径是否逆方向
     int converseArea(int number);//判断某个区域是否逆行
-    int converseArea(const cv::Mat& inFrame,int number, QString fileDir="./converse", QString fileName="./converse/image.png");//该区域是否逆行并保存图片
 
     void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制检测区域
 
     void initData();
 
 private:
-    PictureSaveThread *pictureSaveThread;//图片保存类
     ImageProcess *imageProcess;//图像处理算法类
     GeometryCalculations *geometryCalculations;//几何运算类
     FrameForeground *frameForeground;//前景检测类
@@ -63,13 +61,8 @@ private:
     float crossMatchMaxValue;//两矩形相交的临界值，大于这个值就认为匹配
     float minBox;//检测的最小目标面积大小
     int minSize;//最小检测目标
-    QString savePictureDir;//保存截图的路径
-    QString savePictureFileName;
     QString saveClassiferPath;//分类器保存路径
-
     bool isDrawObject;
-
-    int saveDeltaTime;//两帧之间保存一张图片的间隔s
 
     int errorCode;//错误码
     bool isFirstRun;//第一次运行

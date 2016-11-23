@@ -13,8 +13,6 @@ public:
     int getNormalDirection();
 
     bool isConverse;//是否逆行
-    int isFirst;//第一次检测到目标
-    QDateTime firstTime;//第一次检测到目标的时间
 
 private:
     int normalDirection;//车辆正常方向

@@ -132,7 +132,7 @@ void VehicleConverseShowVideoWindow::slotSaveVideo()
     QFileInfo info(videoWriteThread->getSaveFileName());
     if((info.size()/minSize) > 1)
     {
-        emit signalConverseMessage(detectNumber,videoWriteThread->getSaveFileName());
+        emit signalConverseMessage(detectNumber, videoWriteThread->getSaveFileName());
     }
     else
     {

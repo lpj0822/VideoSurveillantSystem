@@ -31,7 +31,7 @@ signals:
 
 protected:
     void run();
-    virtual void detect(const cv::Mat& frame);
+    virtual void detect(const cv::Mat& frame) = 0;
 
 protected:
     VideoProcess *videoProcess;//视频处理

@@ -14,7 +14,7 @@ public:
     PictureSave(QObject *parent = 0);
     ~PictureSave();
 
-    void savePictureData(QString savePath,QString saveFileName, QImage image);
+    void savePictureData(QString savePath ,QString saveFileName, QImage image);
 
     void savePictureData(QString savePath, QString saveFileName, const cv::Mat& frame);
 

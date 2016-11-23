@@ -87,30 +87,30 @@ void IntrudeShowVideoWindow::slotMessage(QString message,int pos)
     qDebug()<<message<<" Pos:"<<pos;
     if(message.trimmed().startsWith(str))
     {
-        if(isFirstLeave)
+        if(isFirstIntrude)
         {
-            QString filePath = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd");
-            QString fileName = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
-            errCode=videoWriteThread->openVideo(videoPath);
+            QString filePath = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd");
+            QString fileName = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+            errCode = videoWriteThread->openVideo(videoPath);
             if(errCode==0)
             {
-                errCode=videoWriteThread->initSaveVideoData(filePath,fileName);
-                if(errCode==0)
+                errCode = videoWriteThread->initSaveVideoData(filePath, fileName);
+                if(errCode == 0)
                 {
                     videoWriteThread->setStartPos(pos);
                     videoWriteThread->setStopPos(pos);
                     videoWriteThread->startThread();
                     videoWriteThread->start();
-                    isFirstLeave=false;
+                    isFirstIntrude = false;
                 }
                 else
                 {
-                    qDebug()<<errorCodeString.getErrCodeString(errCode);
+                    qDebug() << errorCodeString.getErrCodeString(errCode);
                 }
             }
             else
             {
-                qDebug()<<errorCodeString.getErrCodeString(errCode);
+                qDebug() << errorCodeString.getErrCodeString(errCode);
             }
 
         }
@@ -118,15 +118,15 @@ void IntrudeShowVideoWindow::slotMessage(QString message,int pos)
         {
             videoWriteThread->setStopPos(pos);
         }
-        int number=message.trimmed().mid(str.length()).toInt();
-        this->detectNumber=number;
+        int number = message.trimmed().mid(str.length()).toInt();
+        this->detectNumber = number;
     }
 }
 
 void IntrudeShowVideoWindow::slotSaveVideo()
 {
     videoWriteThread->stopThread();
-    isFirstLeave=true;
+    isFirstIntrude = true;
     emit signalIntrudeMessage(detectNumber,videoWriteThread->getSaveFileName());
 }
 
@@ -269,7 +269,7 @@ void IntrudeShowVideoWindow::initData()
     myPen.setStyle(Qt::SolidLine);
     myPen.setColor(Qt::green);
 
-    isFirstLeave=true;
+    isFirstIntrude = true;
 }
 
 void IntrudeShowVideoWindow::initConnect()

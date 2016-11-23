@@ -114,7 +114,7 @@ void PictureSave::savePictureData(QString savePath, QString saveFileName, QImage
         }
         else
         {
-            qDebug()<<errorCodeString.getErrCodeString(errCode);
+            qDebug() << errorCodeString.getErrCodeString(errCode);
             delete saveThread[numThread%MAXPICTURETHREAD];
             saveThread[numThread%MAXPICTURETHREAD] = nullptr;
         }

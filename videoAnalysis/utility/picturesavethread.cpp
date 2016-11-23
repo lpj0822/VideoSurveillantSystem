@@ -22,18 +22,14 @@ PictureSaveThread::~PictureSaveThread()
 void PictureSaveThread::run()
 {
     int errorCode=0;
-    if(isStart)
+    if(isType)
     {
-        if(isType)
-        {
-            errorCode = saveImage(image, savePictureFileName);
-        }
-        else
-        {
-            errorCode = imageWriter->saveImage(frame, savePictureFileName.toStdString());
-        }
+        errorCode = saveImage(image, savePictureFileName);
     }
-    isStart = false;
+    else
+    {
+        errorCode = imageWriter->saveImage(frame, savePictureFileName.toStdString());
+    }
     emit signalPictureSaveFinish(savePictureFileName, errorCode);
 }
 
@@ -51,7 +47,6 @@ int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileN
             return -11;
         }
     }
-    isStart=true;
     return 0;
 }
 
@@ -70,7 +65,6 @@ int PictureSaveThread::initData(const QString &fileNameDir, const QString &fileN
         }
     }
     std::cout << "fileName:" << fileName.toStdString() << std::endl;
-    isStart = true;
     return 0;
 }
 
@@ -94,8 +88,7 @@ int PictureSaveThread::saveImage(QImage image,const QString& fileNamePath)
 
 void PictureSaveThread::init()
 {
-    isStart = false;
-    isType = false;
+    isType = true;
     imageWriter = new MyImageWriter();
     savePictureFileName = "temp/image.png";
 }

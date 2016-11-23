@@ -67,7 +67,7 @@ private:
 
     QPen myPen;//绘图画笔
 
-    bool isFirstLeave;
+    bool isFirstIntrude;
 
     ErrorCodeString errorCodeString;
 

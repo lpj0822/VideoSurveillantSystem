@@ -4,12 +4,12 @@
 PolygonArea::PolygonArea()
 {
     initData();
-    std::cout<<"PolygonArea()"<<std::endl;
+    std::cout << "PolygonArea()" << std::endl;
 }
 
 PolygonArea::~PolygonArea()
 {
-    std::cout<<"~PolygonArea()"<<std::endl;
+    std::cout << "~PolygonArea()" << std::endl;
 }
 
 //设置区域
@@ -19,8 +19,8 @@ void PolygonArea::setPolygon(std::vector<cv::Point> points)
     this->polygon=points;
     for(int loop=0;loop<(int)points.size();loop++)
     {
-        int x=points[loop].x-rect.x;
-        int y=points[loop].y-rect.y;
+        int x = points[loop].x - rect.x;
+        int y = points[loop].y - rect.y;
         this->movePolygon.push_back(cv::Point(x,y));
     }
 }

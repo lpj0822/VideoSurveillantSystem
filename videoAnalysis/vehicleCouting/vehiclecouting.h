@@ -32,7 +32,7 @@ signals:
 
 private:
 
-    void tracking(const cv::Mat& roi,int number);//对目标进行多目标跟踪
+    void tracking(const cv::Mat& roi, int number);//对目标进行多目标跟踪
     void countingVehicle(int number);//统计车流量
 
     void drawingDetectArea(cv::Mat &inFrame , cv::Scalar color=cv::Scalar(255,255,255));//绘制检测区域

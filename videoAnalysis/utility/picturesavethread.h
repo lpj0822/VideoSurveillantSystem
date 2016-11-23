@@ -24,7 +24,6 @@ protected:
     void run();
 
 private:
-    bool isStart;
     bool isType;
 
     QImage image;

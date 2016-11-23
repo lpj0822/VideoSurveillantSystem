@@ -36,14 +36,12 @@ private:
     std::vector<cv::Rect> detectObject(const cv::Mat& frame);//检测运动目标
     void matchDetectArea(std::vector<cv::Rect> vectorRect,int number);//对某一个区域匹配目标
     int  intrusionArea(int number);//判断某个区域是否入侵
-    int intrusionArea(const cv::Mat& inFrame,int number,QString fileDir="./intrude",QString fileName="./intrude/image.png");//该区域是否入侵并保存图片
 
     void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制入侵区域
 
 private:
     GeometryCalculations *geometryCalculations;//几何运算类
     FrameForeground *frameForeground;//前景检测类
-    PictureSaveThread *pictureSaveThread;//图片保存类
     ImageProcess *imageProcess;//图像处理类
 
     std::vector<IntrusionArea> detectArea;//整个检测区域
@@ -51,12 +49,6 @@ private:
 
     float crossMatchMaxValue;//两矩形相交的临界值，大于这个值就认为匹配
     float minBox;//检测的最小目标面积大小
-    QString savePictureDir;//保存截图的路径
-
-    QString savePictureFileName;
-
-    int deltaTime;//两次入侵中间隔多长时间保存一张图片s
-
     bool isDrawObject;
 
     ErrorCodeString errorCodeString;

@@ -3,19 +3,18 @@
 
 ConverseArea::ConverseArea()
 {
-    PolygonArea::PolygonArea();
     initData();
-    std::cout<<"ConverseArea()"<<std::endl;
+    std::cout << "ConverseArea()" << std::endl;
 }
 
 ConverseArea::~ConverseArea()
 {
-    std::cout<<"~ConverseArea()"<<std::endl;
+    std::cout << "~ConverseArea()" << std::endl;
 }
 
 void ConverseArea::setNormalDirection(int direction)
 {
-    this->normalDirection=direction;
+    this->normalDirection = direction;
 }
 
 int ConverseArea::getNormalDirection()
@@ -26,8 +25,7 @@ int ConverseArea::getNormalDirection()
 //初始化数据
 void ConverseArea::initData()
 {
-    this->normalDirection=0;
-    this->isConverse=false;
-    this->isFirst=0;
+    this->normalDirection = 0;
+    this->isConverse = false;
 }
 

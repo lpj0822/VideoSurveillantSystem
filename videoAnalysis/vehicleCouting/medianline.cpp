@@ -3,12 +3,12 @@
 
 MedianLine::MedianLine()
 {
-    std::cout<<"MedianLine()"<<std::endl;
+    std::cout << "MedianLine()" << std::endl;
 }
 
 MedianLine::~MedianLine()
 {
-    std::cout<<"~MedianLine()"<<std::endl;
+    std::cout << "~MedianLine()" << std::endl;
 }
 
 //根据多边形，得到大概的中位线

@@ -3,24 +3,23 @@
 
 IntrusionArea::IntrusionArea()
 {
-    PolygonArea::PolygonArea();
     initData();
-    std::cout<<"IntrusionArea()"<<std::endl;
+    std::cout << "IntrusionArea()" << std::endl;
 }
 
 IntrusionArea::~IntrusionArea()
 {
-    std::cout<<"~IntrusionArea()"<<std::endl;
+    std::cout << "~IntrusionArea()" << std::endl;
 }
 
 void IntrusionArea::setIntrusionCount(int count)
 {
-    this->intrusionCount=count;
+    this->intrusionCount = count;
 }
 
 void IntrusionArea::addIntrusionCount(int count)
 {
-    this->intrusionCount+=count;
+    this->intrusionCount += count;
 }
 
 int IntrusionArea::getIntrusionCount()
@@ -31,8 +30,7 @@ int IntrusionArea::getIntrusionCount()
 //初始化数据
 void IntrusionArea::initData()
 {
-    this->intrusionCount=0;
-    this->isIntrusion=false;
-    this->isFirst=0;
+    this->intrusionCount = 0;
+    this->isIntrusion = false;
 }
 

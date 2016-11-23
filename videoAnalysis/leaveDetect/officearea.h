@@ -18,8 +18,8 @@ public:
     int getLeaveCount();
     void addLeaveCount(int count);//增加离岗次数
 
-    int isFirstLeave;//第一次检测到离岗
     QDateTime firstLeaveTime;//第一次离岗的时间
+    int isFirstLeave;//第一次检测到离岗
 
 private:
 

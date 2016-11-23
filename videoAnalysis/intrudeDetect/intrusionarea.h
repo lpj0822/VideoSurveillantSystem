@@ -15,8 +15,6 @@ public:
     int getIntrusionCount();
 
     bool isIntrusion;//是否入侵
-    int isFirst;//第一次检测到目标
-    QDateTime firstTime;//第一次检测到目标的时间
 
 private:
     int intrusionCount;//入侵次数

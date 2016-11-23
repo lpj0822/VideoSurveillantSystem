@@ -3,7 +3,7 @@ HEADERS += \
     $$PWD/package_tracker/kalmanFilter/mykalmanfilter.h \
     $$PWD/package_tracker/blobtracker.h \
     $$PWD/package_tracker/kalmantracker.h \
-    $$PWD/utils/assignmentproblemsolver.h \
+    $$PWD/utility/assignmentproblemsolver.h \
     $$PWD/blobmultipletracker.h \
     $$PWD/kalmanmultipletracker.h \
     $$PWD/package_tracker/kalmanFilter/mykalmanfilter2.h
@@ -19,7 +19,7 @@ SOURCES += \
     $$PWD/package_tracker/kalmanFilter/mykalmanfilter.cpp \
     $$PWD/package_tracker/blobtracker.cpp \
     $$PWD/package_tracker/kalmantracker.cpp \
-    $$PWD/utils/assignmentproblemsolver.cpp \
+    $$PWD/utility/assignmentproblemsolver.cpp \
     $$PWD/blobmultipletracker.cpp \
     $$PWD/kalmanmultipletracker.cpp \
     $$PWD/package_tracker/kalmanFilter/mykalmanfilter2.cpp
