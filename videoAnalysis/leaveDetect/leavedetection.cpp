@@ -165,7 +165,7 @@ void LeaveDetection::drawOfficeArea(cv::Mat &inFrame ,cv::Scalar color)
         for(int loop2=0;loop2<num;loop2++)
         {
             index = (loop2 + 1) % num;
-            cv::line(inFrame,polygon[loop2], polygon[index], color, 2, 8);
+            cv::line(inFrame, polygon[loop2], polygon[index], color, 2, 8);
         }
     }
 }

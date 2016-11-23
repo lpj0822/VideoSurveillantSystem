@@ -11,8 +11,9 @@ public:
     ImageProcess();
     ~ImageProcess();
 
-    void drawCenter(cv::Mat &inFrame, std::vector<cv::Point2f> vectorPoint, cv::Scalar color=cv::Scalar(255,255,255));//在图像上绘制中心点
-    void drawRect(cv::Mat &inFrame, std::vector<cv::Rect> vectorRect, cv::Scalar color=cv::Scalar(255,255,255));//在图像上绘制矩形框
+    void drawCenter(cv::Mat &inFrame, const std::vector<cv::Point2f>& vectorPoint, cv::Scalar color=cv::Scalar(255,255,255));//在图像上绘制中心点
+    void drawRect(cv::Mat &inFrame, const std::vector<cv::Rect>& vectorRect, cv::Scalar color=cv::Scalar(255,255,255));//在图像上绘制矩形框
+    void drawPolygon(cv::Mat &inFrame, const std::vector<cv::Point>& polygon, cv::Scalar color=cv::Scalar(0,0,255));//在图像上绘制多边形
     cv::Mat drawObjectContours(const cv::Mat &inMat, const std::vector< std::vector<cv::Point> > &objectContours,
                                const std::vector<cv::Rect> &objectRect, cv::Scalar color=cv::Scalar(255,255,255));//绘制图像的轮廓
 

@@ -14,7 +14,7 @@ ImageProcess::~ImageProcess()
 }
 
 //在图像上绘制中心点
-void ImageProcess::drawCenter(cv::Mat &inFrame, std::vector<cv::Point2f> vectorPoint, cv::Scalar color)
+void ImageProcess::drawCenter(cv::Mat &inFrame, const std::vector<cv::Point2f>& vectorPoint, cv::Scalar color)
 {
     if (inFrame.empty())
     {
@@ -28,7 +28,7 @@ void ImageProcess::drawCenter(cv::Mat &inFrame, std::vector<cv::Point2f> vectorP
 }
 
 //在图像上绘制矩形框
-void ImageProcess::drawRect(cv::Mat &inFrame, std::vector<cv::Rect> vectorRect, cv::Scalar color)
+void ImageProcess::drawRect(cv::Mat &inFrame, const std::vector<cv::Rect>& vectorRect, cv::Scalar color)
 {
     //cv::Scalar color;
     if (inFrame.empty())
@@ -40,6 +40,18 @@ void ImageProcess::drawRect(cv::Mat &inFrame, std::vector<cv::Rect> vectorRect, 
     {
         //color = cv::Scalar(rng.uniform(0, 255), rng.uniform(0, 255), rng.uniform(0, 255));
         cv::rectangle(inFrame, vectorRect[loop1].tl(), vectorRect[loop1].br(), color, 2, 8, 0);
+    }
+}
+
+//在图像上绘制多边形
+void ImageProcess::drawPolygon(cv::Mat &inFrame, const std::vector<cv::Point>& polygon, cv::Scalar color)
+{
+    size_t index = 0;
+    size_t num = polygon.size();
+    for(int loop=0; loop<num; loop++)
+    {
+        index = (loop + 1) % num;
+        cv::line(inFrame, polygon[loop], polygon[index], color, 2, 8);
     }
 }
 
