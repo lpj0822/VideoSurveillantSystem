@@ -151,25 +151,6 @@ int LeaveDetection::leaveArea(int number)
     }
 }
 
-//绘制办公区域
-void LeaveDetection::drawOfficeArea(cv::Mat &inFrame ,cv::Scalar color)
-{
-    int number = (int)office.size();
-    int index = 0;
-    std::vector<cv::Point> polygon;
-    polygon.clear();
-    for(int loop1=0; loop1<number;loop1++)
-    {
-        polygon = office[loop1].getPolygon();
-        int num = (int)polygon.size();
-        for(int loop2=0;loop2<num;loop2++)
-        {
-            index = (loop2 + 1) % num;
-            cv::line(inFrame, polygon[loop2], polygon[index], color, 2, 8);
-        }
-    }
-}
-
 //检测运动目标
 std::vector<cv::Rect> LeaveDetection::detectObject(const cv::Mat &frame)
 {

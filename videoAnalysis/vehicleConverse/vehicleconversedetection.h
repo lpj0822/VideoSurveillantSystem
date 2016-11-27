@@ -42,8 +42,6 @@ private:
     bool isTrcakConverse(const std::vector<cv::Point2f> &points, int myDirection);//判断路径是否逆方向
     int converseArea(int number);//判断某个区域是否逆行
 
-    void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制检测区域
-
     void initData();
 
 private:

@@ -37,8 +37,6 @@ private:
     void matchOfficeArea(std::vector<cv::Rect> vectorRect,int number);//对某一个区域匹配目标
     int leaveArea(int number);//判断某个区域是否离岗
 
-    void drawOfficeArea(cv::Mat& inFrame ,cv::Scalar color=cv::Scalar(0,0,255));//绘制办公区域
-
 
 private:
     ImageProcess *imageProcess;//图像处理算法类

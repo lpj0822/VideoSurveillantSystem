@@ -138,25 +138,6 @@ int  IntrusionDetection::intrusionArea(int number)
     }
 }
 
-//绘制入侵区域
-void IntrusionDetection::drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color)
-{
-    int number=(int)detectArea.size();
-    int index=0;
-    std::vector<cv::Point> polygon;
-    polygon.clear();
-    for(int loop1=0;loop1<number;loop1++)
-    {
-        polygon=detectArea[loop1].getPolygon();
-        int num=(int)polygon.size();
-        for(int loop2=0;loop2<num;loop2++)
-        {
-            index = (loop2 + 1) % num;
-            cv::line(inFrame, polygon[loop2], polygon[index], color, 2, 8);
-        }
-    }
-}
-
 //检测运动目标
 std::vector<cv::Rect> IntrusionDetection::detectObject(const cv::Mat &frame)
 {
@@ -195,9 +176,9 @@ void IntrusionDetection::initData()
     detectArea.clear();
     pointsArea.clear();
 
-    imageProcess=new ImageProcess();//图像处理类
-    geometryCalculations=new GeometryCalculations();//几何运算类
-    frameForeground=new FrameForeground();//前景检测类
+    imageProcess = new ImageProcess();//图像处理类
+    geometryCalculations = new GeometryCalculations();//几何运算类
+    frameForeground = new FrameForeground();//前景检测类
 
     loadConfig();
 }

@@ -1,5 +1,6 @@
 ﻿#ifndef POLYGONAREA_H
 #define POLYGONAREA_H
+
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <vector>
@@ -12,9 +13,9 @@ public:
 
     void setPolygon(std::vector<cv::Point> points);//设置区域
 
-    std::vector<cv::Point> getPolygon();//得到多边形区域
-    std::vector<cv::Point> getPolygon1();//得到相对于多边形外包矩形坐标的多边形区域
-    cv::Rect getPolygonRect();//得到多边形的外包矩形
+    std::vector<cv::Point> getPolygon() const;//得到多边形区域
+    std::vector<cv::Point> getPolygon1()const;//得到相对于多边形外包矩形坐标的多边形区域
+    cv::Rect getPolygonRect() const;//得到多边形的外包矩形
 
 private:
 

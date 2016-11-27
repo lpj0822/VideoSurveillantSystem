@@ -27,7 +27,8 @@ HEADERS += \
     $$PWD/leaveshowvideowindow.h \
     $$PWD/vehicleconverseshowvideowindow.h \
     $$PWD/vehiclecountingshowvideowindow.h \
-    $$PWD/utility/detectedpicturesave.h
+    $$PWD/utility/detectedpicturesave.h \
+    $$PWD/utility/drawdetectarea.h
 
 SOURCES += \
     $$PWD/intrudeDetect/intrudedetectthread.cpp \
@@ -56,5 +57,6 @@ SOURCES += \
     $$PWD/leaveshowvideowindow.cpp \
     $$PWD/vehicleconverseshowvideowindow.cpp \
     $$PWD/vehiclecountingshowvideowindow.cpp \
-    $$PWD/utility/detectedpicturesave.cpp
+    $$PWD/utility/detectedpicturesave.cpp \
+    $$PWD/utility/drawdetectarea.cpp
 

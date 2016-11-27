@@ -176,25 +176,6 @@ void VehicleCouting::initData()
     }
 }
 
-//绘制检测区域
-void VehicleCouting::drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color)
-{
-    int number=(int)detectArea.size();
-    int index=0;
-    std::vector<cv::Point> polygon;
-    polygon.clear();
-    for(int loop1=0;loop1<number;loop1++)
-    {
-        polygon=detectArea[loop1].getPolygon();
-        int num=(int)polygon.size();
-        for(int loop2=0; loop2<num; loop2++)
-        {
-            index=(loop2 + 1) % num;
-            line(inFrame, polygon[loop2], polygon[index], color, 2, 8);
-        }
-    }
-}
-
 //得到错误码
 int VehicleCouting::getErrorCode()
 {

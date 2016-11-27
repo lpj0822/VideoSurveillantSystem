@@ -37,8 +37,6 @@ private:
     void matchDetectArea(std::vector<cv::Rect> vectorRect,int number);//对某一个区域匹配目标
     int  intrusionArea(int number);//判断某个区域是否入侵
 
-    void drawingDetectArea(cv::Mat &inFrame ,cv::Scalar color=cv::Scalar(255,255,255));//绘制入侵区域
-
 private:
     GeometryCalculations *geometryCalculations;//几何运算类
     FrameForeground *frameForeground;//前景检测类
