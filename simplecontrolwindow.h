@@ -6,18 +6,18 @@
 #include <QTabWidget>
 #include <QPushButton>
 #include <QDialogButtonBox>
-#include "leavedetectcontrolwindow.h"
-#include "intrudedetectcontrolwindow.h"
-#include "vehicleconversecontrolwindow.h"
-#include "vehiclecountingcontrolwindow.h"
+#include "applicationGUI/simpleGUI/leavedetectcontrolwindow.h"
+#include "applicationGUI/simpleGUI/intrudedetectcontrolwindow.h"
+#include "applicationGUI/simpleGUI/vehicleconversecontrolwindow.h"
+#include "applicationGUI/simpleGUI/vehiclecountingcontrolwindow.h"
 
-class ControlWindow : public QWidget
+class SimpleControlWindow : public QWidget
 {
     Q_OBJECT
 
 public:
-    ControlWindow(QWidget *parent = 0);
-    ~ControlWindow();
+    SimpleControlWindow(QWidget *parent = 0);
+    ~SimpleControlWindow();
 
 signals:
 

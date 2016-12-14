@@ -21,30 +21,13 @@ include(algorithmClassify/algorithmClassify.pri)
 include(saliencyDetect/saliencyDetect.pri)
 include(baseAlgorithm/baseAlgorithm.pri)
 include(videoAnalysis/videoAnalysis.pri)
+include(applicationGUI/applicationGUI.pri)
 
 SOURCES += main.cpp\
-    drawingwindow.cpp \
-    controlwindow.cpp \
-    vehiclecountingcontrolwindow.cpp \
-    vehicleconversecontrolwindow.cpp \
-    vehicleconverseconfigurewindow.cpp \
-    vehiclecountingconfigurewindow.cpp \
-    leavedetectcontrolwindow.cpp \
-    leavedetectconfigurewindow.cpp \
-    intrudedetectcontrolwindow.cpp \
-    intrudedetectconfigurewindow.cpp
+    simplecontrolwindow.cpp
 
 HEADERS  += \
-    drawingwindow.h \
-    controlwindow.h \
-    vehiclecountingcontrolwindow.h \
-    vehicleconversecontrolwindow.h \
-    vehicleconverseconfigurewindow.h \
-    vehiclecountingconfigurewindow.h \
-    leavedetectcontrolwindow.h \
-    leavedetectconfigurewindow.h \
-    intrudedetectcontrolwindow.h \
-    intrudedetectconfigurewindow.h
+    simplecontrolwindow.h
 	
 RESOURCES += \
         text.qrc

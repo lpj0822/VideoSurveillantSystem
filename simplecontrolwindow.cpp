@@ -1,9 +1,9 @@
 ﻿#pragma execution_character_set("utf-8")
-#include "controlwindow.h"
+#include "simplecontrolwindow.h"
 #include <QHBoxLayout>
 #include <QDebug>
 
-ControlWindow::ControlWindow(QWidget *parent)
+SimpleControlWindow::SimpleControlWindow(QWidget *parent)
     : QWidget(parent)
 {
     init();
@@ -11,7 +11,7 @@ ControlWindow::ControlWindow(QWidget *parent)
     initConnect();
 }
 
-ControlWindow::~ControlWindow()
+SimpleControlWindow::~SimpleControlWindow()
 {
     leaveDetectWindow->deleteLater();
     intrudeDetectWindow->deleteLater();
@@ -19,17 +19,17 @@ ControlWindow::~ControlWindow()
     vehicleCountingWindow->deleteLater();
 }
 
-void ControlWindow::slotOK()
+void SimpleControlWindow::slotOK()
 {
 
 }
 
-void ControlWindow::init()
+void SimpleControlWindow::init()
 {
 
 }
 
-void ControlWindow::initUI()
+void SimpleControlWindow::initUI()
 {
     tabweight=new QTabWidget();
     leaveDetectWindow = new LeaveDetectControlWindow();
@@ -55,8 +55,8 @@ void ControlWindow::initUI()
     this->setWindowTitle(tr("智能视频监控系统"));
 }
 
-void ControlWindow::initConnect()
+void SimpleControlWindow::initConnect()
 {
-    connect(buttonBox,&QDialogButtonBox::accepted, this, &ControlWindow::slotOK);  // 为button定义连接信号槽
-    connect(buttonBox, &QDialogButtonBox::rejected, this, &ControlWindow::close);
+    connect(buttonBox,&QDialogButtonBox::accepted, this, &SimpleControlWindow::slotOK);  // 为button定义连接信号槽
+    connect(buttonBox, &QDialogButtonBox::rejected, this, &SimpleControlWindow::close);
 }

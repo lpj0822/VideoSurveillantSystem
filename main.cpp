@@ -2,16 +2,16 @@
 #include <QTextCodec>
 #include <QApplication>
 #include <QDesktopWidget>
-#include "controlwindow.h"
+#include "simplecontrolwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     //a.setApplicationName("智能监控系统");
-    ControlWindow w;
+    SimpleControlWindow w;
     w.show();
-    w.move((QApplication::desktop()->width() - w.width())/2,(QApplication::desktop()->height() - w.height())/2);
+    w.move((QApplication::desktop()->width() - w.width())/2, (QApplication::desktop()->height() - w.height())/2);
 
     return a.exec();
 }
