@@ -1,4 +1,4 @@
-Intelligent Visual Surveillance
+﻿Intelligent Visual Surveillance
 ===============================
 
 ![logo](./appico.ico)
