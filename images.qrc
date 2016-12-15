@@ -1,0 +1,21 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/areaIntrude.png</file>
+        <file>images/Deviate.png</file>
+        <file>images/Dystropy.png</file>
+        <file>images/IllegalPark.png</file>
+        <file>images/logo.png</file>
+        <file>images/play.png</file>
+        <file>images/Population.png</file>
+        <file>images/sp.png</file>
+        <file>images/Target.png</file>
+        <file>images/TrafficAccident.png</file>
+        <file>images/TunnelPedestrian.png</file>
+        <file>images/TurnLane.png</file>
+        <file>images/VehicleRetrograde.png</file>
+        <file>images/VehicleSpeed.png</file>
+        <file>images/volume_off.png</file>
+        <file>images/volume_up.png</file>
+        <file>images/TrafficFlow.png</file>
+    </qresource>
+</RCC>

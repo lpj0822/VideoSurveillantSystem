@@ -56,7 +56,7 @@ void VehicleConverseShowVideoWindow::paintEvent(QPaintEvent *e)
     }
     else
     {
-        QPixmap initPicture=QPixmap::fromImage(QImage(":/img/play.png"));
+        QPixmap initPicture=QPixmap::fromImage(QImage(":/images/play.png"));
         int window_width = width();
         int window_height = height();
         int image_width = initPicture.width();
@@ -279,7 +279,7 @@ void VehicleConverseShowVideoWindow::initData()
     detectNumber=0;//检测到的区域
     videoWriteThread=new VideoWriteThread();//保存视频
 
-    currentImage=QImage(":/img/play.png");
+    currentImage=QImage(":/images/play.png");
 
     //绘图画笔
     myPen.setWidth(2);
@@ -304,22 +304,17 @@ void VehicleConverseShowVideoWindow::saveVehicleConverseConfig()
     {
         if(!makeDir.mkdir("./config/"))
         {
-            std::cout<<"make dir fail!"<<std::endl;
+            std::cout << "make dir fail!" << std::endl;
             return;
         }
     }
-    fs.open("./config/VehicleConverseDetection.xml",cv::FileStorage::WRITE,"utf-8");
+    fs.open("./config/VehicleConverseDetection.xml", cv::FileStorage::WRITE, "utf-8");
 
-    cv::write(fs,"minConversePointNum",10);
-    cv::write(fs, "crossMatchMaxValue", 0.1f);
-    cv::write(fs,"minSize",30);
-    cv::write(fs, "minBox", 300);
-    cv::write(fs,"savePictureDir","./converse");
-    cv::write(fs,"areaDirection",areaDirection);
+    cv::write(fs, "areaDirection", areaDirection);
 
     for(int loop=0;loop<(int)area.size();loop++)
     {
-        QString tempName="pointsArea"+QString::number(loop);
+        QString tempName = "pointsArea" + QString::number(loop);
         cv::write(fs,tempName.toStdString().c_str(),area[loop]);
     }
     fs.release();
@@ -331,11 +326,11 @@ void VehicleConverseShowVideoWindow::loadVehicleConverseConfig()
     std::vector<cv::Point> tempVector;
     area.clear();
     areaDirection.clear();
-    fs.open("./config/VehicleConverseDetection.xml",cv::FileStorage::READ,"utf-8");
+    fs.open("./config/VehicleConverseDetection.xml", cv::FileStorage::READ, "utf-8");
 
-    cv::read(fs["areaDirection"],areaDirection);
+    cv::read(fs["areaDirection"], areaDirection);
 
-    cv::FileNode node=fs["pointsArea0"];
+    cv::FileNode node = fs["pointsArea0"];
     if(node.isNone())
     {
         return;

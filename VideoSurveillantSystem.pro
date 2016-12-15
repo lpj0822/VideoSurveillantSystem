@@ -4,10 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-CONFIG   += c++11
+QT       += core gui sql av avwidgets xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+CONFIG   += c++11
 
 TARGET = VideoSurveillantSystem
 TEMPLATE = app
@@ -24,13 +25,25 @@ include(videoAnalysis/videoAnalysis.pri)
 include(applicationGUI/applicationGUI.pri)
 
 SOURCES += main.cpp\
-    simplecontrolwindow.cpp
+    simplecontrolwindow.cpp \
+    mainwindow.cpp
 
 HEADERS  += \
-    simplecontrolwindow.h
+    simplecontrolwindow.h \
+    mainwindow.h
 	
 RESOURCES += \
-        text.qrc
+    images.qrc \
+    style.qrc \
+    QtAwesome.qrc
+
+MOC_DIR = temp/moc
+RCC_DIR = temp/rcc
+UI_DIR  = temp/ui
+OBJECTS_DIR = temp/obj
+DESTDIR = bin
+
+RC_ICONS = appico.ico
 
 INCLUDEPATH+= D:\opencv\build\include\
               D:\opencv\build\include\opencv\

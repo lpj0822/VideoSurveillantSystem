@@ -51,7 +51,7 @@ void DetectThread::run()
                     isReadVideo = false;
                     isOpen = false;
                     isStart = false;
-                    emit signalVideoMessage(QImage(":/img/play.png"), isOpen);
+                    emit signalVideoMessage(QImage(":/images/play.png"), isOpen);
                 }
                 cv::waitKey(1);
                 msleep(31);
@@ -141,6 +141,6 @@ void DetectThread::init()
     isOpen = false;
     isStartDetection = false;
 
-    frameToimage.load(":/img/play.png");
+    frameToimage.load(":/images/play.png");
 }
 

@@ -56,7 +56,7 @@ void IntrudeShowVideoWindow::paintEvent(QPaintEvent *e)
     }
     else
     {
-        QPixmap initPicture=QPixmap::fromImage(QImage(":/img/play.png"));
+        QPixmap initPicture=QPixmap::fromImage(QImage(":/images/play.png"));
         int window_width = width();
         int window_height = height();
         int image_width = initPicture.width();
@@ -262,7 +262,7 @@ void IntrudeShowVideoWindow::initData()
     detectNumber=0;//检测到的区域
     videoWriteThread=new VideoWriteThread();//保存视频
 
-    currentImage=QImage(":/img/play.png");
+    currentImage=QImage(":/images/play.png");
 
     //绘图画笔
     myPen.setWidth(2);
@@ -274,9 +274,9 @@ void IntrudeShowVideoWindow::initData()
 
 void IntrudeShowVideoWindow::initConnect()
 {
-    connect(intrudeDetectThread,&IntrudeDetectThread::signalMessage,this,&IntrudeShowVideoWindow::slotMessage);
-    connect(intrudeDetectThread,&IntrudeDetectThread::signalVideoMessage,this,&IntrudeShowVideoWindow::slotVideoImage);
-    connect(intrudeDetectThread,&IntrudeDetectThread::signalSaveVideo,this,&IntrudeShowVideoWindow::slotSaveVideo);
+    connect(intrudeDetectThread, &IntrudeDetectThread::signalMessage, this, &IntrudeShowVideoWindow::slotMessage);
+    connect(intrudeDetectThread, &IntrudeDetectThread::signalVideoMessage, this, &IntrudeShowVideoWindow::slotVideoImage);
+    connect(intrudeDetectThread, &IntrudeDetectThread::signalSaveVideo, this, &IntrudeShowVideoWindow::slotSaveVideo);
 }
 
 void IntrudeShowVideoWindow::saveIntrudesConfig()
@@ -291,16 +291,12 @@ void IntrudeShowVideoWindow::saveIntrudesConfig()
             return;
         }
     }
-    fs.open("./config/IntrusionDetection.xml",cv::FileStorage::WRITE,"utf-8");
-
-    cv::write(fs, "crossMatchMaxValue",0.3f);
-    cv::write(fs, "minBox", 300);
-    cv::write(fs,"savePictureDir","./intrude");
+    fs.open("./config/IntrusionDetection.xml", cv::FileStorage::WRITE,"utf-8");
 
     for(int loop=0;loop<(int)area.size();loop++)
     {
-        QString tempName="pointsArea"+QString::number(loop);
-        cv::write(fs,tempName.toStdString().c_str(),area[loop]);
+        QString tempName = "pointsArea" + QString::number(loop);
+        cv::write(fs,tempName.toStdString().c_str(), area[loop]);
     }
     fs.release();
 }
@@ -311,8 +307,7 @@ void IntrudeShowVideoWindow::loadIntrudesConfig()
     std::vector<cv::Point> tempVector;
     area.clear();
     copyArea.clear();
-    fs.open("./config/IntrusionDetection.xml",cv::FileStorage::READ,"utf-8");
-
+    fs.open("./config/IntrusionDetection.xml", cv::FileStorage::READ,"utf-8");
 
     cv::FileNode node=fs["pointsArea0"];
     if(node.isNone())

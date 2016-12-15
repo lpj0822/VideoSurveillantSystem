@@ -52,7 +52,7 @@ void LeaveShowVideoWindow::paintEvent(QPaintEvent *e)
     }
     else
     {
-        QPixmap initPicture=QPixmap::fromImage(QImage(":/img/play.png"));
+        QPixmap initPicture=QPixmap::fromImage(QImage(":/images/play.png"));
         int window_width = width();
         int window_height = height();
         int image_width = initPicture.width();
@@ -227,7 +227,7 @@ void LeaveShowVideoWindow::initData()
     videoSave=new VideoSave();//保存视频
     isOpen=false;
 
-    currentImage = QImage(":/img/play.png");
+    currentImage = QImage(":/images/play.png");
 
     //绘图画笔
     myPen.setWidth(2);
@@ -256,11 +256,8 @@ void LeaveShowVideoWindow::saveLeaveConfig()
     }
     fs.open("./config/LeaveDetection.xml",cv::FileStorage::WRITE,"utf-8");
 
-    cv::write(fs,"maxLeaveCount",-1);
-    cv::write(fs,"maxLeaveTime",maxLeaveTime);
-    cv::write(fs, "crossMatchMaxValue", 0.1);
-    cv::write(fs, "minBox", 300);
-    cv::write(fs,"savePictureDir","./leave");
+    cv::write(fs,"maxLeaveCount", -1);
+    cv::write(fs,"maxLeaveTime", maxLeaveTime);
 
     for(int loop=0;loop<(int)area.size();loop++)
     {
@@ -276,12 +273,11 @@ void LeaveShowVideoWindow::loadLeaveConfig()
     std::vector<cv::Point> tempVector;
     area.clear();
     copyArea.clear();
-    fs.open("./config/LeaveDetection.xml",cv::FileStorage::READ,"utf-8");
+    fs.open("./config/LeaveDetection.xml", cv::FileStorage::READ, "utf-8");
 
+    cv::read(fs["maxLeaveTime"], maxLeaveTime, 5*60);
 
-    cv::read(fs["maxLeaveTime"],maxLeaveTime,5*60);
-
-    cv::FileNode node=fs["pointsArea0"];
+    cv::FileNode node = fs["pointsArea0"];
     if(node.isNone())
     {
         return;

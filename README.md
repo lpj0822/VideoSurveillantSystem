@@ -1,7 +1,7 @@
 Intelligent Visual Surveillance
 ===============================
 
-![logo](./myappico.ico)
+![logo](./appico.ico)
 
 ##Source description
 ###Catalogue
@@ -38,8 +38,9 @@ Intelligent Visual Surveillance
 
 ##Depend
 * [MSVC2013_64](https://www.visualstudio.com/zh-hans/downloads/)
-* [OpenCV3.1](http://opencv.org/downloads.html)
 * [Qt5](https://www.qt.io/download-open-source/#section-2)
+* [QtAV](https://github.com/wang-bin/QtAV)
+* [OpenCV3.1](http://opencv.org/downloads.html)
 * [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
 
 ##Discuss

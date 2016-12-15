@@ -1,0 +1,47 @@
+<RCC>
+    <qresource prefix="/style">
+        <file>style/style.qss</file>
+    </qresource>
+    <qresource prefix="/qss_icons">
+        <file>style/rc/branch_closed.png</file>
+        <file>style/rc/branch_closed-on.png</file>
+        <file>style/rc/branch_open.png</file>
+        <file>style/rc/branch_open-on.png</file>
+        <file>style/rc/checkbox_checked.png</file>
+        <file>style/rc/checkbox_checked_disabled.png</file>
+        <file>style/rc/checkbox_checked_focus.png</file>
+        <file>style/rc/checkbox_indeterminate.png</file>
+        <file>style/rc/checkbox_indeterminate_disabled.png</file>
+        <file>style/rc/checkbox_indeterminate_focus.png</file>
+        <file>style/rc/checkbox_unchecked.png</file>
+        <file>style/rc/checkbox_unchecked_disabled.png</file>
+        <file>style/rc/checkbox_unchecked_focus.png</file>
+        <file>style/rc/close.png</file>
+        <file>style/rc/close-hover.png</file>
+        <file>style/rc/close-pressed.png</file>
+        <file>style/rc/down_arrow.png</file>
+        <file>style/rc/down_arrow_disabled.png</file>
+        <file>style/rc/Hmovetoolbar.png</file>
+        <file>style/rc/Hsepartoolbar.png</file>
+        <file>style/rc/left_arrow.png</file>
+        <file>style/rc/left_arrow_disabled.png</file>
+        <file>style/rc/radio_checked.png</file>
+        <file>style/rc/radio_checked_disabled.png</file>
+        <file>style/rc/radio_checked_focus.png</file>
+        <file>style/rc/radio_unchecked.png</file>
+        <file>style/rc/radio_unchecked_disabled.png</file>
+        <file>style/rc/radio_unchecked_focus.png</file>
+        <file>style/rc/right_arrow.png</file>
+        <file>style/rc/right_arrow_disabled.png</file>
+        <file>style/rc/sizegrip.png</file>
+        <file>style/rc/stylesheet-branch-end.png</file>
+        <file>style/rc/stylesheet-branch-more.png</file>
+        <file>style/rc/stylesheet-vline.png</file>
+        <file>style/rc/transparent.png</file>
+        <file>style/rc/undock.png</file>
+        <file>style/rc/up_arrow.png</file>
+        <file>style/rc/up_arrow_disabled.png</file>
+        <file>style/rc/Vmovetoolbar.png</file>
+        <file>style/rc/Vsepartoolbar.png</file>
+    </qresource>
+</RCC>

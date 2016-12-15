@@ -49,7 +49,7 @@ void VehicleCountingShowVideoWindow::paintEvent(QPaintEvent *e)
     }
     else
     {
-        QPixmap initPicture=QPixmap::fromImage(QImage(":/img/play.png"));
+        QPixmap initPicture=QPixmap::fromImage(QImage(":/images/play.png"));
         int window_width = width();
         int window_height = height();
         int image_width = initPicture.width();
@@ -218,7 +218,7 @@ void VehicleCountingShowVideoWindow::initData()
     vehicleCountingThread=new VehicleCountingThread();//车流量统计
     isOpen=false;
 
-    currentImage=QImage(":/img/play.png");
+    currentImage=QImage(":/images/play.png");
 
     //绘图画笔
     myPen.setWidth(2);
@@ -228,8 +228,8 @@ void VehicleCountingShowVideoWindow::initData()
 
 void VehicleCountingShowVideoWindow::initConnect()
 {
-    connect(vehicleCountingThread,&VehicleCountingThread::signalMessage,this,&VehicleCountingShowVideoWindow::slotMessage);
-    connect(vehicleCountingThread,&VehicleCountingThread::signalVideoMessage,this,&VehicleCountingShowVideoWindow::slotVideoImage);
+    connect(vehicleCountingThread, &VehicleCountingThread::signalMessage, this, &VehicleCountingShowVideoWindow::slotMessage);
+    connect(vehicleCountingThread, &VehicleCountingThread::signalVideoMessage, this, &VehicleCountingShowVideoWindow::slotVideoImage);
 }
 
 void VehicleCountingShowVideoWindow::saveVehicleCountingConfig()
@@ -244,9 +244,9 @@ void VehicleCountingShowVideoWindow::saveVehicleCountingConfig()
             return;
         }
     }
-    fs.open("./config/VehicleCouting.xml",cv::FileStorage::WRITE,"utf-8");
+    fs.open("./config/VehicleCouting.xml", cv::FileStorage::WRITE, "utf-8");
 
-    cv::write(fs,"areaDirection",areaDirection);
+    cv::write(fs, "areaDirection", areaDirection);
 
     for(int loop=0;loop<(int)area.size();loop++)
     {
@@ -264,16 +264,16 @@ void VehicleCountingShowVideoWindow::loadVehicleCountingConfig()
     copyLine.clear();
     area.clear();
     areaDirection.clear();
-    fs.open("./config/VehicleCouting.xml",cv::FileStorage::READ,"utf-8");
+    fs.open("./config/VehicleCouting.xml", cv::FileStorage::READ, "utf-8");
 
-    cv::read(fs["areaDirection"],areaDirection);
+    cv::read(fs["areaDirection"], areaDirection);
 
-    cv::FileNode node=fs["pointsArea0"];
+    cv::FileNode node = fs["pointsArea0"];
     if(node.isNone())
     {
         return;
     }
-    cv::FileNodeIterator iterator=node.begin(),iterator_end=node.end();
+    cv::FileNodeIterator iterator = node.begin(),iterator_end=node.end();
     for(int loop=0;iterator!=iterator_end;iterator++,loop++)
     {
         QString tempName="pointsArea"+QString::number(loop);

@@ -218,7 +218,7 @@ void VehicleCouting::saveConfig()
     }
     fs.open("./config/VehicleCouting.xml", cv::FileStorage::WRITE, "utf-8");
 
-    cv::write(fs,"areaDirection",areaDirection);
+    cv::write(fs, "areaDirection", areaDirection);
     for(int loop=0; loop<(int)pointsArea.size(); loop++)
     {
         QString tempName = "pointsArea" + QString::number(loop);
@@ -237,7 +237,7 @@ void VehicleCouting::loadConfig()
 
     cv::read(fs["areaDirection"], areaDirection);
 
-    cv::FileNode node=fs["pointsArea0"];
+    cv::FileNode node = fs["pointsArea0"];
     if(node.isNone())
     {
         return;
