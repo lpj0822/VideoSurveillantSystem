@@ -1,5 +1,5 @@
-#ifndef PLAYVIDEOWIDGET_H
-#define PLAYVIDEOWIDGET_H
+﻿#ifndef MAINWIDGET_H
+#define MAINWIDGET_H
 
 #include <QWidget>
 #include <QLabel>
@@ -39,11 +39,11 @@ private:
 
 };
 
-class PlayVideoWidget : public QWidget
+class MainWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit PlayVideoWidget(QWidget *parent = 0);
+    explicit MainWidget(QWidget *parent = 0);
 
 signals:
 
@@ -71,5 +71,4 @@ private:
 
 };
 
-
-#endif // PLAYVIDEOWIDGET_H
+#endif // MAINWIDGET_H

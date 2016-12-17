@@ -1,4 +1,4 @@
-﻿#include "wshowinfodetail_2.h"
+﻿#include "videoplayer.h"
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QHeaderView>
@@ -9,7 +9,7 @@
 
 using namespace QtAV;
 
-WShowInfoDetail_2::WShowInfoDetail_2(QWidget *parent) : QDialog(parent),
+VideoPlayer::VideoPlayer(QWidget *parent) : QDialog(parent),
     m_unit(1000),
     dplayset(nullptr)
 {
@@ -18,12 +18,11 @@ WShowInfoDetail_2::WShowInfoDetail_2(QWidget *parent) : QDialog(parent),
     initConnect();
 }
 
-WShowInfoDetail_2::~WShowInfoDetail_2()
+VideoPlayer::~VideoPlayer()
 {
-    qDebug()<<"WShowInfoDetail_2::~WShowInfoDetail_2()";
 }
 
-void WShowInfoDetail_2::initData()
+void VideoPlayer::initData()
 {
     QtAwesome* awesome = MyHelper::getAwesome();
     QtAV::Widgets::registerRenderers();
@@ -70,7 +69,7 @@ void WShowInfoDetail_2::initData()
     this->resize(1200,800);
 }
 
-void WShowInfoDetail_2::initUI()
+void VideoPlayer::initUI()
 {
     QHBoxLayout *aboveLayout = new QHBoxLayout();
     aboveLayout->setMargin(0);
@@ -99,7 +98,7 @@ void WShowInfoDetail_2::initUI()
     this->setLayout(mainLayout);
 }
 
-void WShowInfoDetail_2::initConnect()
+void VideoPlayer::initConnect()
 {
     connect(Player, SIGNAL(positionChanged(qint64)), SLOT(updateSlider(qint64)));
     connect(Player, SIGNAL(started()), SLOT(updateSlider()));
@@ -160,30 +159,30 @@ void WShowInfoDetail_2::initConnect()
     });
 }
 
-void WShowInfoDetail_2::playVideo(const QString &fileName)
+void VideoPlayer::playVideo(const QString &fileName)
 {
     Player->play(fileName);
 }
 
-void WShowInfoDetail_2::updateSlider()
+void VideoPlayer::updateSlider()
 {
     updateSlider(Player->position());
 }
 
-void WShowInfoDetail_2::updateSlider(qint64 value)
+void VideoPlayer::updateSlider(qint64 value)
 {
     timeSlider->setRange(0, int(Player->duration()/m_unit));
     timeSlider->setValue(int(value/m_unit));
 }
 
-void WShowInfoDetail_2::seekBySlider(int value)
+void VideoPlayer::seekBySlider(int value)
 {
     if (!Player->isPlaying())
         return;
     Player->seek(qint64(value*1000));
 }
 
-void WShowInfoDetail_2::seekBySlider()
+void VideoPlayer::seekBySlider()
 {
     qDebug()<<"moved";
     seekBySlider(timeSlider->value());
@@ -192,18 +191,18 @@ void WShowInfoDetail_2::seekBySlider()
     }
 }
 
-void WShowInfoDetail_2::updateSliderUnit()
+void VideoPlayer::updateSliderUnit()
 {
     m_unit = Player->notifyInterval();
     updateSlider();
 }
 
-void WShowInfoDetail_2::setTitle(const QString &title)
+void VideoPlayer::setTitle(const QString &title)
 {
     this->setWindowTitle(title);
 }
 
-void WShowInfoDetail_2::setVolume()
+void VideoPlayer::setVolume()
 {
     AudioOutput *ao = Player ? Player->audio() : 0;
     qreal v = qreal(volumeSlider->value())*volumeInterval;
@@ -215,14 +214,14 @@ void WShowInfoDetail_2::setVolume()
     volumeSlider->setToolTip(QString::number(v));
 }
 
-void WShowInfoDetail_2::initEQEngine()
+void VideoPlayer::initEQEngine()
 {
     VideoRenderer *vo = Player->renderer();
     vo->forcePreferredPixelFormat(false);
 }
 
 
-void WShowInfoDetail_2::onBrightnessChanged(int b)
+void VideoPlayer::onBrightnessChanged(int b)
 {
     VideoRenderer *vo = Player->renderer();
 
@@ -231,7 +230,7 @@ void WShowInfoDetail_2::onBrightnessChanged(int b)
     }
 }
 
-void WShowInfoDetail_2::onContrastChanged(int c)
+void VideoPlayer::onContrastChanged(int c)
 {
     VideoRenderer *vo = Player->renderer();
 
@@ -240,7 +239,7 @@ void WShowInfoDetail_2::onContrastChanged(int c)
     }
 }
 
-void WShowInfoDetail_2::onHueChanged(int h)
+void VideoPlayer::onHueChanged(int h)
 {
     VideoRenderer *vo = Player->renderer();
     if(vo->setHue((qreal)h/100)) {
@@ -248,7 +247,7 @@ void WShowInfoDetail_2::onHueChanged(int h)
     }
 }
 
-void WShowInfoDetail_2::onSaturationChanged(int s)
+void VideoPlayer::onSaturationChanged(int s)
 {
     VideoRenderer *vo = Player->renderer();
 

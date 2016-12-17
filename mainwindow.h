@@ -1,4 +1,4 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
 #include <QMainWindow>
@@ -31,9 +31,9 @@
 #include <QHeaderView>
 #include <QSettings>
 #include <QProcess>
-#include "applicationGUI/mainGUI/playvideowidget.h"
-#include "applicationGUI/mainGUI/wvehicleretrograde.h"
 #include "applicationGUI/mainGUI/expand/customanimation.h"
+#include "applicationGUI/mainGUI/mainwidget.h"
+#include "applicationGUI/mainGUI/vehicleconversewidget.h"
 
 class MainWindow : public QMainWindow
 {
@@ -89,7 +89,7 @@ private:
     CustomAnimation *customAnimation;
     QLabel *label;
 
-    PlayVideoWidget *VideoWidget;
+    MainWidget *mainWidget;
 
     //MenuBar
     QMenuBar *AboveMenuBar;
@@ -101,7 +101,7 @@ private:
     int leftTabminmumwidth;
     bool leftTabXxpanded;
 
-    WVehicleRetrograde *wVehicleRetrograde;
+    VehicleConverseWidget *vehicleConverseWidget;
 
     //process
     QProcess *ProcessDeviate;

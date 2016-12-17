@@ -1,5 +1,5 @@
-#ifndef WVEHICLERETROGRADE_H
-#define WVEHICLERETROGRADE_H
+﻿#ifndef VEHICLECONVERSEWIDGET_H
+#define VEHICLECONVERSEWIDGET_H
 
 #include <QWidget>
 #include <QLabel>
@@ -36,16 +36,16 @@
 #include <QToolBar>
 #include "expand/wnavigation.h"
 
-class WVehicleRetrograde : public QWidget
+class VehicleConverseWidget : public QWidget
 {
     Q_OBJECT
 
 public:
-    WVehicleRetrograde(QWidget *parent = 0);
-    ~WVehicleRetrograde();
+    VehicleConverseWidget(QWidget *parent = 0);
+    ~VehicleConverseWidget();
 
 protected:
-    void closeEvent(QCloseEvent *event);//virtual
+    void closeEvent(QCloseEvent *event);
 
 private slots:
 
@@ -61,5 +61,4 @@ private:
     QStackedWidget *CentralStackedWidget;
 };
 
-
-#endif // WVEHICLERETROGRADE_H
+#endif // VEHICLECONVERSEWIDGET_H

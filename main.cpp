@@ -33,15 +33,15 @@ int main(int argc, char *argv[])
     splash.showMessage("connecting......", Qt::AlignRight | Qt::AlignTop, Qt::red);
     QThread::msleep(400);
 
-    SimpleControlWindow w;
-    w.show();
-    w.move((QApplication::desktop()->width() - w.width())/2, (QApplication::desktop()->height() - w.height())/2);
-
-//    MainWindow w;
+//    SimpleControlWindow w;
 //    w.show();
-//    QVariant d;//global property
-//    d.setValue(&w);
-//    app.setProperty("MainWindow",d);
+//    w.move((QApplication::desktop()->width() - w.width())/2, (QApplication::desktop()->height() - w.height())/2);
+
+    MainWindow w;
+    w.show();
+    QVariant d;//global property
+    d.setValue(&w);
+    app.setProperty("MainWindow",d);
 
     splash.finish(&w);//splash is finish
     return app.exec();

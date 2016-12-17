@@ -1,5 +1,4 @@
-﻿#pragma execution_character_set("utf-8")
-#include "wvehicleretrograde.h"
+#include "leavewidget.h"
 #include <QApplication>
 #include "windows/wmainpreview.h"
 #include "windows/weventsearch.h"
@@ -8,28 +7,27 @@
 #include "expand/myhelper.h"
 #include <QMessageBox>
 
-WVehicleRetrograde::WVehicleRetrograde(QWidget *parent)
-    : QWidget(parent)
+LeaveWidget::LeaveWidget(QWidget *parent) : QWidget(parent)
 {
     initData();
     initUI();
     initConnect();
 }
 
-WVehicleRetrograde::~WVehicleRetrograde()
+LeaveWidget::~LeaveWidget()
 {
 }
 
-void WVehicleRetrograde::closeEvent(QCloseEvent *event)
+void LeaveWidget::closeEvent(QCloseEvent *event)
 {
     QWidget::closeEvent(event);
 }
 
-void WVehicleRetrograde::initData()
+void LeaveWidget::initData()
 {
     WMainPreview *mainPreview = new WMainPreview();
     WEventSearch *eventSearch = new WEventSearch();
-    WLocalResource *localResource = new WLocalResource();
+    WLocalResource *localResource = new WLocalResource(1);
     WDeviceManager *deviceManager = new WDeviceManager();
 
     CentralStackedWidget = new QStackedWidget(this);
@@ -40,7 +38,7 @@ void WVehicleRetrograde::initData()
     CentralStackedWidget->setCurrentIndex(0);
 }
 
-void WVehicleRetrograde::initUI()
+void LeaveWidget::initUI()
 {
     QtAwesome* awesome = MyHelper::getAwesome();
 
@@ -59,12 +57,12 @@ void WVehicleRetrograde::initUI()
     this->setLayout(mainLayout);
 }
 
-void WVehicleRetrograde::initConnect()
+void LeaveWidget::initConnect()
 {
-    connect(navigation, &WNavigation::signalBtnClicked, this, &WVehicleRetrograde::CentralIndexChanged);
+    connect(navigation, &WNavigation::signalBtnClicked, this, &LeaveWidget::CentralIndexChanged);
 }
 
-void WVehicleRetrograde::CentralIndexChanged(int index)
+void LeaveWidget::CentralIndexChanged(int index)
 {
     CentralStackedWidget->setCurrentIndex(index);
 }

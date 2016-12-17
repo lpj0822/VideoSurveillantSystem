@@ -37,12 +37,12 @@ public:
     bool getIsOpenVideo();//是否打开视频
 
 signals:
-    void signalIntrudeMessage(int number,QString savePath);
+    void signalIntrudeMessage(int number, QString savePath);
     void signalVideoMessage(bool isOpenVideo);
 
 public slots:
-    void slotVideoImage(QImage image,bool isOpen);
-    void slotMessage(QString message,int pos);
+    void slotVideoImage(QImage image, bool isOpen);
+    void slotMessage(QString message, int pos);
     void slotSaveVideo();
 
 protected:

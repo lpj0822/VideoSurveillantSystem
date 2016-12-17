@@ -82,8 +82,8 @@ void LeaveShowVideoWindow::slotMessage(QString message,int pos)
     qDebug() << message;
     if (message.trimmed().startsWith(str))
     {
-        QString filePath = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd");
-        QString fileName = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd") + "/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+        QString filePath = QDir::currentPath() + "/result/leave/" + QDate::currentDate().toString("yyyy-MM-dd");
+        QString fileName = filePath + "/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
         videoSave->saveVideoData(videoPath, filePath, fileName, pos, maxLeaveTime);
         int number= message.trimmed().mid(str.length()).toInt();
         emit signalLeaveMessage(number);
@@ -197,7 +197,7 @@ void LeaveShowVideoWindow::stopVideo()
 //得到图片
 QImage LeaveShowVideoWindow::getImage()
 {
-    return currentImage;
+    return currentImage.copy();
 }
 
 //绘制区域

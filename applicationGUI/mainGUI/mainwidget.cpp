@@ -1,8 +1,9 @@
-﻿#pragma execution_character_set("utf-8")
-#include "playvideowidget.h"
+﻿#include "mainwidget.h"
 #include <QDebug>
 
-PlayVideoWidget::PlayVideoWidget(QWidget *parent) : QWidget(parent)
+#pragma execution_character_set("utf-8")
+
+MainWidget::MainWidget(QWidget *parent) : QWidget(parent)
 {
     this->resize(800,600);
     Initlabel();
@@ -13,7 +14,7 @@ PlayVideoWidget::PlayVideoWidget(QWidget *parent) : QWidget(parent)
     InitRightPressMenu();
 }
 
-void PlayVideoWidget::Initlabel()
+void MainWidget::Initlabel()
 {
     for(int i=0; i < 16; i++){
         VideoLabel *label= new VideoLabel(this);
@@ -21,7 +22,7 @@ void PlayVideoWidget::Initlabel()
     }
 }
 
-void PlayVideoWidget::InitRightPressMenu()
+void MainWidget::InitRightPressMenu()
 {
     RightPressMenu = new QMenu(this);
     RightPressMenu->addAction("切换到1画面", this, SLOT(ChangeView1()));
@@ -30,7 +31,7 @@ void PlayVideoWidget::InitRightPressMenu()
     RightPressMenu->addAction("切换到16画面", this, SLOT(ChangeView16()));
 }
 
-void PlayVideoWidget::ChangeView1()
+void MainWidget::ChangeView1()
 {
     VideoType = 1;
     RemoveAllLayout();
@@ -38,7 +39,7 @@ void PlayVideoWidget::ChangeView1()
     labellist[0]->show();
 }
 
-void PlayVideoWidget::ChangeView4()
+void MainWidget::ChangeView4()
 {
     VideoType = 4;
     RemoveAllLayout();
@@ -50,7 +51,7 @@ void PlayVideoWidget::ChangeView4()
     }
 }
 
-void PlayVideoWidget::ChangeView9()
+void MainWidget::ChangeView9()
 {
     VideoType = 9;
     RemoveAllLayout();
@@ -62,7 +63,7 @@ void PlayVideoWidget::ChangeView9()
     }
 }
 
-void PlayVideoWidget::ChangeView16()
+void MainWidget::ChangeView16()
 {
     VideoType = 16;
     RemoveAllLayout();
@@ -74,7 +75,7 @@ void PlayVideoWidget::ChangeView16()
     }
 }
 
-void PlayVideoWidget::RemoveAllLayout()
+void MainWidget::RemoveAllLayout()
 {
     for(int i = 0;i<labellist.count();i++){
         gridlayout->removeWidget(labellist[i]);
@@ -82,7 +83,7 @@ void PlayVideoWidget::RemoveAllLayout()
     }
 }
 
-void PlayVideoWidget::resizeEvent(QResizeEvent *e)
+void MainWidget::resizeEvent(QResizeEvent *e)
 {
     for(int i=0;i<16;i++){
         QPixmap pixmap = QPixmap(":/images/sp.png");
@@ -93,7 +94,7 @@ void PlayVideoWidget::resizeEvent(QResizeEvent *e)
     QWidget::resizeEvent(e);
 }
 
-void PlayVideoWidget::mousePressEvent(QMouseEvent *e)
+void MainWidget::mousePressEvent(QMouseEvent *e)
 {
     if(e->button() == Qt::RightButton){
         qDebug()<<"点击右键";
@@ -101,5 +102,4 @@ void PlayVideoWidget::mousePressEvent(QMouseEvent *e)
     }
     QWidget::mousePressEvent(e);
 }
-
 

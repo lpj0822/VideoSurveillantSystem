@@ -1,24 +1,23 @@
-﻿#ifndef DLOCALPARSECONFIG_H
-#define DLOCALPARSECONFIG_H
+﻿#ifndef VEHICLECONVERSECONFIG_H
+#define VEHICLECONVERSECONFIG_H
 
 #include <QDialog>
 #include <QPushButton>
 #include <QComboBox>
 #include "../expand/editablelabel.h"
 
-class DLocalParseConfig : public QDialog
+class VehicleConverseConfig : public QDialog
 {
     Q_OBJECT
 public:
-    explicit DLocalParseConfig(QWidget *parent = 0);
-    ~DLocalParseConfig();
+    explicit VehicleConverseConfig(QWidget *parent = 0);
+    ~VehicleConverseConfig();
     void updatePreview(const QImage &image);
 
     int getDirection();
     QList<QPolygonF> getPolygon();
 
 signals:
-    void signal_ConfigFinished(QList<QPolygonF> &list);
 
 public slots:
 
@@ -41,4 +40,4 @@ private:
     QComboBox *cbbDirection;
 };
 
-#endif // DLOCALPARSECONFIG_H
+#endif // VEHICLECONVERSECONFIG_H

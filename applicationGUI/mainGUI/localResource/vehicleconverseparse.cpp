@@ -1,31 +1,41 @@
-﻿#pragma execution_character_set("utf-8")
-#include "wlocalfileparse.h"
+﻿#include "vehicleconverseparse.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QHeaderView>
-#include "dlocalparseconfig.h"
+#include "vehicleconverseconfig.h"
 #include "../windows/weventsearch.h"
-#include "../expand/wshowinfodetail_2.h"
+#include "../expand/videoplayer.h"
 
-using namespace QtAV;
+#pragma execution_character_set("utf-8")
 
-WLocalFileParse::WLocalFileParse(QWidget *parent) : QDialog(parent)
+VehicleConverseParse::VehicleConverseParse(QWidget *parent) : QDialog(parent)
 {
     initData();
+    initDetectData();
     initUI();
     initConnect();
 }
 
-WLocalFileParse::~WLocalFileParse()
+VehicleConverseParse::~VehicleConverseParse()
 {
 }
 
-void WLocalFileParse::initData()
+void VehicleConverseParse::initData()
 {
     btnConfig = new QPushButton("配置规则");
     btnParse = new QPushButton("开始分析");
     btnConfig->setEnabled(true);
+    btnParse->setEnabled(false);
+
+    listWidget = new QListWidget(this);
+    listWidget->setIconSize(QSize(200, 200));
+    listWidget->setViewMode(QListView::IconMode);
+    listWidget->setMovement(QListView::Static);
+}
+
+void VehicleConverseParse::initDetectData()
+{
     QFileInfo info1("./config/VehicleConverseDetection.xml");
     if(info1.exists())
     {
@@ -36,22 +46,9 @@ void WLocalFileParse::initData()
         btnParse->setEnabled(false);
     }
     lbPlay = new VehicleConverseShowVideoWindow(this);
-
-    listWidget = new QListWidget(this);
-    listWidget->setIconSize(QSize(200, 200));
-    listWidget->setViewMode(QListView::IconMode);
-    listWidget->setMovement(QListView::Static);
-
-
-    QDir *temp = new QDir;
-    bool exist = temp->exists(QDir::currentPath()+"/Resource");
-    if(!exist)
-        temp->mkdir(QDir::currentPath()+"/Resource");
-
-    this->resize(1200,600);
 }
 
-void WLocalFileParse::initUI()
+void VehicleConverseParse::initUI()
 {
     QHBoxLayout *leftBelowLayout = new QHBoxLayout();
     leftBelowLayout->addStretch(0);
@@ -65,16 +62,18 @@ void WLocalFileParse::initUI()
     QHBoxLayout *mainLayout = new QHBoxLayout();
     mainLayout->addLayout(leftLayout);
     mainLayout->addWidget(listWidget);
-    mainLayout->setStretch(0,4);
-    mainLayout->setStretch(1,1);
+    mainLayout->setStretch(0, 4);
+    mainLayout->setStretch(1, 1);
 
     this->setLayout(mainLayout);
+    this->resize(1200, 600);
+    this->setWindowTitle("车辆逆行检测");
 }
 
-void WLocalFileParse::initConnect()
+void VehicleConverseParse::initConnect()
 {
-    connect(btnConfig,&QPushButton::clicked,this,&WLocalFileParse::on_BeginConfig);
-    connect(btnParse,&QPushButton::clicked,[&](){
+    connect(btnConfig, &QPushButton::clicked, this, &VehicleConverseParse::on_BeginConfig);
+    connect(btnParse, &QPushButton::clicked, [&](){
         if(btnParse->text().contains("开始分析"))
         {
             lbPlay->startDetect();
@@ -88,13 +87,13 @@ void WLocalFileParse::initConnect()
             btnConfig->setEnabled(true);
          }
     });
-    connect(listWidget,&QListWidget::itemDoubleClicked,this,&WLocalFileParse::on_ShowInfoDetails);
+    connect(listWidget, &QListWidget::itemDoubleClicked, this, &VehicleConverseParse::on_ShowInfoDetails);
 
-    connect(lbPlay,&VehicleConverseShowVideoWindow::signalConverseMessage,this,&WLocalFileParse::slotConverseMessage);
-    connect(lbPlay,&VehicleConverseShowVideoWindow::signalVideoMessage,this,&WLocalFileParse::slotVideoMessage);
+    connect(lbPlay, &VehicleConverseShowVideoWindow::signalConverseMessage, this, &VehicleConverseParse::slotConverseMessage);
+    connect(lbPlay, &VehicleConverseShowVideoWindow::signalVideoMessage, this, &VehicleConverseParse::slotVideoMessage);
 }
 
-void WLocalFileParse::playVideo(const QString &fileName)
+void VehicleConverseParse::playVideo(const QString &fileName)
 {
     path = fileName;
     if(lbPlay)
@@ -107,15 +106,15 @@ void WLocalFileParse::playVideo(const QString &fileName)
     }
 }
 
-void WLocalFileParse::on_BeginConfig()
+void VehicleConverseParse::on_BeginConfig()
 {
     lbPlay->stopVideo();
-    DLocalParseConfig *configDialog = new DLocalParseConfig(this);
+    VehicleConverseConfig *configDialog = new VehicleConverseConfig(this);
     configDialog->updatePreview(lbPlay->getImage());
     if(configDialog->exec()==QDialog::Accepted)
     {
-        QList<QPolygonF> polygons=configDialog->getPolygon();
-        int direction=configDialog->getDirection();
+        QList<QPolygonF> polygons = configDialog->getPolygon();
+        int direction = configDialog->getDirection();
         QList<int> directions;
         directions.clear();
         //qDebug()<<"polygons:"<<polygons<<" direction:"<<direction;
@@ -133,7 +132,7 @@ void WLocalFileParse::on_BeginConfig()
      lbPlay->startVideo();
 }
 
-void WLocalFileParse::slotVideoMessage(bool isVideoOpen)
+void VehicleConverseParse::slotVideoMessage(bool isVideoOpen)
 {
     if(!isVideoOpen)
     {
@@ -144,9 +143,9 @@ void WLocalFileParse::slotVideoMessage(bool isVideoOpen)
 }
 
 
-void WLocalFileParse::slotConverseMessage(int number, QString savePath)
+void VehicleConverseParse::slotConverseMessage(int number, QString savePath)
 {
-    qDebug()<<"Converse area:"<<number<<" Path:"<<savePath;
+    qDebug() << "Converse area:" << number << " Path:" << savePath;
 
     QImage img = lbPlay->getImage();
     QIcon icon(QPixmap::fromImage(img));
@@ -158,9 +157,9 @@ void WLocalFileParse::slotConverseMessage(int number, QString savePath)
     item->setText(QDate::currentDate().toString("yyyy.MM.dd")+" "+QTime::currentTime().toString()+"  车辆逆行");
 }
 
-void WLocalFileParse::on_ShowInfoDetails(QListWidgetItem *item)
+void VehicleConverseParse::on_ShowInfoDetails(QListWidgetItem *item)
 {
-    WShowInfoDetail_2 *showInfoDetail = new WShowInfoDetail_2(this);
+    VideoPlayer *showInfoDetail = new VideoPlayer(this);
     showInfoDetail->setTitle("车辆逆行检测详细信息");
     showInfoDetail->playVideo(item->data(100001).toString());
 

@@ -11,14 +11,16 @@
 #include <QDebug>
 #include <QHeaderView>
 #include <QFileInfo>
-#include "wlocalfileparse.h"
 #include "../expand/myhelper.h"
+#include "vehicleconverseparse.h"
+#include "leaveparse.h"
 
-WLocalResource::WLocalResource(QWidget *parent) : QFrame(parent)
+WLocalResource::WLocalResource(int function, QWidget *parent) : QFrame(parent)
 {
     initData();
     initUI();
     initConnect();
+    this->function = function;
 }
 
 WLocalResource::~WLocalResource()
@@ -218,12 +220,31 @@ void WLocalResource::on_tableViewTriggered(QAction *act)
         }
     }
     else if (act==actParse){
+        switch (this->function){
 
-        WLocalFileParse *parseDialog = new WLocalFileParse(this);
-        parseDialog->playVideo(path+"/"+baseName+"."+suffixName);
-        connect(parseDialog, &WLocalFileParse::signal_NewPreviewInfo, this, &WLocalResource::slotAnalysisResult);
-        parseDialog->exec();
-        parseDialog->deleteLater();
+        case 1:
+        {
+            LeaveParse *parseDialog = new LeaveParse(this);
+            parseDialog->playVideo(path+"/"+baseName+"."+suffixName);
+            connect(parseDialog, &LeaveParse::signal_NewPreviewInfo, this, &WLocalResource::slotAnalysisResult);
+            parseDialog->exec();
+            parseDialog->deleteLater();
+        }
+            break;
+        case 2:
+            break;
+        case 3:
+        {
+            VehicleConverseParse *parseDialog = new VehicleConverseParse(this);
+            parseDialog->playVideo(path+"/"+baseName+"."+suffixName);
+            connect(parseDialog, &VehicleConverseParse::signal_NewPreviewInfo, this, &WLocalResource::slotAnalysisResult);
+            parseDialog->exec();
+            parseDialog->deleteLater();
+        }
+            break;
+        case 4:
+            break;
+        }
     }
 }
 

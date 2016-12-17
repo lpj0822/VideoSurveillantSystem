@@ -89,8 +89,8 @@ void IntrudeShowVideoWindow::slotMessage(QString message,int pos)
     {
         if(isFirstIntrude)
         {
-            QString filePath = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd");
-            QString fileName = QDir::currentPath() + "/result/" + QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+            QString filePath = QDir::currentPath() + "/result/intrude/" + QDate::currentDate().toString("yyyy-MM-dd");
+            QString fileName = filePath + "/" + QTime::currentTime().toString("hhmmsszzz") + ".avi";
             errCode = videoWriteThread->openVideo(videoPath);
             if(errCode==0)
             {
@@ -127,7 +127,7 @@ void IntrudeShowVideoWindow::slotSaveVideo()
 {
     videoWriteThread->stopThread();
     isFirstIntrude = true;
-    emit signalIntrudeMessage(detectNumber,videoWriteThread->getSaveFileName());
+    emit signalIntrudeMessage(detectNumber, videoWriteThread->getSaveFileName());
 }
 
 int IntrudeShowVideoWindow::showVideo(const QString &path)
@@ -232,7 +232,7 @@ void IntrudeShowVideoWindow::stopVideo()
 //得到图片
 QImage IntrudeShowVideoWindow::getImage()
 {
-    return currentImage;
+    return currentImage.copy();
 }
 
 //绘制区域
@@ -262,7 +262,7 @@ void IntrudeShowVideoWindow::initData()
     detectNumber=0;//检测到的区域
     videoWriteThread=new VideoWriteThread();//保存视频
 
-    currentImage=QImage(":/images/play.png");
+    currentImage = QImage(":/images/play.png");
 
     //绘图画笔
     myPen.setWidth(2);

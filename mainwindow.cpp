@@ -1,9 +1,10 @@
-﻿#pragma execution_character_set("utf-8")
-#include "mainwindow.h"
+﻿#include "mainwindow.h"
 #include <QApplication>
 #include <QMessageBox>
 #include <QDesktopServices>
 #include "applicationGUI/mainGUI/expand/wexpand.h"
+
+#pragma execution_character_set("utf-8")
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), leftTabXxpanded(true)
@@ -45,7 +46,8 @@ void MainWindow::addLogMsg(const QString &str)
 
 void MainWindow::SlotLeave()
 {
-    qDebug()<<"运行离岗检测模块程序";
+    MainWindow *mainwindow = qApp->property("MainWindow").value<MainWindow *>();
+    mainwindow->addLogMsg("运行离岗检测模块程序");
 }
 
 void MainWindow::SlotVehicleRetrograde()
@@ -168,14 +170,14 @@ void MainWindow::initStackCenterWidget()
     mainCentralTab = new QTabWidget();
     mainCentralTab->setTabPosition(QTabWidget::West);
 
-    VideoWidget = new PlayVideoWidget();
-    mainCentralTab->addTab(VideoWidget, "视频播放");
+    mainWidget = new MainWidget();
+    mainCentralTab->addTab(mainWidget, "视频播放");
 
-    wVehicleRetrograde = new WVehicleRetrograde(this);
-    wVehicleRetrograde->hide();
+    vehicleConverseWidget = new VehicleConverseWidget(this);
+    vehicleConverseWidget->hide();
 
     CentralWidget->addWidget(mainCentralTab);
-    CentralWidget->addWidget(wVehicleRetrograde);
+    CentralWidget->addWidget(vehicleConverseWidget);
     CentralWidget->setCurrentIndex(0);
 }
 

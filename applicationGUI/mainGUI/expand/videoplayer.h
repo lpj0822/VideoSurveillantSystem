@@ -1,7 +1,9 @@
-#ifndef WSHOWINFODETAIL_2_H
-#define WSHOWINFODETAIL_2_H
+﻿#ifndef VIDEOPLAYER_H
+#define VIDEOPLAYER_H
 
 #include <QWidget>
+#include <QDialog>
+#include <QFrame>
 #include <QTableView>
 #include <QStandardItemModel>
 #include <QPushButton>
@@ -11,8 +13,6 @@
 #include <QModelIndex>
 #include <QVBoxLayout>
 #include <QLabel>
-#include <QDialog>
-#include <QFrame>
 #include <QToolButton>
 #include "Slider.h"
 #include "dplayerset.h"
@@ -20,12 +20,13 @@
 const int volumeSliderMax = 100;
 const qreal volumeInterval = 0.04;
 
-class WShowInfoDetail_2 : public QDialog
+class VideoPlayer : public QDialog
 {
     Q_OBJECT
 public:
-    explicit WShowInfoDetail_2(QWidget *parent = 0);
-    ~WShowInfoDetail_2();
+    explicit VideoPlayer(QWidget *parent = 0);
+    ~VideoPlayer();
+
     void playVideo(const QString &fileName);
     void setTitle(const QString &title);
 
@@ -75,4 +76,4 @@ private:
     qreal volume;
 };
 
-#endif // WSHOWINFODETAIL_2_H
+#endif // VIDEOPLAYER_H

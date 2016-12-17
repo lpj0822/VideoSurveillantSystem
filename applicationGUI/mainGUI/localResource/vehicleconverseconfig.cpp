@@ -1,22 +1,22 @@
-﻿#include "dlocalparseconfig.h"
+﻿#include "vehicleconverseconfig.h"
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QDebug>
 
 #pragma execution_character_set("utf-8")
 
-DLocalParseConfig::DLocalParseConfig(QWidget *parent) : QDialog(parent)
+VehicleConverseConfig::VehicleConverseConfig(QWidget *parent) : QDialog(parent)
 {
     initData();
     initUI();
     initConnect();
 }
 
-DLocalParseConfig::~DLocalParseConfig()
+VehicleConverseConfig::~VehicleConverseConfig()
 {
 }
 
-void DLocalParseConfig::initData()
+void VehicleConverseConfig::initData()
 {
     editArea  = new EditableLabel();
     btnReConfig = new QPushButton("重新配置");
@@ -30,7 +30,7 @@ void DLocalParseConfig::initData()
     cbbDirection->addItem("右");
 }
 
-void DLocalParseConfig::initUI()
+void VehicleConverseConfig::initUI()
 {
     QHBoxLayout *belowLayout = new QHBoxLayout();
     belowLayout->addStretch(0);
@@ -52,21 +52,21 @@ void DLocalParseConfig::initUI()
     this->setLayout(mainLayout);
 }
 
-void DLocalParseConfig::initConnect()
+void VehicleConverseConfig::initConnect()
 {
-    connect(btnOK,&QPushButton::clicked,this,&DLocalParseConfig::on_btnOKClicked);
-    connect(btnCancel,&QPushButton::clicked,this,&DLocalParseConfig::on_btnCancleClicked);
-    connect(btnReConfig,&QPushButton::clicked,this,&DLocalParseConfig::on_btnReConfigClicked);
+    connect(btnOK, &QPushButton::clicked, this, &VehicleConverseConfig::on_btnOKClicked);
+    connect(btnCancel, &QPushButton::clicked, this, &VehicleConverseConfig::on_btnCancleClicked);
+    connect(btnReConfig, &QPushButton::clicked, this, &VehicleConverseConfig::on_btnReConfigClicked);
 }
 
-void DLocalParseConfig::updatePreview(const QImage &image)
+void VehicleConverseConfig::updatePreview(const QImage &image)
 {
     QImage img(image);
     editArea->SetNewQImage(img);
-    this->resize(image.width(),image.height()*11/10);
+    this->resize(image.width(), image.height()*11/10);
 }
 
-int DLocalParseConfig::getDirection()
+int VehicleConverseConfig::getDirection()
 {
     int direction;
     QString str = cbbDirection->currentText();
@@ -89,23 +89,23 @@ int DLocalParseConfig::getDirection()
     return direction;
 }
 
-QList<QPolygonF> DLocalParseConfig::getPolygon()
+QList<QPolygonF> VehicleConverseConfig::getPolygon()
 {
     return editArea->GetPoints();
 }
 
-void DLocalParseConfig::on_btnOKClicked()
+void VehicleConverseConfig::on_btnOKClicked()
 {
     qDebug()<<getDirection();
     this->accept();
 }
 
-void DLocalParseConfig::on_btnCancleClicked()
+void VehicleConverseConfig::on_btnCancleClicked()
 {
     this->close();
 }
 
-void DLocalParseConfig::on_btnReConfigClicked()
+void VehicleConverseConfig::on_btnReConfigClicked()
 {
     editArea->ClearPoints();
 }

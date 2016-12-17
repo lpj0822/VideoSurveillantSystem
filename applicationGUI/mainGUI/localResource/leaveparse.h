@@ -1,5 +1,5 @@
-﻿#ifndef WLOCALFILEPARSE_H
-#define WLOCALFILEPARSE_H
+﻿#ifndef LEAVEPARSE_H
+#define LEAVEPARSE_H
 
 #include <QDialog>
 #include <QtAV>
@@ -13,14 +13,14 @@
 #include <QLabel>
 #include <QListWidget>
 #include "../windows/wtitletableview.h"
-#include "videoAnalysis/vehicleconverseshowvideowindow.h"
+#include "videoAnalysis/leaveshowvideowindow.h"
 
-class WLocalFileParse : public QDialog
+class LeaveParse : public QDialog
 {
     Q_OBJECT
 public:
-    explicit WLocalFileParse(QWidget *parent = 0);
-    ~WLocalFileParse();
+    explicit LeaveParse(QWidget *parent = 0);
+    ~LeaveParse();
     void playVideo(const QString &fileName);
 
 signals:
@@ -28,7 +28,8 @@ signals:
 
 public slots:
     void slotVideoMessage(bool isVideoOpen);
-    void slotConverseMessage(int number, QString savePath);
+    void slotLeaveMessage(int number);
+    void slotSaveVideoMessage(QString savePath);
 
 protected:
 
@@ -38,19 +39,19 @@ private slots:
 
 private:
     void initData();
+    void initDetectData();
     void initUI();
     void initConnect();
 
 private:
 
-    VehicleConverseShowVideoWindow *lbPlay;
-
+    LeaveShowVideoWindow *lbPlay;
     QPushButton *btnConfig;
     QPushButton *btnParse;
+    QListWidget *listWidget;
 
     QString path;
-
-    QListWidget *listWidget;
+    QImage saveImg;
 };
 
-#endif // WLOCALFILEPARSE_H
+#endif // LEAVEPARSE_H

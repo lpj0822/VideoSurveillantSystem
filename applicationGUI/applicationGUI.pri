@@ -17,7 +17,6 @@ HEADERS += \
     $$PWD/mainGUI/expand/Slider.h \
     $$PWD/mainGUI/expand/wexpand.h \
     $$PWD/mainGUI/expand/wnavigation.h \
-    $$PWD/mainGUI/expand/wshowinfodetail_2.h \
     $$PWD/mainGUI/windows/ftoolbtn.h \
     $$PWD/mainGUI/windows/searchbtn.h \
     $$PWD/mainGUI/windows/wareatree.h \
@@ -30,11 +29,15 @@ HEADERS += \
     $$PWD/mainGUI/windows/wtitletableview.h \
     $$PWD/mainGUI/QtAwesome/QtAwesome.h \
     $$PWD/mainGUI/QtAwesome/QtAwesomeAnim.h \
-    $$PWD/mainGUI/localResource/dlocalparseconfig.h \
-    $$PWD/mainGUI/localResource/wlocalfileparse.h \
     $$PWD/mainGUI/localResource/wlocalresource.h \
-    $$PWD/mainGUI/playvideowidget.h \
-    $$PWD/mainGUI/wvehicleretrograde.h
+    $$PWD/mainGUI/expand/videoplayer.h \
+    $$PWD/mainGUI/mainwidget.h \
+    $$PWD/mainGUI/vehicleconversewidget.h \
+    $$PWD/mainGUI/localResource/vehicleconverseparse.h \
+    $$PWD/mainGUI/localResource/vehicleconverseconfig.h \
+    $$PWD/mainGUI/localResource/leaveconfig.h \
+    $$PWD/mainGUI/localResource/leaveparse.h \
+    $$PWD/mainGUI/leavewidget.h
 
 SOURCES += \
     $$PWD/simpleGUI/drawingwindow.cpp \
@@ -54,7 +57,6 @@ SOURCES += \
     $$PWD/mainGUI/expand/Slider.cpp \
     $$PWD/mainGUI/expand/wexpand.cpp \
     $$PWD/mainGUI/expand/wnavigation.cpp \
-    $$PWD/mainGUI/expand/wshowinfodetail_2.cpp \
     $$PWD/mainGUI/windows/ftoolbtn.cpp \
     $$PWD/mainGUI/windows/searchbtn.cpp \
     $$PWD/mainGUI/windows/wareatree.cpp \
@@ -67,9 +69,13 @@ SOURCES += \
     $$PWD/mainGUI/windows/wtitletableview.cpp \
     $$PWD/mainGUI/QtAwesome/QtAwesome.cpp \
     $$PWD/mainGUI/QtAwesome/QtAwesomeAnim.cpp \
-    $$PWD/mainGUI/localResource/dlocalparseconfig.cpp \
-    $$PWD/mainGUI/localResource/wlocalfileparse.cpp \
     $$PWD/mainGUI/localResource/wlocalresource.cpp \
-    $$PWD/mainGUI/playvideowidget.cpp \
-    $$PWD/mainGUI/wvehicleretrograde.cpp
+    $$PWD/mainGUI/expand/videoplayer.cpp \
+    $$PWD/mainGUI/mainwidget.cpp \
+    $$PWD/mainGUI/vehicleconversewidget.cpp \
+    $$PWD/mainGUI/localResource/vehicleconverseparse.cpp \
+    $$PWD/mainGUI/localResource/vehicleconverseconfig.cpp \
+    $$PWD/mainGUI/localResource/leaveconfig.cpp \
+    $$PWD/mainGUI/localResource/leaveparse.cpp \
+    $$PWD/mainGUI/leavewidget.cpp
 

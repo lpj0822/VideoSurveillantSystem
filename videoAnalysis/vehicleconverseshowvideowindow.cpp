@@ -69,10 +69,10 @@ void VehicleConverseShowVideoWindow::paintEvent(QPaintEvent *e)
     painter.end();
 }
 
-void VehicleConverseShowVideoWindow::slotVideoImage(QImage image,bool isOpen)
+void VehicleConverseShowVideoWindow::slotVideoImage(QImage image, bool isOpen)
 {
-    this->isOpen=isOpen;
-    currentImage=image;
+    this->isOpen = isOpen;
+    currentImage = image;
     this->update();
     if(!isOpen)
     {
@@ -89,8 +89,8 @@ void VehicleConverseShowVideoWindow::slotMessage(QString message, int pos)
     {
         if(isFirstConverse)
         {
-            QString filePath = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd");
-            QString fileName = QDir::currentPath()+"/result/"+QDate::currentDate().toString("yyyy-MM-dd")+"/" + QTime::currentTime().toString("hhmmsszzz")+".avi";
+            QString filePath = QDir::currentPath()+"/result/vehicleConverse/"+QDate::currentDate().toString("yyyy-MM-dd");
+            QString fileName = filePath + "/" + QTime::currentTime().toString("hhmmsszzz") + ".avi";
             errCode=videoWriteThread->openVideo(videoPath);
             if(errCode==0)
             {
@@ -177,7 +177,7 @@ int VehicleConverseShowVideoWindow::closeShowVideo()
     if(vehicleConverseDetectThread)
     {
         vehicleConverseDetectThread->stopThread();
-        isOpen=false;
+        isOpen = false;
     }
     return 0;
 }
@@ -249,7 +249,7 @@ void VehicleConverseShowVideoWindow::stopVideo()
 //得到图片
 QImage VehicleConverseShowVideoWindow::getImage()
 {
-    return currentImage;
+    return currentImage.copy();;
 }
 
 //绘制区域

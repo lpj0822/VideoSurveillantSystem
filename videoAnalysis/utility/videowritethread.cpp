@@ -165,7 +165,7 @@ void VideoWriteThread::init()
     video=new VideoProcess();
     outputVideo=new MyVideoWriter();
 
-    fileName="";
+    fileName = "";
 
     size=cv::Size(640,480);//保存视频文件的大小
     fps=25;//帧率

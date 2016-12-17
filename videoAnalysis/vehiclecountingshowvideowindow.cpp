@@ -188,7 +188,7 @@ void VehicleCountingShowVideoWindow::stopVideo()
 //得到图片
 QImage VehicleCountingShowVideoWindow::getImage()
 {
-    return currentImage;
+    return currentImage.copy();
 }
 
 //绘制区域

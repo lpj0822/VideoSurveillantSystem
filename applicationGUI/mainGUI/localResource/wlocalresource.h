@@ -18,7 +18,7 @@ class WLocalResource : public QFrame
 {
     Q_OBJECT
 public:
-    explicit WLocalResource(QWidget *parent = 0);
+    explicit WLocalResource(int function, QWidget *parent = 0);
     ~WLocalResource();
 
 signals:
@@ -69,6 +69,8 @@ private:
     QMenu *tableViewMenu;
     QAction *actDelFile;
     QAction *actParse;
+
+    int function;
 };
 
 #endif // WLOCALRESOURCE_H
