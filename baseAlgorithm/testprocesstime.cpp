@@ -22,7 +22,7 @@ void TestProcessTime::tic()
 void TestProcessTime::toc()
 {
     duration = (static_cast<double>(cv::getTickCount()) - duration) / cv::getTickFrequency();
-    std::cout << processname << "\ttime(sec):" << std::fixed << std::setprecision(6) << duration << std::endl;
+    std::cout << processname << "\ttime(sec):" << std::fixed << std::setprecision(4) << duration << std::endl;
 }
 
 //设置算法名称和得到算法名称
