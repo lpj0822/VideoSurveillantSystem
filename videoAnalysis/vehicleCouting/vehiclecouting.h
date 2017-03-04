@@ -6,8 +6,10 @@
 #define VEHICLECOUTING_H
 
 #include <QObject>
+#include "baseAlgorithm/imageprocess.h"
 #include "baseAlgorithm/frameforeground.h"
-#include "multipletracking/blobmultipletracker.h"
+#include "baseAlgorithm/geometrycalculations.h"
+#include "multipletracking/kalmanmultipletracker.h"
 #include "countingarea.h"
 #include "medianline.h"
 
@@ -32,7 +34,8 @@ signals:
 
 private:
 
-    void tracking(const cv::Mat& roi, int number);//对目标进行多目标跟踪
+    std::vector<cv::Point2f> detectObjectCenter(const cv::Mat& frame, int number);//检测运动目标得到检测区域内的目标中心点
+    void tracking(const cv::Mat& roi, const std::vector<cv::Point2f>& centers, int number);//对目标进行多目标跟踪
     void countingVehicle(int number);//统计车流量
 
     void initData();
@@ -40,12 +43,20 @@ private:
 private:
 
     MedianLine medianLine;//中间位置
+    ImageProcess *imageProcess;//图像处理算法类
+    GeometryCalculations *geometryCalculations;//几何运算类
     FrameForeground *frameForeground;//前景检测类
-    std::vector<BlobMultipleTracker *> allTracker;//多目标跟踪类
+    std::vector<KalmanMultipleTracker *> allMultipleTrackers;//多目标跟踪类
 
     std::vector<CountingArea> detectArea;//整个检测区域
     std::vector< std::vector<cv::Point> > pointsArea;
     std::vector<int> areaDirection;//每个区域的正常行驶方向
+
+    int minConversePointNum;//运动路径中至少多少个逆行点
+    float crossMatchMaxValue;//两矩形相交的临界值，大于这个值就认为匹配
+    float minBox;//检测的最小目标面积大小
+    int minSize;//最小检测目标
+    bool isDrawObject;
 
     int errorCode;//错误码
     bool isFirstRun;//第一次运行

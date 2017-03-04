@@ -11,17 +11,27 @@ VehicleCouting::VehicleCouting(QObject *parent) : QObject(parent)
 
 VehicleCouting::~VehicleCouting()
 {
-    if(frameForeground)
+    if (imageProcess)
+    {
+        delete imageProcess;
+        imageProcess = NULL;
+    }
+    if (geometryCalculations)
+    {
+        delete geometryCalculations;
+        geometryCalculations = NULL;
+    }
+    if (frameForeground)
     {
         delete frameForeground;
         frameForeground = NULL;
     }
-    for(int loop1=0;loop1<(int)allTracker.size();loop1++)
+    for (int loop1=0;loop1<(int)allMultipleTrackers.size();loop1++)
     {
-        if(allTracker[loop1])
+        if (allMultipleTrackers[loop1])
         {
-            delete allTracker[loop1];
-            allTracker[loop1] = NULL;
+            delete allMultipleTrackers[loop1];
+            allMultipleTrackers[loop1] = NULL;
         }
     }
     std::cout << "~VehicleCouting()" << std::endl;
@@ -31,6 +41,7 @@ VehicleCouting::~VehicleCouting()
 int VehicleCouting::detect(const cv::Mat& frame)
 {
     cv::Mat roiArea;//区域截图
+    std::vector<cv::Point2f> objectCenter;//检测的目标中心
     currentDate = QDateTime::currentDateTime().toString("yyyy:MM:dd-hh:mm:ss");
     int counting = 0;
     errorCode = 0;
@@ -46,7 +57,9 @@ int VehicleCouting::detect(const cv::Mat& frame)
             if(detectArea[loop].getNormalDirection()>0)
             {
                 roiArea = frame(detectArea[loop].getPolygonRect());
-                tracking(roiArea,loop);
+                objectCenter.clear();
+                objectCenter = detectObjectCenter(roiArea, loop);
+                tracking(roiArea, objectCenter, loop);
                 countingVehicle(loop);
                 counting = detectArea[loop].getVehicleCouting();
                 if(errorCode < 0)
@@ -68,14 +81,38 @@ int VehicleCouting::detect(const cv::Mat& frame)
 
 }
 
-//对目标进行多目标跟踪
-void VehicleCouting::tracking(const cv::Mat& roi, int number)
+//检测运动目标得到运动目标中心
+std::vector<cv::Point2f> VehicleCouting::detectObjectCenter(const cv::Mat &frame, int number)
 {
-    cv::Mat fsMak;
-    if(frameForeground)
+    std::vector<cv::Point2f> myCenterPoint;
+    std::vector<cv::Point2f> objectCenters;//检测目标的中心
+    objectCenters.clear();
+    myCenterPoint.clear();
+    //objectCenters = frameForeground->getFrameForegroundCentroid(frame, minBox);
+    objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
+    //objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
+    int count= static_cast<int>(objectCenters.size());
+    for (int loop=0; loop<count; loop++)
     {
-        frameForeground->getFrameForeground(roi, fsMak);
-        allTracker[number]->multipleTracking(roi, fsMak);
+        if(geometryCalculations->pointInPolygon(objectCenters[loop], detectArea[number].getPolygon1()))
+        {
+            myCenterPoint.push_back(objectCenters[loop]);
+        }
+    }
+    if (isDrawObject)
+    {
+        imageProcess->drawCenter(const_cast<cv::Mat&>(frame), myCenterPoint, cv::Scalar(0,255,255));
+    }
+
+    return myCenterPoint;
+}
+
+//对目标进行多目标跟踪
+void VehicleCouting::tracking(const cv::Mat& roi, const std::vector<cv::Point2f>& centers, int number)
+{
+    if(allMultipleTrackers[number])
+    {
+        allMultipleTrackers[number]->mutilpleTracking(roi, centers);
     }
 }
 
@@ -84,15 +121,17 @@ void VehicleCouting::countingVehicle(int number)
 {
     int direction = detectArea[number].getNormalDirection();
     int position = detectArea[number].getMedianPoint();
-    std::vector< std::vector<cv::Point2d> > tracks = allTracker[number]->getTracksPoints();
-    for(int loop=0; loop<(int) tracks.size(); loop++)
+    std::vector<KalmanTracker*> trackers = allMultipleTrackers[number]->getListTrackers();
+    int count = allMultipleTrackers[number]->getTrackersCount();
+    std::cout << "tracker number:"<< count << std::endl;
+    for(int loop=0; loop< count; loop++)
     {
-        std::vector<cv::Point2d> points = tracks[loop];
-        int size = (int)points.size();
+        std::vector<cv::Point2f> points = trackers[loop]->getTrace();
+        int size = static_cast<int>(points.size());
         if(size > 1)
         {
-            cv::Point2d currentPoint=points[size-1];
-            cv::Point2d prePoint=points[size-2];
+            cv::Point2f currentPoint = points[size-1];
+            cv::Point2f prePoint = points[size-2];
             switch(direction)
             {
             case 1:
@@ -129,11 +168,11 @@ void VehicleCouting::countingVehicle(int number)
 //每个跟踪区域重新开始跟踪
 void VehicleCouting::startTrcaking(bool isStart)
 {
-    for(int loop1=0; loop1<(int)allTracker.size(); loop1++)
+    for (int loop=0; loop<(int)allMultipleTrackers.size(); loop++)
     {
-        if(allTracker[loop1])
+        if (allMultipleTrackers[loop])
         {
-            allTracker[loop1]->initStart(isStart);
+            allMultipleTrackers[loop]->initStart(isStart);
         }
     }
 }
@@ -152,15 +191,15 @@ void VehicleCouting::initDetectData()
 void VehicleCouting::initData()
 {
     detectArea.clear();
-    for(int loop1=0; loop1<(int)allTracker.size(); loop1++)
+    for (int loop1=0; loop1<(int)allMultipleTrackers.size(); loop1++)
     {
-        if(allTracker[loop1])
+        if (allMultipleTrackers[loop1])
         {
-            delete allTracker[loop1];
-            allTracker[loop1] = NULL;
+            delete allMultipleTrackers[loop1];
+            allMultipleTrackers[loop1] = NULL;
         }
     }
-    allTracker.clear();
+    allMultipleTrackers.clear();
 
     CountingArea area;
     int number = (int)pointsArea.size();
@@ -171,8 +210,8 @@ void VehicleCouting::initData()
         area.setVehicleCouting(0);
         area.setMedianPoint(medianLine.getMedianPosition(pointsArea[loop], areaDirection[loop]));
         detectArea.push_back(area);
-        BlobMultipleTracker* tarcker = new BlobMultipleTracker();
-        allTracker.push_back(tarcker);
+        KalmanMultipleTracker* tarcker = new KalmanMultipleTracker();
+        allMultipleTrackers.push_back(tarcker);
     }
 }
 
@@ -197,8 +236,10 @@ void VehicleCouting::init()
     detectArea.clear();
     pointsArea.clear();
     areaDirection.clear();
-    allTracker.clear();
+    allMultipleTrackers.clear();
 
+    imageProcess = new ImageProcess();//图像处理算法类
+    geometryCalculations = new GeometryCalculations();//几何运算类
     frameForeground = new FrameForeground();//前景检测类
 
     loadConfig();
@@ -218,6 +259,11 @@ void VehicleCouting::saveConfig()
     }
     fs.open("./config/VehicleCouting.xml", cv::FileStorage::WRITE, "utf-8");
 
+    cv::write(fs,"isDrawObject", isDrawObject);
+    cv::write(fs, "minConversePointNum", minConversePointNum);
+    cv::write(fs, "crossMatchMaxValue", crossMatchMaxValue);
+    cv::write(fs, "minSize", minSize);
+    cv::write(fs, "minBox", minBox);
     cv::write(fs, "areaDirection", areaDirection);
     for(int loop=0; loop<(int)pointsArea.size(); loop++)
     {
@@ -235,6 +281,11 @@ void VehicleCouting::loadConfig()
     areaDirection.clear();
     fs.open("./config/VehicleCouting.xml", cv::FileStorage::READ, "utf-8");
 
+    cv::read(fs["isDrawObject"],isDrawObject, false);
+    cv::read(fs["minConversePointNum"], minConversePointNum, 10);
+    cv::read(fs["crossMatchMaxValue"], crossMatchMaxValue, 0.1f);
+    cv::read(fs["minSize"], minSize, 30);
+    cv::read(fs["minBox"], minBox, 300.0f);
     cv::read(fs["areaDirection"], areaDirection);
 
     cv::FileNode node = fs["pointsArea0"];
