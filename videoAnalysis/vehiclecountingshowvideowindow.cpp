@@ -152,7 +152,7 @@ void VehicleCountingShowVideoWindow::setConfigParameter(QList<QPolygonF> detectA
             cv::Point point((int)tempData[loop1].x(),(int)tempData[loop1].y());
             tempPoint.push_back(point);
         }
-        QLine line=medianLine.getMedianLine(tempPoint,directions[loop]);
+        QLine line = medianLine.getMedianLine(tempPoint,directions[loop]);
         copyLine.append(line);
         area.push_back(tempPoint);
         areaDirection.push_back(directions[loop]);
@@ -218,7 +218,7 @@ void VehicleCountingShowVideoWindow::initData()
     vehicleCountingThread=new VehicleCountingThread();//车流量统计
     isOpen=false;
 
-    currentImage=QImage(":/images/play.png");
+    currentImage = QImage(":/images/play.png");
 
     //绘图画笔
     myPen.setWidth(2);

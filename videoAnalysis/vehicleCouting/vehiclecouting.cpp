@@ -88,9 +88,8 @@ std::vector<cv::Point2f> VehicleCouting::detectObjectCenter(const cv::Mat &frame
     std::vector<cv::Point2f> objectCenters;//检测目标的中心
     objectCenters.clear();
     myCenterPoint.clear();
-    //objectCenters = frameForeground->getFrameForegroundCentroid(frame, minBox);
-    objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
-    //objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
+    objectCenters = frameForeground->getFrameForegroundCentroid(frame, minBox);
+    //objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
     int count= static_cast<int>(objectCenters.size());
     for (int loop=0; loop<count; loop++)
     {
@@ -260,9 +259,6 @@ void VehicleCouting::saveConfig()
     fs.open("./config/VehicleCouting.xml", cv::FileStorage::WRITE, "utf-8");
 
     cv::write(fs,"isDrawObject", isDrawObject);
-    cv::write(fs, "minConversePointNum", minConversePointNum);
-    cv::write(fs, "crossMatchMaxValue", crossMatchMaxValue);
-    cv::write(fs, "minSize", minSize);
     cv::write(fs, "minBox", minBox);
     cv::write(fs, "areaDirection", areaDirection);
     for(int loop=0; loop<(int)pointsArea.size(); loop++)
@@ -282,9 +278,6 @@ void VehicleCouting::loadConfig()
     fs.open("./config/VehicleCouting.xml", cv::FileStorage::READ, "utf-8");
 
     cv::read(fs["isDrawObject"],isDrawObject, false);
-    cv::read(fs["minConversePointNum"], minConversePointNum, 10);
-    cv::read(fs["crossMatchMaxValue"], crossMatchMaxValue, 0.1f);
-    cv::read(fs["minSize"], minSize, 30);
     cv::read(fs["minBox"], minBox, 300.0f);
     cv::read(fs["areaDirection"], areaDirection);
 

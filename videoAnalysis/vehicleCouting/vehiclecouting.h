@@ -52,10 +52,7 @@ private:
     std::vector< std::vector<cv::Point> > pointsArea;
     std::vector<int> areaDirection;//每个区域的正常行驶方向
 
-    int minConversePointNum;//运动路径中至少多少个逆行点
-    float crossMatchMaxValue;//两矩形相交的临界值，大于这个值就认为匹配
     float minBox;//检测的最小目标面积大小
-    int minSize;//最小检测目标
     bool isDrawObject;
 
     int errorCode;//错误码

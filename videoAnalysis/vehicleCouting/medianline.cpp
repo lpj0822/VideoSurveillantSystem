@@ -128,7 +128,7 @@ int MedianLine::getMedianPosition(const std::vector<cv::Point>& points,const int
         {
             tempPoint.y=rect.br().y;
         }
-        medianPosition=rect.width/2;
+        medianPosition = rect.width/2;
         break;
     default:
         break;
