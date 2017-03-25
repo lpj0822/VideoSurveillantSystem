@@ -316,7 +316,7 @@ void MainWindow::ReadSetting()
 {
     QSettings settings("LPJ", "GUI");
     QPoint pos = settings.value("pos", QVariant(QPoint(20, 20))).toPoint();
-    QSize size = settings.value("size", QVariant(QSize(1000, 1300))).toSize();
+    QSize size = settings.value("size", QVariant(QSize(1300, 1000))).toSize();
     this->resize(size);
     this->move(pos);
 }
