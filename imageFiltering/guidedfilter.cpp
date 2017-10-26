@@ -183,9 +183,9 @@ GuidedFilter::~GuidedFilter()
     if(impl_)
     {
         delete impl_;
-        impl_= NULL;
+        impl_=NULL;
     }
-    std::cout << "~GuidedFilter()" << std::endl;
+    std::cout<<"~GuidedFilter()"<<std::endl;
 }
 
 cv::Mat GuidedFilter::filter(const cv::Mat &p, int depth) const

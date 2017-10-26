@@ -1,5 +1,5 @@
 ﻿#include "hcsaliency.h"
-#include "utility/utility.h"
+#include "utils/utility.h"
 #include <iostream>
 
 const int HCSaliency::DefaultNums[3] = {12, 12, 12};

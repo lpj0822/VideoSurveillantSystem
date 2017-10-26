@@ -70,25 +70,25 @@ void ImageFilter::guidedFilter(const cv::Mat &inMat ,cv::Mat &outMat,bool enhanc
     }
 }
 
-////导向滤波器
-//void ImageFilter::guidedFilter(const cv::Mat &inMat,cv::Mat &outMat, int radius, double eps, int depth)
-//{
-//    CV_Assert(inMat.channels()==3||outMat.channels()==1);
-//    cv::Mat I;
-//    inMat.convertTo(I,CV_32F,1.0/255.0);
-//    cv::ximgproc::guidedFilter(I,inMat,outMat,radius,eps,depth);
-//}
+//导向滤波器
+void ImageFilter::guidedFilter(const cv::Mat &inMat,cv::Mat &outMat, int radius, double eps, int depth)
+{
+    CV_Assert(inMat.channels()==3||outMat.channels()==1);
+    cv::Mat I;
+    inMat.convertTo(I,CV_32F,1.0/255.0);
+    cv::ximgproc::guidedFilter(I,inMat,outMat,radius,eps,depth);
+}
 
-//void ImageFilter::guidedFilter(const cv::Mat& inMat,cv::Mat &I,cv::Mat &outMat,int radius, double eps, int depth)
-//{
-//    cv::Mat tempI;
-//    if(inMat.empty()||I.empty())
-//    {
-//        std::cout<<"image empty!"<<std::endl;
-//        return;
-//    }
-//    //eps *= 255 * 255;   // Because the intensity range of our images is [0, 255]
-//    //outMat=GuidedFilter(I, radius, eps).filter(inMat, depth);
-//    I.convertTo(tempI,CV_32F,1.0/255.0);
-//    cv::ximgproc::guidedFilter(tempI,inMat,outMat,radius,eps,depth);
-//}
+void ImageFilter::guidedFilter(const cv::Mat& inMat,cv::Mat &I,cv::Mat &outMat,int radius, double eps, int depth)
+{
+    cv::Mat tempI;
+    if(inMat.empty()||I.empty())
+    {
+        std::cout<<"image empty!"<<std::endl;
+        return;
+    }
+    //eps *= 255 * 255;   // Because the intensity range of our images is [0, 255]
+    //outMat=GuidedFilter(I, radius, eps).filter(inMat, depth);
+    I.convertTo(tempI,CV_32F,1.0/255.0);
+    cv::ximgproc::guidedFilter(tempI,inMat,outMat,radius,eps,depth);
+}

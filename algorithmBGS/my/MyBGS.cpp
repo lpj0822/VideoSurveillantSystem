@@ -17,6 +17,7 @@ void MyBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_
     if (img_previous.empty())
         img_input.copyTo(img_previous);
 
+    cv::Mat img_foreground;
     cv::absdiff(img_previous, img_input, img_foreground);
 
     if (img_foreground.channels() == 3)

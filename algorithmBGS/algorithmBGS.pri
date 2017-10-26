@@ -10,7 +10,9 @@ HEADERS += \
     $$PWD/PBAS/vibe.h \
     $$PWD/PBAS/VibeBackgroundSegmenter.h \
     $$PWD/my/MyBGS.h \
-    $$PWD/my/IViBeBGS.h
+    $$PWD/my/ivibebgs.h \
+    $$PWD/my/saliencybgs.h \
+    $$PWD/utility/tool.h
 
 SOURCES += \
     $$PWD/OpticalFlowBGS.cpp \
@@ -23,5 +25,7 @@ SOURCES += \
     $$PWD/PBAS/vibe.cpp \
     $$PWD/PBAS/VibeBackgroundSegmenter.cpp \
     $$PWD/my/MyBGS.cpp \
-    $$PWD/my/IViBeBGS.cpp
+    $$PWD/my/ivibebgs.cpp \
+    $$PWD/my/saliencybgs.cpp \
+    $$PWD/utility/tool.cpp
     

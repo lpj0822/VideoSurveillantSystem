@@ -8,25 +8,28 @@
 #define IVIBEBGS_H
 
 #include <opencv2/core.hpp>
-#include <opencv2/highgui.hpp>
 #include <vector>
-#include "../IBGS.h"
 
-class IViBeBGS: public IBGS
+class IViBeBGS
 {
 public:
     IViBeBGS();
     ~IViBeBGS();
 
-    void process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel);
+    void initModel(cv::Mat &bg);
+    void detectAndUpdate(const cv::Mat &img, cv::Mat& mask);
+
+    void getEstimatedBG(cv::Mat &bg)
+    {
+       estimated_bg.copyTo(bg);
+    }
 
 private:
-    bool firstTime;
     cv::RNG rng;//随机数生成器
     cv::Size img_size; // Frame size.
     int img_type; // Frame type. Must be CV_8UC1 or CV_8UC3.
+
     std::vector<cv::Mat> bg_samples; // Background samples. Is an array containing samples_per_pixel images.
-    cv::Mat img_foreground;
     cv::Mat estimated_bg; // Estimated background. This is not part of the original method, but is important for other purposes.
 
     //samples_per_pixel: number of samples kept for each pixel,identified as N in the paper.
@@ -41,17 +44,13 @@ private:
     //update_probability: the chance of using one pixel to update the model is 1/update_probability.
     //his is the phi parameter from the paper, with default value of 16.
     int update_probability;
-    bool showOutput;
 
 private:
-    void initModel(const cv::Mat &bg);
-    void detectAndUpdate(const cv::Mat &img, cv::Mat& mask);
-    void initBGModel (const cv::Mat& bg);
+
+    void initBGModel (cv::Mat& bg);
     inline int pixelDistance (const uchar* p1, const uchar* p2, int n_channels);
 
     void init();
-    void saveConfig();
-    void loadConfig();
 };
 
 #endif // IVIBEBGS_H

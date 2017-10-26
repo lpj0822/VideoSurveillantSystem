@@ -1,42 +1,28 @@
 #include "ivibebgs.h"
+#include <stdexcept>
+#include <cstdlib>
 #include <ctime>
 #include <cmath>
 #include <iostream>
+#ifdef __USE_TBB
+// Used for parallel processing.
+#include "tbb/blocked_range.h"
+#include "tbb/parallel_for.h"
+using namespace tbb;
+#endif // __USE_TBB
 
 IViBeBGS::IViBeBGS()
 {
     init();
-    std::cout << "IViBeBGS()"<< std::endl;
+    std::cout<<"IViBeBGS()"<<std::endl;
 }
 
 IViBeBGS::~IViBeBGS()
 {
-    std::cout << "~IViBeBGS()"<< std::endl;
+    std::cout<<"~IViBeBGS()"<<std::endl;
 }
 
-void IViBeBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat &img_bgmodel)
-{
-    if (img_input.empty())
-        return;
-    if (firstTime)
-    {
-        initModel(img_input);
-        saveConfig();
-        firstTime = false;
-    }
-    else
-    {
-        detectAndUpdate(img_input, img_foreground);
-        if (showOutput)
-        {
-            cv::imshow("IViBe", img_foreground);
-        }
-        img_foreground.copyTo(img_output);
-        estimated_bg.copyTo(img_bgmodel);
-    }
-}
-
-void IViBeBGS::initModel(const cv::Mat &bg)
+void IViBeBGS::initModel(cv::Mat &bg)
 {
     // Test parameters.
     CV_Assert(bg.rows >= 16 && bg.cols >= 16);
@@ -49,12 +35,17 @@ void IViBeBGS::initModel(const cv::Mat &bg)
 
     // Initialize.
     for (int i = 0; i < samples_per_pixel; i++)
-        bg_samples.push_back(cv::Mat::zeros(img_size, img_type));
+        bg_samples.push_back( cv::Mat::zeros(img_size, img_type));
 
     initBGModel(bg);
     estimated_bg = bg.clone();
 }
 
+#ifndef __USE_TBB
+
+/*============================================================================*/
+/* FOREGROUND SEGMENTATION AND MODEL UPDATE                                   */
+/*============================================================================*/
 /** This is the central function of the detector. It detects foreground objects,
  * storing the results as a binary motion mask. Furthermore, the internal
  * background model is updated.
@@ -65,6 +56,7 @@ void IViBeBGS::initModel(const cv::Mat &bg)
  *
  * Return value: none. We use the mask parameter, and update internal structures.
 **/
+
 void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
 {
     CV_Assert(img.rows == img_size.height && img.cols == img_size.width);
@@ -72,13 +64,13 @@ void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
 
     int count = 0;
     uchar** model_ptr = new unsigned char* [samples_per_pixel];
-    mask = cv::Mat::zeros(img_size,CV_8UC1);
+    mask=cv::Mat::zeros(img_size,CV_8UC1);
 
     for (int row = 0; row < img.rows-1; row++)
     {
         const uchar* img_ptr = img.ptr<uchar>(row);
         uchar* mask_ptr = mask.ptr<uchar>(row);
-        uchar* estimated_bg_ptr = estimated_bg.ptr<uchar>(row);
+        uchar* estimated_bg_ptr=estimated_bg.ptr<uchar>(row);
         for (int i = 0; i < samples_per_pixel; i++)
             model_ptr[i] = bg_samples[i].ptr<uchar>(row);
 
@@ -95,10 +87,11 @@ void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
             if (count >= min_neighbors_for_bg) // Classified as background
             {
                 *mask_ptr = 0;
-                // Update
-                if (rng.uniform(0, update_probability - 1) == 0)
+
+                // Update... sometimes.
+                if (rng.uniform(0,update_probability-1) == 0)
                 {
-                    uchar* to_replace = model_ptr[rng.uniform(0, samples_per_pixel - 1)];
+                    uchar* to_replace = model_ptr[rng.uniform(0,samples_per_pixel-1)];
                     for (int i = 0; i < img.channels (); i++)
                     {
                         to_replace[i] = img_ptr[i];
@@ -106,22 +99,22 @@ void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
                     }
                 }
 
-                // Propagate to the neighborhood
-                if (rng.uniform(0, update_probability - 1) == 0)
+                // Propagate to the neighborhood... sometimes.
+                if (rng.uniform(0,update_probability-1) == 0)
                 {
-                    int row_offset = (rng.uniform(0, 2) - 1) * (int)img.step[0]; // -1, 0 or 1, *img.step to place in another row.
+                    int row_offset = (rng.uniform(0,2)-1)*(int)img.step[0]; // -1, 0 or 1, *img.step to place in another row.
                     if (row == 0 && row_offset < 0)
                         row_offset = 0; // Avoid pixels outside the image.
                     if (row == img.rows-1 && row_offset > 0)
                         row_offset = 0; // Avoid pixels outside the image.
 
-                    int col_offset = (rng.uniform(0, 2) - 1) * img.channels(); // -1, 0 or 1, *the number of channels.
+                    int col_offset = (rng.uniform(0,2)-1)*img.channels(); // -1, 0 or 1, *the number of channels.
                     if (col == 0 && col_offset < 0)
                         col_offset = 0; // Avoid pixels outside the image.
                     if (col == img.cols-1 && col_offset > 0)
                         col_offset = 0; // Avoid pixels outside the image.
 
-                    uchar* to_replace = model_ptr[rng.uniform(0, samples_per_pixel - 1)] + row_offset + col_offset;
+                    uchar* to_replace = model_ptr[rng.uniform(0,samples_per_pixel-1)] + row_offset + col_offset;
                     for (int i = 0; i < img.channels(); i++)
                     {
                         to_replace[i] = img_ptr[i];
@@ -144,7 +137,7 @@ void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
     if(model_ptr)
     {
         delete [] model_ptr;
-        model_ptr = NULL;
+        model_ptr=NULL;
     }
 }
 
@@ -155,14 +148,15 @@ void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
  *
  * Return value: none. Internal structures are updated.
 **/
-void IViBeBGS::initBGModel (const cv::Mat& bg)
+
+void IViBeBGS::initBGModel (cv::Mat& bg)
 {
     uchar** model_ptr = new uchar* [samples_per_pixel];
 
     // Run through the sample background and all the model images.
     for (int row = 0; row < bg.rows; row++)
     {
-        const uchar* in_ptr = bg.ptr<uchar>(row);
+        uchar* in_ptr= bg.ptr<uchar>(row);
         for (int i = 0; i < samples_per_pixel; i++)
             model_ptr[i] = bg_samples[i].ptr<uchar>(row);
 
@@ -172,19 +166,19 @@ void IViBeBGS::initBGModel (const cv::Mat& bg)
             // Suppose pixels at the margins are duplicated.
             for (int i = 0; i < samples_per_pixel; i++)
             {
-                int row_offset = (rng.uniform(0,2) - 1) * (int)bg.step[0]; // -1, 0 or 1, *bg.step to place in another row.
+                int row_offset = (rng.uniform(0,2)-1)*(int)bg.step[0]; // -1, 0 or 1, *bg.step to place in another row.
                 if (row == 0 && row_offset < 0)
                     row_offset = 0; // Avoid pixels outside the image.
                 if (row == bg.rows-1 && row_offset > 0)
                     row_offset = 0; // Avoid pixels outside the image.
 
-                int col_offset = (rng.uniform(0,2) - 1) * bg.channels(); // -1, 0 or 1, *the number of channels.
+                int col_offset = (rng.uniform(0,2)-1)*bg.channels(); // -1, 0 or 1, *the number of channels.
                 if (col == 0 && col_offset < 0)
                     col_offset = 0; // Avoid pixels outside the image.
                 if (col == bg.cols-1 && col_offset > 0)
                     col_offset = 0; // Avoid pixels outside the image.
 
-                const uchar* selected = in_ptr + row_offset + col_offset;
+                unsigned char* selected = in_ptr + row_offset + col_offset;
                 for (int channel = 0; channel < bg.channels (); channel++)
                     model_ptr[i][channel] = selected[channel];
             }
@@ -198,9 +192,180 @@ void IViBeBGS::initBGModel (const cv::Mat& bg)
     if(model_ptr)
     {
         delete [] model_ptr;
-        model_ptr = NULL;
+        model_ptr=NULL;
     }
 }
+
+#else //__USE_TBB
+
+void IViBeBGS::detectAndUpdate (const cv::Mat &img, cv::Mat& mask)
+{
+    CV_Assert(img.rows == img_size.height && img.cols == img_size.width);
+    CV_Assert(img.type() == img_type);
+
+    mask=cv::Mat::zeros(img_size,CV_8UC1);
+
+    // Internal class, used by the parallel_for.
+    class TBBDetectAndUpdate
+    {
+        cv::Mat* img;
+        cv::Mat* mask;
+        unsigned int min_neighbors_for_bg;
+        float max_distance_for_bg;
+        unsigned int update_probability;
+        cv::Mat* bg_samples;
+        cv::Mat* estimated_bg;
+        unsigned int samples_per_pixel;
+
+    public:
+        void operator () (const blocked_range <int>& range) const
+        {
+            unsigned char** model_ptr = new unsigned char* [samples_per_pixel];
+
+            for (int row = range.begin (); row < range.end (); row++)
+            {
+                unsigned char* img_ptr = (unsigned char*) (img->data + row*img->step);
+                unsigned char* mask_ptr = (unsigned char*) (mask->data + row*mask->step);
+                for (unsigned int i = 0; i < samples_per_pixel; i++)
+                    model_ptr [i] = (unsigned char*) (bg_samples [i].data + row*bg_samples [i].step);
+
+                for (int col = 0; col < img->cols; col++)
+                {
+                    // Check if this is a background pixel. Compare to the pixels in the model.
+                    unsigned int count = 0;
+                    for (unsigned int i = 0; i < samples_per_pixel && count < min_neighbors_for_bg; i++)
+                        if (pixelDistance (img_ptr, model_ptr [i], img->channels ()) <= max_distance_for_bg)
+                            count++;
+
+                    if (count >= min_neighbors_for_bg) // Classified as background?
+                    {
+                        *mask_ptr = 0;
+
+                        // Update... sometimes.
+                        if (rand () % update_probability == 0)
+                        {
+                            unsigned char* estimated_bg_ptr = (unsigned char*) estimated_bg->data + row*estimated_bg->step + col*estimated_bg->channels ();
+                            unsigned char* to_replace = model_ptr [rand () % samples_per_pixel];
+                            for (int i = 0; i < img->channels (); i++)
+                            {
+                                to_replace [i] = img_ptr [i];
+                                estimated_bg_ptr [i] = img_ptr [i];
+                            }
+                        }
+
+                        // Propagate to the neighborhood... sometimes.
+                        // This part has a little problem when using parallel processing: near the limits of each block, the same pixel may be written by two different threads at the same time.
+                        // Instead of employing some kind of access control policy, we simply hope that the problem is rare enough (or so hard to notice) that we can act as if it didn't exist.
+                        if (rand () % update_probability == 0)
+                        {
+                            int row_offset = (rand ()%3-1)*img->step; // -1, 0 or 1, *img.step to place in another row.
+                            if (row == 0 && row_offset < 0) row_offset = 0; // Avoid pixels outside the image.
+                            if (row == img->rows-1 && row_offset > 0) row_offset = 0; // Avoid pixels outside the image.
+
+                            int col_offset = (rand ()%3-1)*img->channels (); // -1, 0 or 1, *the number of channels.
+                            if (col == 0 && col_offset < 0) col_offset = 0; // Avoid pixels outside the image.
+                            if (col == img->cols-1 && col_offset > 0) col_offset = 0; // Avoid pixels outside the image.
+
+                            unsigned char* estimated_bg_ptr = (unsigned char*) estimated_bg->data + row*estimated_bg->step + col*estimated_bg->channels ();
+                            unsigned char* to_replace = model_ptr [rand () % samples_per_pixel] + row_offset + col_offset;
+                            for (int i = 0; i < img->channels (); i++)
+                            {
+                                to_replace [i] = img_ptr [i];
+                                estimated_bg_ptr [i] = img_ptr [i];
+                            }
+                        }
+                    }
+                    else
+                        *mask_ptr = 255;
+
+                    img_ptr += img->channels ();
+                    for (unsigned int i = 0; i < samples_per_pixel; i++)
+                        model_ptr [i] += img->channels ();
+                    mask_ptr++;
+                }
+            }
+
+            delete [] (model_ptr);
+        }
+
+        TBBDetectAndUpdate (cv::Mat* img, cv::Mat* mask, int min_neighbors_for_bg, float max_distance_for_bg, unsigned int update_probability, cv::Mat* bg_samples, Mat* estimated_bg, unsigned int samples_per_pixel)
+        {
+            this->img = img;
+            this->mask = mask;
+            this->min_neighbors_for_bg = min_neighbors_for_bg;
+            this->max_distance_for_bg = max_distance_for_bg;
+            this->update_probability = update_probability;
+            this->bg_samples = bg_samples;
+            this->estimated_bg = estimated_bg;
+            this->samples_per_pixel = samples_per_pixel;
+        }
+    };
+
+    parallel_for (blocked_range <int> (0, img.rows), TBBDetectAndUpdate (&img, &mask, min_neighbors_for_bg, max_distance_for_bg, update_probability, bg_samples, &estimated_bg, samples_per_pixel), auto_partitioner ());
+}
+
+void IViBeBGS::initBGModel (cv::Mat& sample_bg)
+{
+    // Internal class, used by the parallel_for.
+    class TBBInitBGModel
+    {
+    private:
+        cv::Mat* sample_bg;
+        cv::Mat* bg_samples;
+        unsigned int samples_per_pixel;
+
+    public:
+        void operator () (const blocked_range <int>& range) const
+        {
+            unsigned char** model_ptr = new unsigned char* [samples_per_pixel];
+
+            // Run through the sample background and all the model images.
+            for (int row = range.begin (); row < range.end (); row++)
+            {
+                unsigned char* in_ptr = (unsigned char*) (sample_bg->data + row*sample_bg->step);
+                for (unsigned int i = 0; i < samples_per_pixel; i++)
+                    model_ptr [i] = (unsigned char*) (bg_samples [i].data + row*bg_samples [i].step);
+
+                for (int col = 0; col < sample_bg->cols; col++)
+                {
+                    // Select samples_per_pixel pixels around the pixel in (row,col).
+                    // Suppose pixels at the margins are duplicated.
+                    for (unsigned int i = 0; i < samples_per_pixel; i++)
+                    {
+                        int row_offset = (rand ()%3-1)*sample_bg->step; // -1, 0 or 1, *sample_bg.step to place in another row.
+                        if (row == 0 && row_offset < 0) row_offset = 0; // Avoid pixels outside the image.
+                        if (row == sample_bg->rows-1 && row_offset > 0) row_offset = 0; // Avoid pixels outside the image.
+
+                        int col_offset = (rand ()%3-1)*sample_bg->channels (); // -1, 0 or 1, *the number of channels.
+                        if (col == 0 && col_offset < 0) col_offset = 0; // Avoid pixels outside the image.
+                        if (col == sample_bg->cols-1 && col_offset > 0) col_offset = 0; // Avoid pixels outside the image.
+
+                        unsigned char* selected = in_ptr + row_offset + col_offset;
+                        for (int channel = 0; channel < sample_bg->channels (); channel++)
+                            model_ptr [i][channel] = selected [channel];
+                    }
+
+                    in_ptr += sample_bg->channels ();
+                    for (unsigned int i = 0; i < samples_per_pixel; i++)
+                        model_ptr [i] += sample_bg->channels ();
+                }
+            }
+
+            delete [] (model_ptr);
+        }
+
+        TBBInitBGModel (cv::Mat* sample_bg, cv::Mat* bg_samples, unsigned int samples_per_pixel)
+        {
+            this->sample_bg = sample_bg;
+            this->bg_samples = bg_samples;
+            this->samples_per_pixel = samples_per_pixel;
+        }
+    };
+
+    parallel_for(blocked_range <int> (0, sample_bg.rows), TBBInitBGModel (&sample_bg, bg_samples, samples_per_pixel), auto_partitioner ());
+}
+
+#endif // __USE_TBB
 
 /** "Color distance" between two pixels, used to decide if they are similar.
  * For 1-channel images, is just the absolute difference between the pixels,
@@ -222,42 +387,17 @@ int IViBeBGS::pixelDistance (const uchar* p1, const uchar* p2, int n_channels)
     int diff1 = p1[1] - p2[1];
     int diff2 = p1[2] - p2[2];
 
-    return (int)sqrt(diff0 * diff0 + diff1 * diff1 + diff2 * diff2);
+    return (int)sqrt(diff0*diff0 + diff1*diff1 + diff2*diff2);
 }
 
 void IViBeBGS::init()
 {
     long seed = (long)time(0);
-    rng = cv::RNG(seed);
+    rng=cv::RNG(seed);
+    //srand(seed);//随机数初始化函数
+    samples_per_pixel= 20;
+    min_neighbors_for_bg = 2;
+    max_distance_for_bg = 20;
+    update_probability = 16;
     bg_samples.clear();
-    firstTime = true;
-    loadConfig();
-}
-
-void IViBeBGS::saveConfig()
-{
-    cv::FileStorage fs;
-    fs.open("./config/IViBeBGS.xml", cv::FileStorage::WRITE);
-
-    cv::write(fs, "samples_per_pixel", samples_per_pixel);
-    cv::write(fs, "min_neighbors_for_bg", min_neighbors_for_bg);
-    cv::write(fs, "max_distance_for_bg", max_distance_for_bg);
-    cv::write(fs, "update_probability", update_probability);
-    cv::write(fs, "showOutput", showOutput);
-
-    fs.release();
-}
-
-void IViBeBGS::loadConfig()
-{
-    cv::FileStorage fs;
-    fs.open("./config/IViBeBGS.xml", cv::FileStorage::READ);
-
-    cv::read(fs["samples_per_pixel"], samples_per_pixel, 20);
-    cv::read(fs["min_neighbors_for_bg"], min_neighbors_for_bg, 2);
-    cv::read(fs["max_distance_for_bg"], max_distance_for_bg ,20);
-    cv::read(fs["update_probability"], update_probability, 16);
-    cv::read(fs["showOutput"], showOutput, true);
-
-    fs.release();
 }

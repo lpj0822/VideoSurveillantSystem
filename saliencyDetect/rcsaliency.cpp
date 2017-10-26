@@ -1,5 +1,5 @@
 ﻿#include "rcsaliency.h"
-#include "utility/utility.h"
+#include "utils/utility.h"
 #include "segmentation/efficientGraphBased/segment_image.h"
 #include <iostream>
 
