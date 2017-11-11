@@ -139,8 +139,8 @@ std::vector<cv::Point2f> VehicleConverseDetection::detectObjectCenter(const cv::
     objectCenters.clear();
     myCenterPoint.clear();
     //objectCenters = frameForeground->getFrameForegroundCentroid(frame,minBox);
-    objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
-    //objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
+    //objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
+    objectCenters = objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
     int count= static_cast<int>(objectCenters.size());
     for (int loop=0; loop<count; loop++)
     {
@@ -350,7 +350,7 @@ void VehicleConverseDetection::loadConfig()
     cv::read(fs["crossMatchMaxValue"], crossMatchMaxValue, 0.1f);
     cv::read(fs["minSize"], minSize, 30);
     cv::read(fs["minBox"], minBox, 300.0f);
-    cv::read(fs["saveClassiferPath"], tempPath, cv::String("./classifer/cascade.xml"));
+    cv::read(fs["saveClassiferPath"], tempPath, cv::String("./classifer/carCascade.xml"));
 
     saveClassiferPath = QString::fromStdString(tempPath);
     qDebug() << saveClassiferPath;

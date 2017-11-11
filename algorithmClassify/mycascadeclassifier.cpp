@@ -57,7 +57,7 @@ std::vector<cv::Rect> MyCascadeClassifier::detectObjectRect(const cv::Mat& inFra
             cv::equalizeHist(frame_gray, frame_gray);
         }
         //-- Detect
-        cascade.detectMultiScale(frame_gray, objects, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, cv::Size(minSize, minSize));
+        cascade.detectMultiScale(frame_gray, objects, 1.1, 2, 0|cv::CASCADE_SCALE_IMAGE, cv::Size(minSize, minSize), cv::Size(maxSize, maxSize));
     }
     return objects;
 }

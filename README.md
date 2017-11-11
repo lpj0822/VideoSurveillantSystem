@@ -40,7 +40,7 @@
 * [MSVC2013_64](https://www.visualstudio.com/zh-hans/downloads/)
 * [Qt5](https://www.qt.io/download-open-source/#section-2)
 * [QtAV](https://github.com/wang-bin/QtAV)
-* [OpenCV3](http://opencv.org/downloads.html)
+* [OpenCV3+opencv_contrib](https://github.com/opencv/opencv)
 * [C++11](https://en.wikipedia.org/wiki/C%2B%2B11)
 
 ## Discuss
