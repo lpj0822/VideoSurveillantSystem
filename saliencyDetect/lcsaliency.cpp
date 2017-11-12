@@ -44,7 +44,7 @@ cv::Mat LCSaliency::getSaliency(const cv::Mat &src)
             s[i] += abs(i - j) * f[j];
         }
     }
-    cv::Mat saliencyMap=cv::Mat(src.size(), CV_32FC1);
+    cv::Mat saliencyMap = cv::Mat(src.size(), CV_32FC1);
     for (int r = 0; r < img.rows; r++)
     {
         uchar* data = img.ptr<uchar>(r);

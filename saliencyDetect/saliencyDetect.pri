@@ -11,7 +11,10 @@ HEADERS += \
     $$PWD/mssaliency.h \
     $$PWD/rcsaliency.h \
     $$PWD/srsaliency.h \
-    $$PWD/isaliency.h
+    $$PWD/isaliency.h \
+    $$PWD/mbsaliency.h \
+    $$PWD/GeodesicSaliency/BGMapExtractor_Grid.h \
+    $$PWD/GeodesicSaliency/geodesicsaliency.h
 
 SOURCES += \
     $$PWD/utils/utility.cpp \
@@ -24,4 +27,7 @@ SOURCES += \
     $$PWD/mssaliency.cpp \
     $$PWD/rcsaliency.cpp \
     $$PWD/srsaliency.cpp \
-    $$PWD/isaliency.cpp
+    $$PWD/isaliency.cpp \
+    $$PWD/mbsaliency.cpp \
+    $$PWD/GeodesicSaliency/BGMapExtractor_Grid.cpp \
+    $$PWD/GeodesicSaliency/geodesicsaliency.cpp
