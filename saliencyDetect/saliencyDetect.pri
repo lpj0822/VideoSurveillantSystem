@@ -14,7 +14,15 @@ HEADERS += \
     $$PWD/isaliency.h \
     $$PWD/mbsaliency.h \
     $$PWD/GeodesicSaliency/BGMapExtractor_Grid.h \
-    $$PWD/GeodesicSaliency/geodesicsaliency.h
+    $$PWD/GeodesicSaliency/geodesicsaliency.h \
+    $$PWD/bmsaliency.h \
+    $$PWD/GMRsaliency.h \
+    $$PWD/SFSaliency/filter/filter.h \
+    $$PWD/SFSaliency/filter/permutohedral.h \
+    $$PWD/SFSaliency/superpixel/superpixel.h \
+    $$PWD/SFSaliency/utility/fastmath.h \
+    $$PWD/SFSaliency/utility/sse_defs.h \
+    $$PWD/SFSaliency/sfsaliency.h
 
 SOURCES += \
     $$PWD/utils/utility.cpp \
@@ -30,4 +38,10 @@ SOURCES += \
     $$PWD/isaliency.cpp \
     $$PWD/mbsaliency.cpp \
     $$PWD/GeodesicSaliency/BGMapExtractor_Grid.cpp \
-    $$PWD/GeodesicSaliency/geodesicsaliency.cpp
+    $$PWD/GeodesicSaliency/geodesicsaliency.cpp \
+    $$PWD/bmsaliency.cpp \
+    $$PWD/GMRsaliency.cpp \
+    $$PWD/SFSaliency/filter/filter.cpp \
+    $$PWD/SFSaliency/filter/permutohedral.cpp \
+    $$PWD/SFSaliency/superpixel/superpixel.cpp \
+    $$PWD/SFSaliency/sfsaliency.cpp

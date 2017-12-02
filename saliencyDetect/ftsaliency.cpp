@@ -3,12 +3,12 @@
 
 FTSaliency::FTSaliency()
 {
-    std::cout<<"FTSaliency()"<<std::endl;
+    std::cout << "FTSaliency()" << std::endl;
 }
 
 FTSaliency::~FTSaliency()
 {
-    std::cout<<"~FTSaliency()"<<std::endl;
+    std::cout << "~FTSaliency()" << std::endl;
 }
 
 cv::Mat FTSaliency::getSaliency(const cv::Mat &src)
