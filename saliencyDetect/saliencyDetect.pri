@@ -22,7 +22,13 @@ HEADERS += \
     $$PWD/SFSaliency/superpixel/superpixel.h \
     $$PWD/SFSaliency/utility/fastmath.h \
     $$PWD/SFSaliency/utility/sse_defs.h \
-    $$PWD/SFSaliency/sfsaliency.h
+    $$PWD/SFSaliency/sfsaliency.h \
+    $$PWD/GCSaliency/cluster/apcluster.h \
+    $$PWD/GCSaliency/cluster/CmAPCluster.h \
+    $$PWD/GCSaliency/cluster/colorquantize.h \
+    $$PWD/GCSaliency/cluster/gmm.h \
+    $$PWD/GCSaliency/gcsaliency.h \
+    $$PWD/GCSaliency/utility.h
 
 SOURCES += \
     $$PWD/utils/utility.cpp \
@@ -44,4 +50,9 @@ SOURCES += \
     $$PWD/SFSaliency/filter/filter.cpp \
     $$PWD/SFSaliency/filter/permutohedral.cpp \
     $$PWD/SFSaliency/superpixel/superpixel.cpp \
-    $$PWD/SFSaliency/sfsaliency.cpp
+    $$PWD/SFSaliency/sfsaliency.cpp \
+    $$PWD/GCSaliency/cluster/apcluster.cpp \
+    $$PWD/GCSaliency/cluster/CmAPCluster.cpp \
+    $$PWD/GCSaliency/cluster/colorquantize.cpp \
+    $$PWD/GCSaliency/cluster/gmm.cpp \
+    $$PWD/GCSaliency/gcsaliency.cpp
