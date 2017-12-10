@@ -55,4 +55,5 @@ SOURCES += \
     $$PWD/GCSaliency/cluster/CmAPCluster.cpp \
     $$PWD/GCSaliency/cluster/colorquantize.cpp \
     $$PWD/GCSaliency/cluster/gmm.cpp \
-    $$PWD/GCSaliency/gcsaliency.cpp
+    $$PWD/GCSaliency/gcsaliency.cpp \
+    $$PWD/testsaliency.cpp
