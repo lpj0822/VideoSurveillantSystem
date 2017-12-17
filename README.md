@@ -14,7 +14,7 @@
 
 <a name="algorithmBGS"></a>
 ### 1.algorithmBGS
-*Background Subtraction Algorithm* </br>
+*[Background Subtraction Algorithm](https://github.com/andrewssobral/bgslibrary)* </br>
 
 <a name="algorithmClassify"></a>
 ### 2.algorithmClassify
@@ -30,7 +30,7 @@
 
 <a name="shadowDetect"></a>
 ### 5.shadowDetect
-*Shadow Detection* </br>
+*[Shadow Detection](https://github.com/3ClassMrWang/ShadowDetection)* </br>
 
 <a name="imageFiltering"></a>
 ### 6.imageFiltering
