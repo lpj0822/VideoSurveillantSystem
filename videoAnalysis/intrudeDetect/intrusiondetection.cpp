@@ -2,6 +2,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
+#include <iostream>
 
 IntrusionDetection::IntrusionDetection(QObject *parent) : QObject(parent)
 {

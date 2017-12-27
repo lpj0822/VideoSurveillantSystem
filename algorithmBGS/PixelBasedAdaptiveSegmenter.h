@@ -5,10 +5,8 @@
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include <iostream>
-
-#include "PBAS.h"
-#include "../IBGS.h"
+#include "PBAS/PBAS.h"
+#include "IBGS.h"
 
 class PixelBasedAdaptiveSegmenter : public IBGS
 {
@@ -24,6 +22,9 @@ private:
 
     bool firstTime;
     bool showOutput;
+	
+	bool enableInputBlur;
+    bool enableOutputBlur;
 
     float alpha;
     float beta;

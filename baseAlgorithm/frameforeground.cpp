@@ -45,20 +45,20 @@ void FrameForeground::initData()
     switch(flags)
     {
     case 0:
-        bgs=new MixtureOfGaussianV2BGS();
-        bgsName="MixtureOfGaussianV2BGS";
+        bgs = new MixtureOfGaussianV2BGS();
+        bgsName = "MixtureOfGaussianV2BGS";
         break;
     case 1:
-        bgs=new PixelBasedAdaptiveSegmenter();
-        bgsName="PixelBasedAdaptiveSegmenter";
+        bgs = new PixelBasedAdaptiveSegmenter();
+        bgsName = "PixelBasedAdaptiveSegmenter";
         break;
     case 2:
-        bgs=new VibeBackgroundSegmenter();
-        bgsName="VibeBackgroundSubtrack";
+        bgs = new ViBeBGS();
+        bgsName = "ViBeBGS";
         break;
     default:
-        bgs=new MixtureOfGaussianV2BGS();
-        bgsName="MixtureOfGaussianV2BGS";
+        bgs = new MixtureOfGaussianV2BGS();
+        bgsName = "MixtureOfGaussianV2BGS";
         break;
     }
 }

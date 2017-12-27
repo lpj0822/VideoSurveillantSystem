@@ -2,6 +2,7 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QDir>
+#include <iostream>
 
 VehicleConverseDetection::VehicleConverseDetection(QObject *parent) : QObject(parent)
 {

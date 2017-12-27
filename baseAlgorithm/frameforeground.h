@@ -2,8 +2,8 @@
 #define FRAMEFOREGROUND_H
 
 #include "algorithmBGS//MixtureOfGaussianV2BGS.h"
-#include "algorithmBGS/PBAS/PixelBasedAdaptiveSegmenter.h"
-#include "algorithmBGS/PBAS/vibebackgroundsegmenter.h"
+#include "algorithmBGS/PixelBasedAdaptiveSegmenter.h"
+#include "algorithmBGS/ViBeBGS.h"
 #include "shadowDetect/colorshadowdetector.h"
 #include "imageFiltering/imagefilter.h"
 #include <vector>
