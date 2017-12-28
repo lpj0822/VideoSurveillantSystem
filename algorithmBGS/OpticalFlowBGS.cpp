@@ -21,6 +21,7 @@ void OpticalFlowBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::
     if (img_input.empty())
         return;
 
+    img_bgmodel = cv::Mat::zeros(img_input.size(), CV_8UC3);
     if (firstTime)
     {
         saveConfig();

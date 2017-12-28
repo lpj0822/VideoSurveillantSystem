@@ -41,6 +41,7 @@ void SaliencyBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::Mat
     {
         return;
     }
+    img_bgmodel = cv::Mat::zeros(img_input.size(), CV_8UC3);
     if (firstRun)
     {
         if (bgNumberFrame < (INITIAL_BG_SAMPLES-1) * INITIAL_BG_INTERVAL)

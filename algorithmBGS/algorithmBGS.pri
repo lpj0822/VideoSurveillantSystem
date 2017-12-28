@@ -11,7 +11,11 @@ HEADERS += \
     $$PWD/utility/tool.h \
     $$PWD/ViBe/vibe-background-sequential.h \
     $$PWD/PBAS/PBAS.h \
-    $$PWD/PixelBasedAdaptiveSegmenter.h
+    $$PWD/PixelBasedAdaptiveSegmenter.h \
+    $$PWD/lb/BGModel.h \
+    $$PWD/lb/BGModelSom.h \
+    $$PWD/lb/Types.h \
+    $$PWD/LBAdaptiveSOM.h
 
 SOURCES += \
     $$PWD/OpticalFlowBGS.cpp \
@@ -25,5 +29,8 @@ SOURCES += \
     $$PWD/utility/tool.cpp \
     $$PWD/ViBe/vibe-background-sequential.cpp \
     $$PWD/PBAS/PBAS.cpp \
-    $$PWD/PixelBasedAdaptiveSegmenter.cpp
+    $$PWD/PixelBasedAdaptiveSegmenter.cpp \
+    $$PWD/lb/BGModel.cpp \
+    $$PWD/lb/BGModelSom.cpp \
+    $$PWD/LBAdaptiveSOM.cpp
     
