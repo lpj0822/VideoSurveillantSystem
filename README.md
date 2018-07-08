@@ -11,6 +11,7 @@
 * [saliencyDetect](#saliencyDetect)
 * [shadowDetect](#shadowDetect)
 * [imageFiltering](#imageFiltering)
+* [superpixelsExtract](#superpixelsExtract)
 
 <a name="algorithmBGS"></a>
 ### 1.algorithmBGS
@@ -35,6 +36,10 @@
 <a name="imageFiltering"></a>
 ### 6.imageFiltering
 *Image Filtering* </br>
+
+<a name="superpixelsExtract"></a>
+### 7.superpixelsExtract
+*[Superpixel Segmentation](https://github.com/davidstutz/superpixels-revisited)* </br>
 
 ## Depend
 * [MSVC2013_64](https://www.visualstudio.com/zh-hans/downloads/)
