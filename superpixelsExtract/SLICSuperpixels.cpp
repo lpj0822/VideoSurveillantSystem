@@ -32,7 +32,7 @@ void SLICSuperpixels::run(const cv::Mat &src)
 
     // Convert normalized image from BGR to CIELAB
     cv::Mat lab_image;
-    cv::cvtColor(normalized_image, lab_image, CV_BGR2Lab);
+    cv::cvtColor(normalized_image, lab_image, cv::COLOR_BGR2Lab);
     this->image = normalized_image;
 
     // TODO: Use dinamic grid instead of regular one
@@ -156,7 +156,7 @@ void SLICSuperpixels::writeLabelsToFile(std::string file_path)
 void SLICSuperpixels::writeCentroidsToFile(std::string file_path)
 {
     cv::Mat bgr_image;
-    this->labels.convertTo(bgr_image, CV_Lab2BGR);
+    this->labels.convertTo(bgr_image, cv::COLOR_Lab2BGR);
 
     for (size_t i=0, max = centroids.size(); i < max; ++i)
     {

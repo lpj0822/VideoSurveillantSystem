@@ -250,7 +250,7 @@ cv::Mat GMRsaliency::getOptAff(const cv::Mat &W)
 {
 
     cv::Mat dd(cv::Size(W.rows,1), CV_32F);
-    cv::reduce(W,dd,1, CV_REDUCE_SUM);
+    cv::reduce(W,dd,1, cv::REDUCE_SUM);
     cv::Mat D(W.size(), CV_32F);
     D = cv::Mat::diag(dd);
     cv::Mat optAff(W.size(), CV_32F);
@@ -294,7 +294,7 @@ cv::Mat GMRsaliency::removeFrame(const cv::Mat &img,int *wcut)
 {
 	double thr=0.6;
     cv::Mat grayimg;
-    cv::cvtColor(img, grayimg, CV_BGR2GRAY);
+    cv::cvtColor(img, grayimg, cv::COLOR_BGR2GRAY);
     cv::Mat edge;
     cv::Canny(grayimg,edge,150*0.4,150);
 

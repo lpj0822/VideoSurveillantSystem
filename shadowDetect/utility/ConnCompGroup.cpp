@@ -42,8 +42,8 @@ void ConnCompGroup::update(const cv::Mat& fgMask, bool clean, bool fill, int min
 	}
 
 	// find contours
-	int mode = (fill ? CV_RETR_EXTERNAL : CV_RETR_CCOMP);
-	cv::findContours(cleanMask, contours, hierarchy, mode, CV_CHAIN_APPROX_NONE);
+    int mode = (fill ? cv::RETR_EXTERNAL : cv::RETR_CCOMP);
+    cv::findContours(cleanMask, contours, hierarchy, mode, cv::CHAIN_APPROX_NONE);
 	int i = 0;
     while (i >= 0 && i < (int) contours.size())
     {
@@ -62,7 +62,7 @@ void ConnCompGroup::update(const cv::Mat& fgMask, bool clean, bool fill, int min
 			cc.box = box;
 			cc.boxMask.create(box.size(), CV_8U);
 			cc.boxMask.setTo(cv::Scalar(0));
-			cv::drawContours(cc.boxMask, cc.contours, -1, 255, CV_FILLED, 8,
+            cv::drawContours(cc.boxMask, cc.contours, -1, 255, cv::FILLED, 8,
 					std::vector<cv::Vec4i>(), std::numeric_limits<int>::max(),
 					cv::Point(-box.x, -box.y));
 
@@ -93,5 +93,5 @@ void ConnCompGroup::update(const cv::Mat& fgMask, bool clean, bool fill, int min
 
 void ConnCompGroup::draw(cv::Mat& dst, const cv::Scalar& color, bool filled) const
 {
-	cv::drawContours(dst, contours, -1, color, (filled ? CV_FILLED : 1));
+    cv::drawContours(dst, contours, -1, color, (filled ? cv::FILLED : 1));
 }

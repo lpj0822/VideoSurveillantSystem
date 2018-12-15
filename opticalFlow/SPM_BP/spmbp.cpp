@@ -553,15 +553,15 @@ void spm_bp::initiateData()
     clock_t start = clock();
     double wall_timer = omp_get_wtime();
     // left
-    cv::resize(im1f, im1Up, cv::Size(width1 * upScale, height1 * upScale), 0.0, 0.0, CV_INTER_CUBIC);
+    cv::resize(im1f, im1Up, cv::Size(width1 * upScale, height1 * upScale), 0.0, 0.0, cv::INTER_CUBIC);
     cv::Mat_<float> tmp1GrayUp;
-    cv::cvtColor(im1Up, tmp1GrayUp, CV_BGR2GRAY);
+    cv::cvtColor(im1Up, tmp1GrayUp, cv::COLOR_BGR2GRAY);
     BuildCensus_bitset(tmp1GrayUp, CENSUS_WINSIZE, censusBS1, height1_up, width1_up, upScale);
     tmp1GrayUp.release();
     // right
-    cv::resize(im2f, im2Up, cv::Size(width2 * upScale, height2 * upScale), 0.0, 0.0, CV_INTER_CUBIC);
+    cv::resize(im2f, im2Up, cv::Size(width2 * upScale, height2 * upScale), 0.0, 0.0, cv::INTER_CUBIC);
     cv::Mat_<float> tmp2GrayUp;
-    cv::cvtColor(im2Up, tmp2GrayUp, CV_BGR2GRAY);
+    cv::cvtColor(im2Up, tmp2GrayUp, cv::COLOR_BGR2GRAY);
     BuildCensus_bitset(tmp2GrayUp, CENSUS_WINSIZE, censusBS2, height1_up, width1_up, upScale);
     tmp2GrayUp.release();
 

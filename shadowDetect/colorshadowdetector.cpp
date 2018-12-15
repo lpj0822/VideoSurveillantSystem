@@ -1,5 +1,6 @@
 ﻿#include "colorshadowdetector.h"
 #include <iostream>
+#include <opencv2/core/core_c.h>
 
 ColorShadowDetector::ColorShadowDetector()
 {

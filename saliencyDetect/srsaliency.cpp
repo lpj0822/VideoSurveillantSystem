@@ -32,7 +32,7 @@ cv::Mat SRSaliency::getSaliency(const cv::Mat &src)
         imgFC1[0] = src.clone();
     }
     imgFC1[0].convertTo(imgFC1[0],CV_32FC1,1.0/255);
-    cv::resize(imgFC1[0], imgFC1[0], saliencySize, 0, 0, CV_INTER_AREA);
+    cv::resize(imgFC1[0], imgFC1[0], saliencySize, 0, 0, cv::INTER_AREA);
 
     imgFC1[1] = cv::Mat::zeros(saliencySize, CV_32FC1);
     cv::merge(imgFC1, 2, complexSrc2f);
@@ -70,7 +70,7 @@ cv::Mat SRSaliency::getSRSaliency1(const cv::Mat &src)
     //cv::Size saliencySize(64*n, 64*n);
     if(src.channels() == 3)
     {
-        cv::cvtColor(src, img, CV_BGR2GRAY);
+        cv::cvtColor(src, img, cv::COLOR_BGR2GRAY);
     }
     else
     {

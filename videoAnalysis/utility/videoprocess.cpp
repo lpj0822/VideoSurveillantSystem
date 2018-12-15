@@ -30,8 +30,8 @@ int VideoProcess::openVideo(int videoNumber,int width,int height)
     if(!isOpenVideo)
     {
         capture.open(videoNumber);
-        capture.set(CV_CAP_PROP_FRAME_WIDTH,captureWidth);
-        capture.set(CV_CAP_PROP_FRAME_HEIGHT,captureHeight);
+        capture.set(cv::CAP_PROP_FRAME_WIDTH,captureWidth);
+        capture.set(cv::CAP_PROP_FRAME_HEIGHT,captureHeight);
         if (!capture.isOpened())
         {
             isOpenVideo=false;
@@ -44,8 +44,8 @@ int VideoProcess::openVideo(int videoNumber,int width,int height)
     {
        closeVideo();
        capture.open(videoNumber);
-       capture.set(CV_CAP_PROP_FRAME_WIDTH,captureWidth);
-       capture.set(CV_CAP_PROP_FRAME_HEIGHT,captureHeight);
+       capture.set(cv::CAP_PROP_FRAME_WIDTH,captureWidth);
+       capture.set(cv::CAP_PROP_FRAME_HEIGHT,captureHeight);
        if (!capture.isOpened())
        {
            isOpenVideo=false;
@@ -69,8 +69,8 @@ int VideoProcess::openVideo(const QString& fileName)
     if(!isOpenVideo)
     {
         capture.open(fileName.toStdString().c_str());
-        captureWidth=(int)capture.get(CV_CAP_PROP_FRAME_WIDTH);
-        captureHeight=(int)capture.get(CV_CAP_PROP_FRAME_HEIGHT);
+        captureWidth=(int)capture.get(cv::CAP_PROP_FRAME_WIDTH);
+        captureHeight=(int)capture.get(cv::CAP_PROP_FRAME_HEIGHT);
         if (!capture.isOpened())
         {
             isOpenVideo=false;
@@ -83,8 +83,8 @@ int VideoProcess::openVideo(const QString& fileName)
     {
        closeVideo();
        capture.open(fileName.toStdString().c_str());
-       captureWidth=(int)capture.get(CV_CAP_PROP_FRAME_WIDTH);
-       captureHeight=(int)capture.get(CV_CAP_PROP_FRAME_HEIGHT);
+       captureWidth=(int)capture.get(cv::CAP_PROP_FRAME_WIDTH);
+       captureHeight=(int)capture.get(cv::CAP_PROP_FRAME_HEIGHT);
        if (!capture.isOpened())
        {
            isOpenVideo=false;

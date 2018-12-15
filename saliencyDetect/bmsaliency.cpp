@@ -37,13 +37,13 @@ cv::Mat BMSaliency::getSaliency(const cv::Mat &src)
     if (CL_Lab & COLOR_SPACE)
     {
         cv::Mat lab;
-        cv::cvtColor(src, lab, CV_RGB2Lab);
+        cv::cvtColor(src, lab, cv::COLOR_RGB2Lab);
         whitenFeatMap(lab, COV_MAT_REG);
     }
     if (CL_Luv & COLOR_SPACE)
     {
         cv::Mat luv;
-        cv::cvtColor(src, luv, CV_RGB2Luv);
+        cv::cvtColor(src, luv, cv::COLOR_RGB2Luv);
         whitenFeatMap(luv, COV_MAT_REG);
     }
 
@@ -152,7 +152,7 @@ void BMSaliency::whitenFeatMap(const cv::Mat& img, float reg)
     cv::Mat srcF,meanF,covF;
     img.convertTo(srcF, CV_32FC3);
     cv::Mat samples = srcF.reshape(1, img.rows*img.cols);
-    cv::calcCovarMatrix(samples, covF, meanF, CV_COVAR_NORMAL | CV_COVAR_ROWS | CV_COVAR_SCALE, CV_32F);
+    cv::calcCovarMatrix(samples, covF, meanF, cv::COVAR_NORMAL | cv::COVAR_ROWS | cv::COVAR_SCALE, CV_32F);
 
     covF += cv::Mat::eye(covF.rows, covF.cols, CV_32FC1)*reg;
     cv::SVD svd(covF);

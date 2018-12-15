@@ -23,12 +23,12 @@ LeaveShowVideoWindow::~LeaveShowVideoWindow()
         leaveDetectThread->stopThread();
         leaveDetectThread->wait();
         delete leaveDetectThread;
-        leaveDetectThread=NULL;
+        leaveDetectThread = NULL;
     }
     if(videoSave)
     {
         delete videoSave;
-        videoSave=NULL;
+        videoSave = NULL;
     }
     std::cout << "~LeaveShowVideoWindow()" << std::endl;
 }
@@ -39,7 +39,7 @@ void LeaveShowVideoWindow::paintEvent(QPaintEvent *e)
     QPainter painter(this);
     if(isOpen)
     {
-        QPixmap tempPicture=QPixmap::fromImage(currentImage);
+        QPixmap tempPicture = QPixmap::fromImage(currentImage);
         drawingArea(tempPicture);
         int window_width = width();
         int window_height = height();
@@ -52,7 +52,7 @@ void LeaveShowVideoWindow::paintEvent(QPaintEvent *e)
     }
     else
     {
-        QPixmap initPicture=QPixmap::fromImage(QImage(":/images/play.png"));
+        QPixmap initPicture = QPixmap::fromImage(QImage(":/images/play.png"));
         int window_width = width();
         int window_height = height();
         int image_width = initPicture.width();

@@ -31,7 +31,7 @@ void OpticalFlowBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::
     if (opticalFlow.get())
     {
         if (img_input.channels() == 3)
-            cv::cvtColor(img_input, grayFrame, CV_BGR2GRAY);
+            cv::cvtColor(img_input, grayFrame, cv::COLOR_BGR2GRAY);
 
         if (preFrame.empty())
         {
@@ -40,7 +40,7 @@ void OpticalFlowBGS::process(const cv::Mat &img_input, cv::Mat &img_output, cv::
         }
         opticalFlow->calc(preFrame, grayFrame, flow);
         drawOpticalFlow(flow, tempOutput);
-        cv::cvtColor(tempOutput, img_foreground, CV_BGR2GRAY);
+        cv::cvtColor(tempOutput, img_foreground, cv::COLOR_BGR2GRAY);
 
         if (enableThreshold)
         {
@@ -172,7 +172,7 @@ void OpticalFlowBGS::drawOpticalFlow(const cv::Mat_<cv::Point2f>& flow, cv::Mat&
 
 void OpticalFlowBGS::init()
 {
-    opticalFlow = cv::createOptFlow_DualTVL1();
+    opticalFlow = cv::optflow::createOptFlow_DualTVL1();
     firstTime = true;
     loadConfig();
 }

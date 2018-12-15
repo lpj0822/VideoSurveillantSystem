@@ -116,7 +116,7 @@ cv::Mat MBSaliency::getSaliency(const cv::Mat &src)
 #endif
 
 #if USE_GEODESIC == 0
-    cv::cvtColor(srcRoi, srcRoi, CV_BGR2Lab);
+    cv::cvtColor(srcRoi, srcRoi, cv::COLOR_BGR2Lab);
 #endif
 
     cv::Mat saliencyMap = cv::Mat::zeros(srcRoi.size(), CV_32FC1);;

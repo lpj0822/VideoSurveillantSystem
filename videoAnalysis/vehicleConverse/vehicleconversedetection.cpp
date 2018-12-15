@@ -139,9 +139,9 @@ std::vector<cv::Point2f> VehicleConverseDetection::detectObjectCenter(const cv::
     std::vector<cv::Point2f> objectCenters;//检测目标的中心
     objectCenters.clear();
     myCenterPoint.clear();
-    //objectCenters = frameForeground->getFrameForegroundCentroid(frame,minBox);
+    objectCenters = frameForeground->getFrameForegroundCentroid(frame,minBox);
     //objectCenters = frameForeground->getFrameForegroundCenter(frame, minBox);
-    objectCenters = objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
+    //objectCenters = objectRecognition->getFrameCarObejctdCenter(frame, minSize, minBox);
     int count= static_cast<int>(objectCenters.size());
     for (int loop=0; loop<count; loop++)
     {

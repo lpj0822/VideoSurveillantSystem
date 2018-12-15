@@ -48,7 +48,7 @@ cv::Mat SFSaliency::getSaliency(const cv::Mat &src)
     // Convert the image to the lab space
     cv::Mat_<cv::Vec3f> rgbim, labim;
     src.convertTo( rgbim, CV_32F, 1.0/255. );
-    cv::cvtColor( rgbim, labim, CV_BGR2Lab );
+    cv::cvtColor( rgbim, labim, cv::COLOR_BGR2Lab );
 
     // Do the abstraction
     cv::Mat_<int> segmentation = superpixel.segment( labim );

@@ -1,11 +1,12 @@
 #include "testsuperpixels.h"
+#include <iostream>
 
 void labelContourMask(const cv::Mat &labels, cv::Mat &contour, bool thick_line)
 {
     if (labels.empty())
-        CV_Error(CV_StsBadArg, "image is empty");
+        std::cout << "image is empty" << std::endl;
     if (labels.type() != CV_32SC1)
-        CV_Error(CV_StsBadArg, "labels mush have CV_32SC1 type");
+        std::cout <<  "labels mush have CV_32SC1 type" << std::endl;
 
     int width = labels.cols;
     int height = labels.rows;

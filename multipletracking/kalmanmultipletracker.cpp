@@ -226,9 +226,9 @@ void KalmanMultipleTracker::drawTrack(cv::Mat& inFrame)
         if (listTrackers[i]->getTraceSize() > 1)
         {
             std::vector<cv::Point2f> trace = listTrackers[i]->getTrace();
-            for (int j = 0; j<trace.size() - 1; j++)
+            for (int j = 0; j< trace.size() - 1; j++)
             {
-                cv::line(inFrame, trace[j], trace[j + 1], cv::Scalar(0,0,255), 2, CV_AA);
+                cv::line(inFrame, trace[j], trace[j + 1], cv::Scalar(0,0,255), 2, cv::LINE_AA);
             }
         }
     }

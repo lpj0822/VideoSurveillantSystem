@@ -20,7 +20,7 @@ ConnComp::~ConnComp()
 
 void ConnComp::draw(cv::Mat& dst, const cv::Scalar& color, bool filled) const
 {
-	cv::drawContours(dst, contours, -1, color, (filled ? CV_FILLED : 1));
+    cv::drawContours(dst, contours, -1, color, (filled ? cv::FILLED : 1));
 }
 
 void ConnComp::verticalProjection(std::map<int, int>& verticalProjection) const

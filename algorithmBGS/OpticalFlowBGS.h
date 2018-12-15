@@ -4,6 +4,9 @@
 #include <opencv2/video.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/highgui.hpp>
+#include <opencv2/video.hpp>
+#include <opencv2/tracking.hpp>
+#include <opencv2/optflow.hpp>
 
 #include "IBGS.h"
 
