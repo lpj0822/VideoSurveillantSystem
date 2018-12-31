@@ -6,7 +6,7 @@
 
 
 template <typename captype, typename tcaptype, typename flowtype> 
-	Graph<captype, tcaptype, flowtype>::Graph(int node_num_max, int edge_num_max, void (*err_function)(char *))
+    MaxFlowGraph<captype, tcaptype, flowtype>::MaxFlowGraph(int node_num_max, int edge_num_max, void (*err_function)(char *))
 	: node_num(0),
 	  nodeptr_block(NULL),
 	  error_function(err_function)
@@ -34,7 +34,7 @@ template <typename captype, typename tcaptype, typename flowtype>
 }
 
 template <typename captype, typename tcaptype, typename flowtype> 
-	Graph<captype,tcaptype,flowtype>::~Graph()
+    MaxFlowGraph<captype,tcaptype,flowtype>::~MaxFlowGraph()
 {
 	if (nodeptr_block) 
 	{ 
@@ -46,7 +46,7 @@ template <typename captype, typename tcaptype, typename flowtype>
 }
 
 template <typename captype, typename tcaptype, typename flowtype> 
-	void Graph<captype,tcaptype,flowtype>::reset()
+    void MaxFlowGraph<captype,tcaptype,flowtype>::reset()
 {
 	node_last = nodes;
 	arc_last = arcs;
@@ -63,7 +63,7 @@ template <typename captype, typename tcaptype, typename flowtype>
 }
 
 template <typename captype, typename tcaptype, typename flowtype> 
-	void Graph<captype,tcaptype,flowtype>::reallocate_nodes(int num)
+    void MaxFlowGraph<captype,tcaptype,flowtype>::reallocate_nodes(int num)
 {
 	int node_num_max = (int)(node_max - nodes);
 	node* nodes_old = nodes;
@@ -93,7 +93,7 @@ template <typename captype, typename tcaptype, typename flowtype>
 }
 
 template <typename captype, typename tcaptype, typename flowtype> 
-	void Graph<captype,tcaptype,flowtype>::reallocate_arcs()
+    void MaxFlowGraph<captype,tcaptype,flowtype>::reallocate_arcs()
 {
 	int arc_num_max = (int)(arc_max - arcs);
 	int arc_num = (int)(arc_last - arcs);

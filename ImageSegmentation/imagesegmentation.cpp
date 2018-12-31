@@ -1,6 +1,6 @@
 #include "imagesegmentation.h"
 
-ImageSegmentation::ImageSegmentation()
+ImageSegmentation::~ImageSegmentation()
 {
 
 }
